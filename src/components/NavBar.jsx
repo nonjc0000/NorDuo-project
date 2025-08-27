@@ -3,7 +3,9 @@ import React from 'react'
 const NavBar = () => {
   return (
     <div className='nav_wrap'>
-        <img src="logo.png" alt="Logo" />
+      <p>Norduo</p>
+
+        {/* <img src="logo.png" alt="Logo" /> */}
 
     </div>
   )

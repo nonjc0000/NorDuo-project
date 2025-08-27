@@ -1,0 +1,31 @@
+%main_font-family_setting {
+    font-family: "Roboto Mono", "Noto Sans TC", san-serif;
+}
+
+%flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+%flex-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+%remove_form_style {
+    border: none;
+    outline: none;
+    background: none;
+}
+
+%flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+%flex-wrap{
+    display: flex;
+    flex-wrap: wrap;
+}

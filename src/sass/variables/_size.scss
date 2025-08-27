@@ -1,0 +1,55 @@
+@use 'sass:math';
+
+// spacing
+$spacing-xxs: 5px;
+$spacing-xs: 10px;
+$spacing-sm: 15px;
+$spacing-md: 20px;
+$spacing-lg: 25px;
+$spacing-xl: 30px;
+$spacing-xxl: 40px;
+$spacing-ex: 110px;
+
+$spacing-x-xs: 0 10px;
+$spacing-x-sm: 0 15px;
+$spacing-x-md: 0 20px;
+$spacing-x-lg: 0 25px;
+$spacing-x-xl: 0 30px;
+
+$spacing-y-xs: 10px 0;
+$spacing-y-sm: 15px 0;
+$spacing-y-md: 20px 0;
+$spacing-y-lg: 25px 0;
+$spacing-y-xl: 30px 0;
+
+// radius
+$rad-basic: 15px;
+
+$rad-sm: math.div($rad-basic, 2);
+$rad-md: $rad-basic;
+$rad-lg: 2 * $rad-basic;
+$rad-ex: 999px;
+
+// width
+$w-100: 100%;
+$w-90: 90%;
+$w-80: 80%;
+$w-70: 70%;
+$w-60: 60%;
+$w-50: 50%;
+$w-40: 40%;
+$w-30: 30%;
+$w-20: 20%;
+$w-10: 10%;
+
+// height
+$h-100vh: 100vh;
+$h-90vh: 90vh;
+$h-80vh: 80vh;
+$h-70vh: 70vh;
+$h-60vh: 60vh;
+$h-50vh: 50vh;
+$h-40vh: 40vh;
+$h-30vh: 30vh;
+$h-20vh: 20vh;
+$h-10vh: 10vh;

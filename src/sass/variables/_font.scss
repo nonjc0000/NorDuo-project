@@ -1,0 +1,29 @@
+// font-family
+$family-en: "Roboto Mono", san-serif;
+$family-tc: "Noto Sans TC", san-serif;
+$family-display: "Rubik Glitch", system-ui;
+
+// font-size
+$f-s-basic: 1rem;
+
+$f-s-xs: .75 * $f-s-basic;
+$f-s-sm: .875 * $f-s-basic;
+$f-s-md: 1 * $f-s-basic;
+$f-s-lg: 1.25 * $f-s-basic;
+$f-s-xl: 1.5 * $f-s-basic;
+$f-s-xxl: 1.75 * $f-s-basic;
+$f-s-xxxl: 2 * $f-s-basic;
+$f-s-xxxxl: 2.25 * $f-s-basic;
+$f-s-xxxxxl: 2.5 * $f-s-basic;
+$f-s-ex: 4 * $f-s-basic;
+
+// font-weight
+$f-w-r: 400;
+$f-w-m: 500;
+$f-w-b: 700;
+
+// line-height
+$line-height-basic: 150%;
+
+// letter-spacing
+$letter-spacing-basic: 0.1em;
