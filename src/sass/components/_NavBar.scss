@@ -1,0 +1,29 @@
+@use '../variables/' as *;
+@use '../functions/' as *;
+
+.nav_wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-xl 0;
+}
+
+.logo {
+    font-family: $family-display;
+    font-size: $f-s-xxxl;
+    color: $accent;
+}
+
+.nav_list {
+    display: flex;
+}
+
+.nav_item a{
+    margin-left: $spacing-lg;
+    font-size: $f-s-lg;
+
+    &:hover {
+        color: $accent;
+        transition: all .3s;
+    }
+}

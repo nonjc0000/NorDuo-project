@@ -1,0 +1,64 @@
+@use '../variables/' as *;
+@use '../functions/' as *;
+
+.footer_wrap {
+    width: $w-100;
+    height: $h-80vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: $spacing-footer 0;
+}
+
+.footer_left {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .slogan {
+        font-size: $f-s-display;
+
+        p {
+            margin-bottom: $spacing-xxxl;
+        }
+    }
+
+    .socials{
+        display: flex;
+        margin-bottom: $spacing-sm;
+
+        $icons: fb, ig, spotify, soundcloud, yt;
+    
+        @each $icon in $icons {
+            .icon-#{$icon} {
+                width: 50px;
+                height: 50px;
+                margin-right: $spacing-xl;
+                background: url('./images/Footer/#{$icon}.svg') no-repeat center;
+                background-size: contain;
+    
+                &:hover {
+                    filter: brightness(0.8);
+                }
+            }
+        };
+    }
+
+
+    small{
+        font-size: $f-s-xs;
+    }
+}
+
+.footer_right {
+    .arrow{
+        transition: transform 0.3s ease;
+
+        &:hover{
+            cursor: pointer;
+            transform: translateY(-10px);
+        }
+    }
+}

@@ -6,7 +6,7 @@ const App_NorDuo = () => {
     return (
         <div className='wrap'>
             <NavBar />
-            <div>App_NorDuo</div>
+            {/* <div>App_NorDuo</div> */}
             <Footer />
         </div>
     )
