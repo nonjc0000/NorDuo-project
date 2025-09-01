@@ -17,9 +17,9 @@ const SoundCreator = () => {
     return (
         <div className='sound_creator_content_wrap'>
             <div className='sound_deco_left'>
-                <img src="./images/SoundCreator/left-deco1.png" alt="" />
-                <img src="./images/SoundCreator/left-deco2.png" alt="" />
-                <img src="./images/SoundCreator/left-deco3.png" alt="" />
+                <img src="./images/SoundCreator/left-deco1.svg" alt="" />
+                <img src="./images/SoundCreator/left-deco2.svg" alt="" />
+                <img src="./images/SoundCreator/left-deco3.svg" alt="" />
             </div>
             <div className='sound_creator_wrap'>
                 <div className='creator_header'>
@@ -32,6 +32,13 @@ const SoundCreator = () => {
                             <span className='bar'></span>
                             <span className='bar'></span>
                             <span className='bar'></span>
+                            <span className='bar'></span>
+                            <span className='bar'></span>
+                            <span className='bar'></span>
+                            <span className='bar'></span>
+                            <span className='bar'></span>
+                            <span className='bar'></span>
+                            <p>100%</p>
                         </div>
                     </div>
                     <div className='creation_status'>
@@ -104,7 +111,7 @@ const SoundCreator = () => {
                 </div>
             </div>
             <div className='sound_deco_right'>
-                <img src="./images/SoundCreator/right-deco.png" alt="" />
+                <img src="./images/SoundCreator/right-deco.svg" alt="" />
             </div>
         </div>
     )

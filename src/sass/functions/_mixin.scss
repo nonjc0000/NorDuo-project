@@ -1,0 +1,5 @@
+@use '../variables/' as *;
+
+@mixin bordered($width: 3px, $color: $accent) {
+    border: solid $width $color;
+}

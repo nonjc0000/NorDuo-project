@@ -28,6 +28,7 @@ $spacing-y-xl: 30px 0;
 // radius
 $rad-basic: 15px;
 
+$rad-basic-sm: 5px;
 $rad-sm: math.div($rad-basic, 2);
 $rad-md: $rad-basic;
 $rad-lg: 2 * $rad-basic;

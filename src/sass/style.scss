@@ -12,6 +12,6 @@
 // google fonts & others webfonts
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Rubik+Glitch&display=swap');
 
-// @font-face {
-
-// }
+body {
+    @extend %main_font-family_setting;
+}

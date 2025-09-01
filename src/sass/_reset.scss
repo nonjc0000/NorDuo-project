@@ -1,51 +1,129 @@
 @use './variables/' as *;
 @use './functions/' as *;
 
-*{ 
-     box-sizing: border-box; 
-}
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video{
-    margin: 0;   
-    padding: 0; 
+* {
+    box-sizing: border-box;
 }
 
-body {  
-    background-color: $background; 
-    @extend %main_font-family_setting;
-    font-size: 100%;   
-    line-height: $line-height-basic; 
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: $background;
+    font-size: 100%;
+    line-height: $line-height-basic;
     letter-spacing: $letter-spacing-basic;
     color: $text;
     padding: 0 3rem;
 }
 
-h1, h2, h3, h4, h5, h6 {   
-    font-weight: normal; 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
 }
 
-ul, ol {   
-    list-style: none; 
+ul,
+ol {
+    list-style: none;
 }
 
-img {   
-    display: block;   
-    width: 100% ;
+img {
+    display: block;
+    width: 100%;
 }
 
-a { 
+a {
     display: block;
     color: $text;
-    text-decoration: none; 
+    text-decoration: none;
+}
+
+button {
+    border: none;
 }
