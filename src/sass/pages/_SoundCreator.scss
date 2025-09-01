@@ -1,0 +1,319 @@
+@use '../variables/' as *;
+@use '../functions/' as *;
+
+.sound_creator_content_wrap {
+    height: $h-80vh;
+
+    @extend %flex-space-between;
+
+    .sound_deco_left {
+        @extend %flex-column;
+        justify-content: space-between;
+        width: 3.5%;
+        height: 100%;
+    }
+
+    .sound_deco_right {
+        width: 3.5%;
+        height: 100%;
+
+        img {
+            height: 100%;
+        }
+    }
+
+}
+
+
+.sound_creator_wrap {
+    width: 90%;
+    height: 100%;
+    // background: #1a1a1a;
+    background-image: url('./images/SoundCreator/hud-bg.png');
+    background-position: center;
+    color: $text;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+
+    // &::before {
+    //     content: '';
+    //     position: absolute;
+    //     top: 0;
+    //     left: 0;
+    //     right: 0;
+    //     bottom: 0;
+    //     background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    //     background-size: 20px 20px;
+    //     pointer-events: none;
+    // }
+}
+
+.creator_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: $spacing-xxxl;
+
+    .datetime_info {
+        .datetime {
+            font-size: $f-s-lg;
+            color: $accent;
+            margin-bottom: $spacing-xs;
+        }
+
+        .earth_date {
+            font-size: $f-s-sm;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: $spacing-md;
+        }
+
+        .signal_bars {
+            display: flex;
+            gap: 3px;
+
+            .bar {
+                width: 3px;
+                height: 15px;
+                background: $accent;
+                display: block;
+
+                &:nth-child(2) {
+                    height: 12px;
+                }
+
+                &:nth-child(3) {
+                    height: 18px;
+                }
+
+                &:nth-child(4) {
+                    height: 8px;
+                }
+
+                &:nth-child(5) {
+                    height: 20px;
+                }
+            }
+        }
+    }
+
+    .creation_status {
+        text-align: right;
+
+        .creating_title {
+            font-size: $f-s-xl;
+            color: $accent;
+            margin-bottom: $spacing-xs;
+            border: 2px solid $accent;
+            padding: $spacing-sm $spacing-md;
+            border-radius: 4px;
+        }
+
+        .file_info {
+            font-size: $f-s-sm;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: $spacing-sm;
+        }
+    }
+}
+
+// .creator_main {
+//     flex: 1;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+
+//     .visual_container {
+//         width: 400px;
+//         height: 300px;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+
+//         img {
+//             max-width: 100%;
+//             max-height: 100%;
+//             object-fit: contain;
+//             filter: brightness(1.2) contrast(1.1);
+//         }
+//     }
+// }
+
+.creator_controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .sound_selection {
+        display: flex;
+        .selection_title {
+            font-size: $f-s-lg;
+            color: $accent;
+            margin-bottom: $spacing-md;
+        }
+
+        .sound_numbers {
+            display: flex;
+            gap: $spacing-sm;
+            margin-bottom: $spacing-lg;
+
+            .sound_btn {
+                width: 40px;
+                height: 40px;
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                background: transparent;
+                color: $text;
+                font-size: $f-s-md;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    border-color: $accent;
+                    color: $accent;
+                }
+
+                &.active {
+                    background: $accent;
+                    border-color: $accent;
+                    color: $background;
+                }
+            }
+        }
+
+    }
+    .sound_visualizer {
+        .visualizer_bars {
+            display: flex;
+            gap: 3px;
+            align-items: flex-end;
+
+            .vis_bar {
+                width: 4px;
+                background: $accent;
+                display: block;
+                animation: pulse 1.5s ease-in-out infinite;
+
+                &:nth-child(1) {
+                    height: 25px;
+                    animation-delay: 0s;
+                }
+
+                &:nth-child(2) {
+                    height: 35px;
+                    animation-delay: 0.2s;
+                }
+
+                &:nth-child(3) {
+                    height: 20px;
+                    animation-delay: 0.4s;
+                }
+
+                &:nth-child(4) {
+                    height: 30px;
+                    animation-delay: 0.6s;
+                }
+
+                &:nth-child(5) {
+                    height: 15px;
+                    animation-delay: 0.8s;
+                }
+            }
+        }
+    }
+
+    .control_panel {
+        display: flex;
+        gap: $spacing-xl;
+
+        .control_group {
+            text-align: center;
+
+            .control_label {
+                font-size: $f-s-sm;
+                color: rgba(255, 255, 255, 0.7);
+                margin-bottom: $spacing-sm;
+            }
+
+            .random_btn {
+                width: 60px;
+                height: 40px;
+                background: transparent;
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                cursor: pointer;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                gap: 4px;
+                padding: $spacing-xs;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    border-color: $accent;
+                }
+
+                .dot {
+                    width: 8px;
+                    height: 8px;
+                    background: rgba(255, 255, 255, 0.5);
+                    border-radius: 50%;
+                    display: block;
+                }
+            }
+
+            .sound_toggle {
+                width: 60px;
+                height: 40px;
+                background: $accent;
+                border: 2px solid $accent;
+                color: $background;
+                font-size: $f-s-sm;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    background: transparent;
+                    color: $accent;
+                }
+
+                &.playing {
+                    background: transparent;
+                    color: $accent;
+                }
+            }
+
+            .share_btn {
+                width: 60px;
+                height: 40px;
+                background: $accent;
+                border: 2px solid $accent;
+                color: $background;
+                font-size: $f-s-sm;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    background: transparent;
+                    color: $accent;
+                }
+            }
+        }
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scaleY(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}

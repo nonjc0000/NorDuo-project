@@ -1,8 +1,9 @@
 import React from 'react'
+import SoundCreator from './SoundCreator'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <SoundCreator/>
   )
 }
 
