@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 const SoundCreator = () => {
-    const [selectedSound, setSelectedSound] = useState(3)
+    const [selectedSound, setSelectedSound] = useState(1)
     const [isPlaying, setIsPlaying] = useState(false)
 
     const soundOptions = [1, 2, 3, 4, 5]
@@ -47,12 +47,6 @@ const SoundCreator = () => {
                     </div>
                 </div>
 
-                {/* <div className='creator_main'>
-                    <figure className='visual_container'>
-                        <img src="./images/SoundCreator/hud-bg.png" alt="Sound visualization" />
-                    </figure>
-                </div> */}
-
                 <div className='creator_controls'>
                     <div className='sound_selection'>
                         <div className='selection_panel'>
@@ -85,7 +79,7 @@ const SoundCreator = () => {
                             <h4 className='control_label'>Random</h4>
                             <button className='random_btn'>
                                 <svg width="56" height="57" viewBox="0 0 56 57" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="1.5" y="2.14307" width="53" height="53" rx="6.5" stroke="#F18888" stroke-width="3" />
+                                    <rect x="1.5" y="2.14307" width="53" height="53" rx="6.5" stroke="#F18888" strokeWidth="3" />
                                     <circle cx="28.5" cy="29.1431" r="3.5" fill="#F18888" />
                                     <circle cx="16.5" cy="17.1431" r="3.5" fill="#F18888" />
                                     <circle cx="16.5" cy="41.1431" r="3.5" fill="#F18888" />

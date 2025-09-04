@@ -3,7 +3,7 @@ body, .creator_controls .sound_selection .sound_numbers .sound_btn, .creator_con
   font-family: "Roboto Mono", "Noto Sans TC", san-serif;
 }
 
-.sound_creator_content_wrap {
+.hero_nav, .hero_content .hero_text_overlay, .sound_creator_content_wrap {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -445,4 +445,207 @@ button {
 }
 .creator_controls .control_panel .control_group .share_btn {
   border: solid 3px #F18888;
+}
+
+.hero_section_wrap {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero_nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  align-items: flex-start;
+  padding: 30px;
+}
+.hero_nav .hero_nav_left .nav_arrow {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 15px;
+  transition: all 0.3s ease;
+}
+.hero_nav .hero_nav_left .nav_arrow:hover {
+  transform: translateX(-5px);
+}
+.hero_nav .hero_nav_left .nav_arrow:hover svg path {
+  stroke: #F18888;
+}
+.hero_nav .hero_nav_left .nav_arrow svg {
+  width: 40px;
+  height: 40px;
+}
+.hero_nav .hero_nav_right .rec_status {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.hero_nav .hero_nav_right .rec_status .rec_dot {
+  width: 12px;
+  height: 12px;
+  background: #F18888;
+  border-radius: 50%;
+  animation: rec-pulse 2s ease-in-out infinite;
+}
+.hero_nav .hero_nav_right .rec_status .rec_text {
+  font-size: 1.5rem;
+  color: #F18888;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+}
+
+.hero_content {
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  position: relative;
+}
+.hero_content .hero_vid {
+  width: 100%;
+  height: 100%;
+}
+.hero_content .hero_vid video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.2);
+}
+.hero_content .hero_vid::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(255, 255, 255, 0.1) 100%);
+}
+.hero_content .hero_text_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  align-items: flex-end;
+  padding: 30px 50px 50px;
+  z-index: 5;
+}
+.hero_content .hero_text_overlay .hero_slogan {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.hero_content .hero_text_overlay .hero_slogan .slogan_line {
+  font-size: 3.75rem;
+  font-family: "Rubik Glitch", system-ui;
+  color: #fff;
+  line-height: 0.9;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+.hero_content .hero_text_overlay .hero_slogan .slogan_line:first-child {
+  position: relative;
+}
+.hero_content .hero_text_overlay .hero_slogan .slogan_line:first-child::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 3px;
+  background: repeating-linear-gradient(45deg, #F18888, #F18888 8px, transparent 8px, transparent 16px);
+}
+.hero_content .hero_text_overlay .hero_slogan .slogan_decoration {
+  margin-top: 15px;
+}
+.hero_content .hero_text_overlay .hero_slogan .slogan_decoration .decoration_lines {
+  display: flex;
+  gap: 4px;
+}
+.hero_content .hero_text_overlay .hero_slogan .slogan_decoration .decoration_lines .deco_line {
+  width: 3px;
+  height: 30px;
+  background: #F18888;
+  display: block;
+  transform: skew(-15deg);
+}
+.hero_content .hero_text_overlay .hero_slogan .slogan_decoration .decoration_lines .deco_line:nth-child(2) {
+  height: 25px;
+}
+.hero_content .hero_text_overlay .hero_slogan .slogan_decoration .decoration_lines .deco_line:nth-child(3) {
+  height: 35px;
+}
+.hero_content .hero_text_overlay .hero_slogan .slogan_decoration .decoration_lines .deco_line:nth-child(4) {
+  height: 20px;
+}
+.hero_content .hero_text_overlay .hero_slogan .slogan_decoration .decoration_lines .deco_line:nth-child(5) {
+  height: 28px;
+}
+.hero_content .hero_text_overlay .hero_info {
+  text-align: right;
+}
+.hero_content .hero_text_overlay .hero_info .info_label {
+  font-size: 1.25rem;
+  color: #F18888;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+.hero_content .hero_text_overlay .hero_info .battery_indicator {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+.hero_content .hero_text_overlay .hero_info .battery_indicator .battery_bar {
+  width: 6px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 7.5px;
+  transition: all 0.3s ease;
+}
+.hero_content .hero_text_overlay .hero_info .battery_indicator .battery_bar.active {
+  background: #F18888;
+  box-shadow: 0 0 8px rgba(241, 136, 136, 0.5);
+}
+.hero_content .hero_text_overlay .hero_info .battery_indicator .battery_bar:nth-child(1) {
+  height: 35px;
+}
+.hero_content .hero_text_overlay .hero_info .battery_indicator .battery_bar:nth-child(2) {
+  height: 30px;
+}
+.hero_content .hero_text_overlay .hero_info .battery_indicator .battery_bar:nth-child(3) {
+  height: 25px;
+}
+.hero_content .hero_text_overlay .hero_info .battery_indicator .battery_bar:nth-child(4) {
+  height: 20px;
+}
+
+@keyframes rec-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+@media (max-width: 768px) {
+  .hero_text_overlay {
+    padding: 25px !important;
+  }
+  .hero_text_overlay .hero_slogan .slogan_line {
+    font-size: 2rem;
+  }
+  .hero_text_overlay .hero_slogan .slogan_line:first-child::after {
+    display: none;
+  }
+  .hero_nav {
+    padding: 25px;
+  }
 }
