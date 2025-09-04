@@ -29,7 +29,7 @@
     width: 90%;
     height: 100%;
     // background: #1a1a1a;
-    padding: $spacing-xs 0;
+    padding: $spacing-xs $spacing-xxxl $spacing-xxxl;
     background-image: url('./images/SoundCreator/hud-bg.png');
     background-position: center;
     color: $text;
@@ -96,17 +96,17 @@
         text-align: right;
 
         .creating_title {
-            font-size: $f-s-xl;
+            font-size: $f-s-xxl;
             color: $accent;
             margin-bottom: $spacing-xs;
-            border: 2px solid $accent;
+            border: 3px solid $accent;
             padding: $spacing-sm $spacing-md;
-            border-radius: 4px;
+            border-radius: $rad-basic-sm;
         }
 
         .file_info {
-            font-size: $f-s-sm;
-            color: rgba(255, 255, 255, 0.7);
+            font-size: $f-s-lg;
+            color: $accent;
             margin-top: $spacing-sm;
         }
     }
@@ -141,6 +141,10 @@
 
     .sound_selection {
         display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        gap: $spacing-md;
+
 
         .selection_title {
             font-size: $f-s-lg;
@@ -151,38 +155,16 @@
         .sound_numbers {
             display: flex;
             gap: $spacing-sm;
-            margin-bottom: $spacing-lg;
+            // margin-bottom: $spacing-lg;
 
             .sound_btn {
-                // width: 40px;
-                // height: 40px;
-                // border: 2px solid rgba(255, 255, 255, 0.3);
-                // background: transparent;
-                // color: $text;
-                // font-size: $f-s-md;
-                // cursor: pointer;
-                // transition: all 0.3s ease;
-
-                display: flex;
-                min-height: 36px;
-                padding: 10px 20px;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                background-color: transparent;
-                gap: 10px;
+                @extend %btn-style-basic;
                 @include bordered;
-                border-radius: $rad-basic-sm;
-                color: $accent;
-
-                &:hover {
-                    border-color: $accent;
-                }
 
                 &.active {
                     background: $accent;
                     border-color: $accent;
-                    color: $background;
+                    color: $text;
                 }
             }
         }
@@ -194,35 +176,37 @@
             display: flex;
             gap: 3px;
             align-items: flex-end;
+            gap: $spacing-xs;
 
             .vis_bar {
-                width: 4px;
+                width: 6px;
                 background: $accent;
                 display: block;
+                border-radius: $rad-ex;
                 animation: pulse 1.5s ease-in-out infinite;
 
                 &:nth-child(1) {
-                    height: 25px;
+                    height: 37px;
                     animation-delay: 0s;
                 }
 
                 &:nth-child(2) {
-                    height: 35px;
+                    height: 13px;
                     animation-delay: 0.2s;
                 }
 
                 &:nth-child(3) {
-                    height: 20px;
+                    height: 32px;
                     animation-delay: 0.4s;
                 }
 
                 &:nth-child(4) {
-                    height: 30px;
+                    height: 42px;
                     animation-delay: 0.6s;
                 }
 
                 &:nth-child(5) {
-                    height: 15px;
+                    height: 9px;
                     animation-delay: 0.8s;
                 }
             }
@@ -237,52 +221,33 @@
             text-align: center;
 
             .control_label {
-                font-size: $f-s-sm;
-                color: rgba(255, 255, 255, 0.7);
+                font-size: $f-s-lg;
+                color: $text;
                 margin-bottom: $spacing-sm;
             }
 
             .random_btn {
-                width: 60px;
-                height: 40px;
-                background: transparent;
-                border: 2px solid rgba(255, 255, 255, 0.3);
+                background-color: transparent;
                 cursor: pointer;
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                grid-template-rows: repeat(2, 1fr);
-                gap: 4px;
-                padding: $spacing-xs;
-                transition: all 0.3s ease;
 
                 &:hover {
-                    border-color: $accent;
+
+                    svg {
+                        fill: $accent;
+
+                        circle {
+                            fill: $white;
+                        }
+                    }
+
                 }
 
-                .dot {
-                    width: 8px;
-                    height: 8px;
-                    background: rgba(255, 255, 255, 0.5);
-                    border-radius: 50%;
-                    display: block;
-                }
+
             }
 
             .sound_toggle {
-                width: 60px;
-                height: 40px;
-                background: $accent;
-                border: 2px solid $accent;
-                color: $background;
-                font-size: $f-s-sm;
-                font-weight: bold;
-                cursor: pointer;
-                transition: all 0.3s ease;
-
-                &:hover {
-                    background: transparent;
-                    color: $accent;
-                }
+                @extend %btn-style-basic;
+                @include bordered;
 
                 &.playing {
                     background: transparent;
@@ -291,35 +256,9 @@
             }
 
             .share_btn {
-                width: 60px;
-                height: 40px;
-                background: $accent;
-                border: 2px solid $accent;
-                color: $background;
-                font-size: $f-s-sm;
-                font-weight: bold;
-                cursor: pointer;
-                transition: all 0.3s ease;
-
-                &:hover {
-                    background: transparent;
-                    color: $accent;
-                }
+                @extend %btn-style-basic;
+                @include bordered;
             }
         }
-    }
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        opacity: 0.6;
-        transform: scaleY(0.8);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scaleY(1);
     }
 }

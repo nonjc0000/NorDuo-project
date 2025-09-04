@@ -1,3 +1,5 @@
+@use '../variables/' as *;
+
 %main_font-family_setting {
     font-family: "Roboto Mono", "Noto Sans TC", san-serif;
 }
@@ -20,12 +22,32 @@
     background: none;
 }
 
-%flex-column{
+%flex-column {
     display: flex;
     flex-direction: column;
 }
 
-%flex-wrap{
+%flex-wrap {
     display: flex;
     flex-wrap: wrap;
+}
+
+%btn-style-basic {
+    @extend %main_font-family_setting;
+    min-height: 36px;
+    padding: $spacing-xs $spacing-md;
+    background-color: transparent;
+    border-radius: $rad-basic-sm;
+    color: $accent;
+    font-size: $f-s-lg;
+    line-height: 70%;
+    letter-spacing: $letter-spacing-basic;
+    cursor: pointer;
+    font-weight: $f-w-b;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: $accent;
+        color: $white;
+    }
 }

@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Rubik+Glitch&display=swap");
-body {
+body, .creator_controls .sound_selection .sound_numbers .sound_btn, .creator_controls .control_panel .control_group .sound_toggle, .creator_controls .control_panel .control_group .share_btn {
   font-family: "Roboto Mono", "Noto Sans TC", san-serif;
 }
 
@@ -12,6 +12,24 @@ body {
 .sound_creator_content_wrap .sound_deco_left {
   display: flex;
   flex-direction: column;
+}
+
+.creator_controls .sound_selection .sound_numbers .sound_btn, .creator_controls .control_panel .control_group .sound_toggle, .creator_controls .control_panel .control_group .share_btn {
+  min-height: 36px;
+  padding: 10px 20px;
+  background-color: transparent;
+  border-radius: 5px;
+  color: #F18888;
+  font-size: 1.25rem;
+  line-height: 70%;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.creator_controls .sound_selection .sound_numbers .sound_btn:hover, .creator_controls .control_panel .control_group .sound_toggle:hover, .creator_controls .control_panel .control_group .share_btn:hover {
+  background: #F18888;
+  color: #fff;
 }
 
 * {
@@ -274,7 +292,7 @@ button {
 .sound_creator_wrap {
   width: 90%;
   height: 100%;
-  padding: 10px 0;
+  padding: 10px 50px 50px;
   background-image: url("./images/SoundCreator/hud-bg.png");
   background-position: center;
   color: #FFFFFF;
@@ -322,16 +340,16 @@ button {
   text-align: right;
 }
 .creator_header .creation_status .creating_title {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   color: #F18888;
   margin-bottom: 10px;
-  border: 2px solid #F18888;
+  border: 3px solid #F18888;
   padding: 15px 20px;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 .creator_header .creation_status .file_info {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.25rem;
+  color: #F18888;
   margin-top: 15px;
 }
 
@@ -342,6 +360,9 @@ button {
 }
 .creator_controls .sound_selection {
   display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 20px;
 }
 .creator_controls .sound_selection .selection_title {
   font-size: 1.25rem;
@@ -351,58 +372,46 @@ button {
 .creator_controls .sound_selection .sound_numbers {
   display: flex;
   gap: 15px;
-  margin-bottom: 25px;
 }
 .creator_controls .sound_selection .sound_numbers .sound_btn {
-  display: flex;
-  min-height: 36px;
-  padding: 10px 20px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent;
-  gap: 10px;
   border: solid 3px #F18888;
-  border-radius: 5px;
-  color: #F18888;
-}
-.creator_controls .sound_selection .sound_numbers .sound_btn:hover {
-  border-color: #F18888;
 }
 .creator_controls .sound_selection .sound_numbers .sound_btn.active {
   background: #F18888;
   border-color: #F18888;
-  color: #181A1B;
+  color: #FFFFFF;
 }
 .creator_controls .sound_visualizer .visualizer_bars {
   display: flex;
   gap: 3px;
   align-items: flex-end;
+  gap: 10px;
 }
 .creator_controls .sound_visualizer .visualizer_bars .vis_bar {
-  width: 4px;
+  width: 6px;
   background: #F18888;
   display: block;
+  border-radius: 999px;
   animation: pulse 1.5s ease-in-out infinite;
 }
 .creator_controls .sound_visualizer .visualizer_bars .vis_bar:nth-child(1) {
-  height: 25px;
+  height: 37px;
   animation-delay: 0s;
 }
 .creator_controls .sound_visualizer .visualizer_bars .vis_bar:nth-child(2) {
-  height: 35px;
+  height: 13px;
   animation-delay: 0.2s;
 }
 .creator_controls .sound_visualizer .visualizer_bars .vis_bar:nth-child(3) {
-  height: 20px;
+  height: 32px;
   animation-delay: 0.4s;
 }
 .creator_controls .sound_visualizer .visualizer_bars .vis_bar:nth-child(4) {
-  height: 30px;
+  height: 42px;
   animation-delay: 0.6s;
 }
 .creator_controls .sound_visualizer .visualizer_bars .vis_bar:nth-child(5) {
-  height: 15px;
+  height: 9px;
   animation-delay: 0.8s;
 }
 .creator_controls .control_panel {
@@ -413,75 +422,27 @@ button {
   text-align: center;
 }
 .creator_controls .control_panel .control_group .control_label {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.25rem;
+  color: #FFFFFF;
   margin-bottom: 15px;
 }
 .creator_controls .control_panel .control_group .random_btn {
-  width: 60px;
-  height: 40px;
-  background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background-color: transparent;
   cursor: pointer;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 4px;
-  padding: 10px;
-  transition: all 0.3s ease;
 }
-.creator_controls .control_panel .control_group .random_btn:hover {
-  border-color: #F18888;
+.creator_controls .control_panel .control_group .random_btn:hover svg {
+  fill: #F18888;
 }
-.creator_controls .control_panel .control_group .random_btn .dot {
-  width: 8px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  display: block;
+.creator_controls .control_panel .control_group .random_btn:hover svg circle {
+  fill: #fff;
 }
 .creator_controls .control_panel .control_group .sound_toggle {
-  width: 60px;
-  height: 40px;
-  background: #F18888;
-  border: 2px solid #F18888;
-  color: #181A1B;
-  font-size: 0.875rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.creator_controls .control_panel .control_group .sound_toggle:hover {
-  background: transparent;
-  color: #F18888;
+  border: solid 3px #F18888;
 }
 .creator_controls .control_panel .control_group .sound_toggle.playing {
   background: transparent;
   color: #F18888;
 }
 .creator_controls .control_panel .control_group .share_btn {
-  width: 60px;
-  height: 40px;
-  background: #F18888;
-  border: 2px solid #F18888;
-  color: #181A1B;
-  font-size: 0.875rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.creator_controls .control_panel .control_group .share_btn:hover {
-  background: transparent;
-  color: #F18888;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 0.6;
-    transform: scaleY(0.8);
-  }
-  50% {
-    opacity: 1;
-    transform: scaleY(1);
-  }
+  border: solid 3px #F18888;
 }
