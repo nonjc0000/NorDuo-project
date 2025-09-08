@@ -3,6 +3,7 @@
 
 .sound_creator_content_wrap {
     height: $h-80vh;
+    margin-bottom: $spacing-xxxl;
 
     @extend %flex-space-between;
 
