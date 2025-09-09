@@ -3,13 +3,19 @@ body, .creator_controls .sound_selection .sound_numbers .sound_btn, .creator_con
   font-family: "Roboto Mono", "Noto Sans TC", san-serif;
 }
 
-.sound_creator_content_wrap {
+.hero_content .deco_top .deco_rec {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero_content .deco_bottom, .sound_creator_content_wrap {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.sound_creator_content_wrap .sound_deco_left {
+.hero_content .deco_bottom .deco_slogan, .sound_creator_content_wrap .sound_deco_left {
   display: flex;
   flex-direction: column;
 }
@@ -446,4 +452,112 @@ button {
 }
 .creator_controls .control_panel .control_group .share_btn {
   border: solid 3px #F18888;
+}
+
+.hero_section_wrap {
+  width: 100%;
+  height: 100vh;
+  padding: 50px 0;
+}
+
+.hero_content {
+  position: relative;
+  height: 100%;
+}
+.hero_content .hero_vid {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.2);
+  margin: 0 auto;
+  mask-image: linear-gradient(#fff 85%, #000 92%);
+}
+.hero_content .deco_top {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  padding: 30px;
+  z-index: 1;
+}
+.hero_content .deco_top .deco_arrow {
+  position: absolute;
+  left: -15px;
+  max-width: 155px;
+  transition: all 0.3s ease;
+}
+.hero_content .deco_top .deco_arrow:hover {
+  transform: translateX(-5px);
+  filter: brightness(1.2);
+}
+.hero_content .deco_top .deco_rec {
+  gap: 15px;
+}
+.hero_content .deco_top .deco_rec .rec_dot {
+  max-width: 45px;
+}
+.hero_content .deco_top .deco_rec .rec_text {
+  font-size: 2.5rem;
+  color: #F18888;
+}
+.hero_content .deco_bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  align-items: flex-end;
+  padding: 30px 30px 30px 0;
+  z-index: 1;
+}
+.hero_content .deco_bottom .deco_slogan {
+  position: relative;
+  gap: 20px;
+  padding-bottom: 1rem;
+}
+.hero_content .deco_bottom .deco_slogan .slogan_line {
+  position: relative;
+  z-index: 2;
+  font-size: 3.75rem;
+  color: #FFFFFF;
+  margin: 0;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+.hero_content .deco_bottom .deco_slogan .slogan_line:first-child {
+  margin-bottom: 30px;
+}
+.hero_content .deco_bottom .deco_slogan .slogan_decoration {
+  max-width: 350px;
+  position: absolute;
+  left: 3rem;
+  bottom: 2rem;
+}
+.hero_content .deco_bottom .deco_slogan .slogan_decoration .decoration_lines img {
+  filter: drop-shadow(0 0 4px rgba(241, 136, 136, 0.3));
+  opacity: 0.8;
+}
+.hero_content .deco_bottom .deco_battery {
+  text-align: right;
+}
+.hero_content .deco_bottom .deco_battery .battery_label {
+  font-size: 1.75rem;
+  color: #F18888;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+.hero_content .deco_bottom .deco_battery .battery_indicator {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+}
+.hero_content .deco_bottom .deco_battery .battery_indicator .battery_bar {
+  width: 15px;
+  height: 28px;
+  background: #F18888;
+  border-radius: 999px;
+}
+.hero_content .deco_bottom .deco_battery .battery_indicator .battery_bar:nth-child(n+5) {
+  background-color: #adb5bd;
+  opacity: 0.3;
 }

@@ -2,7 +2,7 @@ import React from 'react'
 
 const HeroSection = () => {
   return (
-    <div className='hero_section_wrap'>
+    <section className='hero_section_wrap'>
       <div className='hero_content'>
         <video src="./videos/band_performance.mp4" autoPlay loop muted playsInline className='hero_vid' />
         
@@ -42,7 +42,7 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 
