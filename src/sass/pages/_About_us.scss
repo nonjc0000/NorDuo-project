@@ -2,14 +2,14 @@
 @use '../functions/' as *;
 
 .About_us_wrap {
-    border: solid 2px blue;
+    // border: solid 2px blue;
     width: $w-100;
     height: 100vh;
     padding: $spacing-xxxl 0;
 }
 
 .About_us_content {
-    border: solid 2px red;
+    // border: solid 2px red;
     width: $w-100;
     height: 100%;
     padding: 0 $spacing-xxxxl;
@@ -18,7 +18,7 @@
 
 .slogan_box {
     position: relative;
-    border: solid 2px green;
+    // border: solid 2px green;
     width: 40%;
     margin-bottom: $spacing-xxxl;
     // padding: 0 6%;
@@ -44,7 +44,7 @@
 }
 
 .about_info_box {
-    border: solid 2px yellow;
+    // border: solid 2px yellow;
     width: 60%;
     height: 100%;
     display: flex;
@@ -86,6 +86,10 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+
+            img {
+                mask-image: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgba(0, 0, 0, 0.6) 80%);
+            }
 
         }
 
@@ -163,6 +167,10 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+
+            img {
+                mask-image: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgba(0, 0, 0, 0.6) 80%);
+            }
         }
 
         .artist2_deco_bottom {
@@ -178,7 +186,7 @@
         }
 
         a {
-           position: absolute;
+            position: absolute;
             bottom: 42px;
             right: -23px;
             z-index: 1;
