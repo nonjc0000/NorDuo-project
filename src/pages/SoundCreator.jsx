@@ -17,9 +17,9 @@ const SoundCreator = () => {
     return (
         <div className='sound_creator_content_wrap'>
             <div className='sound_deco_left'>
-                <img src="./images/SoundCreator/left-deco1.svg" alt="" />
-                <img src="./images/SoundCreator/left-deco2.svg" alt="" />
-                <img src="./images/SoundCreator/left-deco3.svg" alt="" />
+                <img className='left1' src="./images/SoundCreator/left-deco1.svg" alt="" />
+                <img className='left2' src="./images/SoundCreator/left-deco2.svg" alt="" />
+                <img className='left3' src="./images/SoundCreator/left-deco3.svg" alt="" />
             </div>
             <div className='sound_creator_wrap'>
                 <div className='creator_header'>

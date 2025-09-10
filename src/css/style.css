@@ -9,7 +9,7 @@ body, .creator_controls .sound_selection .sound_numbers .sound_btn, .creator_con
   align-items: center;
 }
 
-.hero_content .deco_bottom, .sound_creator_content_wrap {
+.About_us_content, .hero_content .deco_bottom, .sound_creator_content_wrap {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -153,6 +153,8 @@ ol {
 img {
   display: block;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 a {
@@ -280,13 +282,21 @@ button {
 }
 
 .sound_creator_content_wrap {
-  height: 80vh;
-  margin-bottom: 50px;
+  height: 83vh;
+  margin-bottom: 25px;
 }
 .sound_creator_content_wrap .sound_deco_left {
   justify-content: space-between;
   width: 3.5%;
   height: 100%;
+}
+.sound_creator_content_wrap .sound_deco_left .left1, .sound_creator_content_wrap .sound_deco_left .left3 {
+  width: 100%;
+  height: 7%;
+  object-fit: contain;
+}
+.sound_creator_content_wrap .sound_deco_left .left2 {
+  height: 22%;
 }
 .sound_creator_content_wrap .sound_deco_right {
   width: 3.5%;
@@ -560,4 +570,186 @@ button {
 .hero_content .deco_bottom .deco_battery .battery_indicator .battery_bar:nth-child(n+5) {
   background-color: #adb5bd;
   opacity: 0.3;
+}
+
+.About_us_wrap {
+  border: solid 2px blue;
+  width: 100%;
+  height: 100vh;
+  padding: 50px 0;
+}
+
+.About_us_content {
+  border: solid 2px red;
+  width: 100%;
+  height: 100%;
+  padding: 0 60px;
+}
+
+.slogan_box {
+  position: relative;
+  border: solid 2px green;
+  width: 40%;
+  margin-bottom: 50px;
+}
+.slogan_box h1 {
+  position: relative;
+  z-index: 1;
+  font-size: 3.75rem;
+  color: #FFFFFF;
+  line-height: 100%;
+}
+.slogan_box img {
+  position: absolute;
+  top: 1.8rem;
+  left: 1.8rem;
+  max-width: 350px;
+  height: 45px;
+  filter: drop-shadow(0 0 4px rgba(241, 136, 136, 0.3));
+  opacity: 0.8;
+}
+
+.about_info_box {
+  border: solid 2px yellow;
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.upper_info_box {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  gap: 10%;
+  position: relative;
+}
+.upper_info_box .artist1_box {
+  position: relative;
+  width: 40%;
+  min-width: 305px;
+  height: 90%;
+  min-height: 350px;
+  border: 0.5px solid #fff;
+  padding: 15px;
+}
+.upper_info_box .artist1_box .artist1_deco {
+  position: absolute;
+  top: 45px;
+  left: -85px;
+  z-index: 1;
+  max-width: 230px;
+}
+.upper_info_box .artist1_box .artist1_deco img {
+  filter: drop-shadow(0 0 3px rgba(241, 136, 136, 0.4));
+}
+.upper_info_box .artist1_box .artist1_img {
+  border: 2px solid #fff;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.upper_info_box .artist1_box a {
+  position: absolute;
+  bottom: 42px;
+  right: -23px;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+}
+.upper_info_box .artist1_box a:hover span {
+  transform: translateX(2px);
+}
+.upper_info_box .artist1_box a p {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #F18888;
+  padding-bottom: 2px;
+}
+.upper_info_box .artist1_box a span {
+  display: flex;
+  transition: all 0.3s ease;
+}
+.upper_info_box > p {
+  align-self: center;
+  font-size: 1.25rem;
+  color: #FFFFFF;
+  text-align: left;
+  width: 35%;
+}
+
+.bottom_info_box {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  gap: 15%;
+  position: relative;
+}
+.bottom_info_box .artist2_box {
+  position: relative;
+  width: 40%;
+  min-width: 305px;
+  height: 90%;
+  min-height: 350px;
+  border: 0.5px solid #fff;
+  padding: 15px;
+  order: 2;
+}
+.bottom_info_box .artist2_box .artist2_deco_top {
+  position: absolute;
+  top: 23px;
+  right: -30px;
+  z-index: 1;
+  max-width: 125px;
+}
+.bottom_info_box .artist2_box .artist2_deco_top img {
+  filter: drop-shadow(0 0 3px rgba(241, 136, 136, 0.4));
+}
+.bottom_info_box .artist2_box .artist2_img {
+  border: 2px solid #fff;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.bottom_info_box .artist2_box .artist2_deco_bottom {
+  position: absolute;
+  bottom: -16.5px;
+  left: -31px;
+  z-index: 1;
+  max-width: 95px;
+}
+.bottom_info_box .artist2_box .artist2_deco_bottom img {
+  filter: drop-shadow(0 0 3px rgba(241, 136, 136, 0.4));
+}
+.bottom_info_box .artist2_box a {
+  position: absolute;
+  bottom: 42px;
+  right: -23px;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+}
+.bottom_info_box .artist2_box a:hover span {
+  transform: translateX(2px);
+}
+.bottom_info_box .artist2_box a p {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #F18888;
+  padding-bottom: 2px;
+}
+.bottom_info_box .artist2_box a span {
+  display: flex;
+  transition: all 0.3s ease;
+}
+.bottom_info_box > p {
+  align-self: center;
+  font-size: 1.25rem;
+  color: #FFFFFF;
+  text-align: left;
+  width: 38%;
 }
