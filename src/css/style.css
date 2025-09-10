@@ -470,7 +470,7 @@ button {
   object-fit: cover;
   filter: contrast(1.2);
   margin: 0 auto;
-  mask-image: linear-gradient(#fff 85%, #000 92%);
+  mask-image: linear-gradient(#fff 70%, #000 80%);
 }
 .hero_content .deco_top {
   width: 100%;
