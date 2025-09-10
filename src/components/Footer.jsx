@@ -10,7 +10,7 @@ const Footer = () => {
         </div>
         <div className='footer_down_left'>
           <ul className='socials'>
-            <li><a className='icon-fb' href="#"></a></li> {/* 用background img寫 */}
+            <li><a className='icon-fb' href="#"></a></li> 
             <li><a className='icon-ig' href="#"></a></li>
             <li><a className='icon-spotify' href="#"></a></li>
             <li><a className='icon-soundcloud' href="#"></a></li>
