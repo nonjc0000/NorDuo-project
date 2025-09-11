@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Rubik+Glitch&display=swap");
-body, .creator_controls .sound_selection .sound_numbers .sound_btn, .creator_controls .control_panel .control_group .sound_toggle, .creator_controls .control_panel .control_group .share_btn {
+body, .Listen_on_Spotify, .more, .creator_controls .sound_selection .sound_numbers .sound_btn, .creator_controls .control_panel .control_group .sound_toggle, .creator_controls .control_panel .control_group .share_btn {
   font-family: "Roboto Mono", "Noto Sans TC", san-serif;
 }
 
@@ -9,7 +9,7 @@ body, .creator_controls .sound_selection .sound_numbers .sound_btn, .creator_con
   align-items: center;
 }
 
-.About_us_content, .hero_content .deco_bottom, .sound_creator_content_wrap {
+.latest_release_content, .About_us_content, .hero_content .deco_bottom, .sound_creator_content_wrap {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -20,7 +20,7 @@ body, .creator_controls .sound_selection .sound_numbers .sound_btn, .creator_con
   flex-direction: column;
 }
 
-.creator_controls .sound_selection .sound_numbers .sound_btn, .creator_controls .control_panel .control_group .sound_toggle, .creator_controls .control_panel .control_group .share_btn {
+.Listen_on_Spotify, .more, .creator_controls .sound_selection .sound_numbers .sound_btn, .creator_controls .control_panel .control_group .sound_toggle, .creator_controls .control_panel .control_group .share_btn {
   min-height: 36px;
   padding: 10px 20px;
   background-color: transparent;
@@ -33,7 +33,7 @@ body, .creator_controls .sound_selection .sound_numbers .sound_btn, .creator_con
   font-weight: 700;
   transition: all 0.3s ease;
 }
-.creator_controls .sound_selection .sound_numbers .sound_btn:hover, .creator_controls .control_panel .control_group .sound_toggle:hover, .creator_controls .control_panel .control_group .share_btn:hover {
+.Listen_on_Spotify:hover, .more:hover, .creator_controls .sound_selection .sound_numbers .sound_btn:hover, .creator_controls .control_panel .control_group .sound_toggle:hover, .creator_controls .control_panel .control_group .share_btn:hover {
   background: #F18888;
   color: #fff;
 }
@@ -754,4 +754,152 @@ button {
   color: #FFFFFF;
   text-align: left;
   width: 38%;
+}
+
+.latest_release_wrap {
+  width: 100%;
+  height: 100vh;
+  padding: 50px 0;
+}
+
+.latest_release_content {
+  width: 100%;
+  height: 100%;
+  padding: 0 60px;
+  align-items: flex-start;
+  gap: 60px;
+}
+
+.album_cover {
+  width: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.album_box {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1;
+}
+.album_box .album_img {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.album_box .album_img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.album_box .album_deco {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  z-index: 1;
+}
+.album_box .album_deco img {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 8px rgba(241, 136, 136, 0.4));
+}
+
+.songlist {
+  width: 55%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+
+.songlist_title {
+  margin-bottom: 40px;
+}
+.songlist_title h2 {
+  font-size: 3.75rem;
+  color: #FFFFFF;
+  margin-bottom: 15px;
+  line-height: 110%;
+}
+.songlist_title p {
+  font-size: 1.5rem;
+  color: #ced4da;
+  font-style: italic;
+}
+
+.songlist_items {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.SongCard_wrap {
+  padding: 15px 20px;
+  border-left: 3px solid transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.SongCard_wrap:hover {
+  border-left-color: #F18888;
+  background: rgba(241, 136, 136, 0.05);
+  transform: translateX(5px);
+}
+.SongCard_wrap h3 {
+  font-size: 1.25rem;
+  color: #FFFFFF;
+  font-weight: 400;
+  margin: 0;
+}
+.SongCard_wrap h3::after {
+  content: attr(data-duration);
+  float: right;
+  color: #adb5bd;
+  font-size: 1rem;
+}
+
+.btn_box {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.Listen_on_Spotify {
+  border: solid 3px #F18888;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 25px;
+  font-size: 1rem;
+}
+.Listen_on_Spotify svg {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+.Listen_on_Spotify svg path {
+  transition: all 0.3s ease;
+}
+.Listen_on_Spotify:hover svg path {
+  fill: #fff;
+}
+
+.more {
+  background: #F18888;
+  color: #FFFFFF;
+  padding: 15px 25px;
+  font-size: 1rem;
+}
+.more:hover {
+  background: rgb(246.3684210526, 181.6315789474, 181.6315789474);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(241, 136, 136, 0.3);
 }

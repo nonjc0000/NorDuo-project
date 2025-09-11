@@ -1,0 +1,171 @@
+@use '../variables/' as *;
+@use '../functions/' as *;
+
+.latest_release_wrap {
+    width: $w-100;
+    height: 100vh;
+    padding: $spacing-xxxl 0;
+}
+
+.latest_release_content {
+    width: $w-100;
+    height: 100%;
+    padding: 0 $spacing-xxxxl;
+    @extend %flex-space-between;
+    align-items: flex-start;
+    gap: $spacing-xxxxl;
+}
+
+.album_cover {
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.album_box {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 1;
+
+    .album_img {
+        width: 100%;
+        height: 100%;
+        border-radius: $rad-basic;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .album_deco {
+        position: absolute;
+        bottom: -$spacing-md;
+        right: -$spacing-md;
+        width: 120px;
+        height: 120px;
+        z-index: 1;
+
+        img {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 8px rgba($accent, 0.4));
+        }
+    }
+}
+
+.songlist {
+    width: 55%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: $spacing-md 0;
+}
+
+.songlist_title {
+    margin-bottom: $spacing-xxl;
+
+    h2 {
+        font-size: $f-s-display;
+        color: $text;
+        margin-bottom: $spacing-sm;
+        line-height: 110%;
+    }
+
+    p {
+        font-size: $f-s-xl;
+        color: $gray-400;
+        font-style: italic;
+    }
+}
+
+.songlist_items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    margin-bottom: $spacing-xxl;
+}
+
+.SongCard_wrap {
+    padding: $spacing-sm $spacing-md;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+        border-left-color: $accent;
+        background: rgba($accent, 0.05);
+        transform: translateX(5px);
+    }
+
+    h3 {
+        font-size: $f-s-lg;
+        color: $text;
+        font-weight: $f-w-r;
+        margin: 0;
+
+        &::after {
+            content: attr(data-duration);
+            float: right;
+            color: $gray-500;
+            font-size: $f-s-md;
+        }
+    }
+}
+
+.btn_box {
+    display: flex;
+    gap: $spacing-md;
+    align-items: center;
+}
+
+.Listen_on_Spotify {
+    @extend %btn-style-basic;
+    @include bordered;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-sm $spacing-lg;
+    font-size: $f-s-md;
+
+    svg {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        // filter: brightness(0) saturate(100%) invert(56%) sepia(65%) saturate(3551%) hue-rotate(326deg) brightness(96%) contrast(91%);
+
+        path{
+            transition: all 0.3s ease;
+        }
+
+    }
+
+    &:hover {
+
+        svg path{
+            fill: $white;
+        }
+    }
+}
+
+.more {
+    @extend %btn-style-basic;
+    background: $accent;
+    color: $text;
+    padding: $spacing-sm $spacing-lg;
+    font-size: $f-s-md;
+
+    &:hover {
+        background: lighten($accent, 10%);
+        color: $text;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba($accent, 0.3);
+    }
+}
