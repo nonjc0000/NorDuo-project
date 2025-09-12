@@ -129,7 +129,7 @@
         width: 24px;
         height: 24px;
         background-color: transparent;
-        background-image: url('./images/Latest_release/play_icon.svg');
+        background-image: url('/images/Latest_release/play_icon.svg');
         background-repeat: no-repeat;
         background-position: center;
         cursor: pointer;
@@ -137,11 +137,11 @@
         flex-shrink: 0;
 
         &:hover {
-            background-image: url('./images/Latest_release/play_icon_hover.svg');
+            background-image: url('/images/Latest_release/play_icon_hover.svg');
         }
 
         &:active {
-            background-image: url('./images/Latest_release/pause_icon.svg');
+            background-image: url('/images/Latest_release/pause_icon.svg');
         }
     }
 

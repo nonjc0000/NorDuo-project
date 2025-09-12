@@ -890,7 +890,7 @@ button {
   width: 24px;
   height: 24px;
   background-color: transparent;
-  background-image: url("./images/Latest_release/play_icon.svg");
+  background-image: url("/images/Latest_release/play_icon.svg");
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
@@ -898,10 +898,10 @@ button {
   flex-shrink: 0;
 }
 .SongCard_wrap .play_btn:hover {
-  background-image: url("./images/Latest_release/play_icon_hover.svg");
+  background-image: url("/images/Latest_release/play_icon_hover.svg");
 }
 .SongCard_wrap .play_btn:active {
-  background-image: url("./images/Latest_release/pause_icon.svg");
+  background-image: url("/images/Latest_release/pause_icon.svg");
 }
 .SongCard_wrap .text_box {
   flex: 1;
@@ -1071,7 +1071,7 @@ button {
   right: -30px;
   width: 85%;
   height: 85%;
-  background-image: url("./images/Learning/card1_guitar.svg");
+  background-image: url("/images/Learning/card1_guitar.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -1094,7 +1094,7 @@ button {
   right: -30px;
   width: 80%;
   height: 80%;
-  background-image: url("./images/Learning/card2_note.svg");
+  background-image: url("/images/Learning/card2_note.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
