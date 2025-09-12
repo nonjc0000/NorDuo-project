@@ -4,8 +4,9 @@
 .sound_creator_content_wrap {
     height: 83vh;
     margin-bottom: $spacing-lg;
-
-    @extend %flex-space-between;
+    display: flex;
+    justify-content: center;
+    gap: $spacing-xs;
 
     .sound_deco_left {
         @extend %flex-column;
@@ -13,13 +14,14 @@
         width: 3.5%;
         height: 100%;
 
-        .left1, .left3{
+        .left1,
+        .left3 {
             width: 100%;
             height: 7%;
             object-fit: contain;
         }
 
-        .left2{
+        .left2 {
             height: 22%;
         }
     }
@@ -30,6 +32,7 @@
 
         img {
             height: 100%;
+            object-fit: contain;
         }
     }
 
@@ -39,7 +42,6 @@
 .sound_creator_wrap {
     width: 90%;
     height: 100%;
-    // background: #1a1a1a;
     padding: $spacing-xs $spacing-xxxl $spacing-xxxl;
     background-image: url('/images/SoundCreator/hud-bg.png');
     background-position: center;
@@ -138,7 +140,6 @@
         .sound_numbers {
             display: flex;
             gap: $spacing-sm;
-            // margin-bottom: $spacing-lg;
 
             .sound_btn {
                 @extend %btn-style-basic;
@@ -213,10 +214,25 @@
             .random_btn {
                 background-color: transparent;
                 cursor: pointer;
+                // transition: all .3s ease;
+
+                rect{
+                    stroke: $accent;
+                }
+
+                circle{
+                    fill: $accent;
+                    transition: all .2s ease
+                }
+
+                svg{
+                    transition: all .3s ease;
+                }
 
                 &:hover {
 
                     svg {
+
                         fill: $accent;
 
                         circle {

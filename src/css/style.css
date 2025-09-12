@@ -3,7 +3,8 @@ body, .Listen_on_Spotify, .more, .creator_controls .sound_selection .sound_numbe
   font-family: "Roboto Mono", "Noto Sans TC", san-serif;
 }
 
-.learning_content_box .text_box .desc_box p, .songlist_title p, .upper_info_box > p, .bottom_info_box > p, .hero_content .deco_top .deco_rec .rec_text, .hero_content .deco_bottom .deco_battery .battery_label, .creator_header .datetime_info .datetime, .creator_header .datetime_info .earth_date, .creator_header .creation_status .creating_title, .creator_header .creation_status .file_info, .creator_controls .sound_selection .selection_title, .creator_controls .control_panel .control_group .control_label, .creator_controls .control_panel .control_group .sound_toggle, .creator_controls .control_panel .control_group .share_btn, .footer_left small, .nav_item a {
+.learning_content_box .text_box .desc_box p, .card1 p,
+.card2 p, .songlist_title p, .upper_info_box > p, .bottom_info_box > p, .hero_content .deco_top .deco_rec .rec_text, .hero_content .deco_bottom .deco_battery .battery_label, .creator_header .datetime_info .datetime, .creator_header .datetime_info .earth_date, .creator_header .creation_status .creating_title, .creator_header .creation_status .file_info, .creator_controls .sound_selection .selection_title, .creator_controls .control_panel .control_group .control_label, .creator_controls .control_panel .control_group .sound_toggle, .creator_controls .control_panel .control_group .share_btn, .footer_left small, .nav_item a {
   line-height: 150%;
   letter-spacing: 0.1em;
 }
@@ -14,7 +15,7 @@ body, .Listen_on_Spotify, .more, .creator_controls .sound_selection .sound_numbe
   align-items: center;
 }
 
-.About_us_content, .hero_content .deco_bottom, .sound_creator_content_wrap {
+.About_us_content, .hero_content .deco_bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -290,13 +291,17 @@ button {
 .sound_creator_content_wrap {
   height: 83vh;
   margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 .sound_creator_content_wrap .sound_deco_left {
   justify-content: space-between;
   width: 3.5%;
   height: 100%;
 }
-.sound_creator_content_wrap .sound_deco_left .left1, .sound_creator_content_wrap .sound_deco_left .left3 {
+.sound_creator_content_wrap .sound_deco_left .left1,
+.sound_creator_content_wrap .sound_deco_left .left3 {
   width: 100%;
   height: 7%;
   object-fit: contain;
@@ -310,6 +315,7 @@ button {
 }
 .sound_creator_content_wrap .sound_deco_right img {
   height: 100%;
+  object-fit: contain;
 }
 
 .sound_creator_wrap {
@@ -451,6 +457,16 @@ button {
 .creator_controls .control_panel .control_group .random_btn {
   background-color: transparent;
   cursor: pointer;
+}
+.creator_controls .control_panel .control_group .random_btn rect {
+  stroke: #F18888;
+}
+.creator_controls .control_panel .control_group .random_btn circle {
+  fill: #F18888;
+  transition: all 0.2s ease;
+}
+.creator_controls .control_panel .control_group .random_btn svg {
+  transition: all 0.3s ease;
 }
 .creator_controls .control_panel .control_group .random_btn:hover svg {
   fill: #F18888;
@@ -767,8 +783,9 @@ button {
 
 .latest_release_wrap {
   width: 100%;
-  height: 90vh;
+  height: 100vh;
   padding: 50px 0;
+  margin-top: 50px;
 }
 
 .latest_release_content {
@@ -832,7 +849,8 @@ button {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 50px;
 }
 
 .songlist_title h2 {
@@ -952,18 +970,16 @@ button {
 }
 
 .learning_wrap {
-  border: solid 3px #F18888;
   width: 100%;
   height: 100vh;
   position: relative;
-  overflow: hidden;
 }
 .learning_wrap .bg_triangle {
   position: absolute;
   top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
+  right: -3rem;
+  width: 99vw;
+  height: 100vh;
   z-index: -1;
 }
 .learning_wrap .bg_triangle polygon {
@@ -972,6 +988,7 @@ button {
 
 .learning_content_box {
   width: 100%;
+  height: 100%;
   padding: 60px;
   display: flex;
   flex-direction: column;
@@ -981,11 +998,11 @@ button {
 }
 .learning_content_box .text_box {
   position: relative;
-  border: solid 3px #F18888;
   width: 100%;
+  height: 80%;
 }
 .learning_content_box .text_box h1 {
-  margin: 80px 0;
+  margin: 50px 0 80px;
   font-size: 3.75rem;
   font-weight: 400;
   letter-spacing: 0.1em;
@@ -1001,36 +1018,26 @@ button {
 .learning_content_box .text_box .desc_box p {
   font-size: 1.25rem;
   color: #FFFFFF;
-  margin-bottom: 15px;
-}
-.learning_content_box .text_box .desc_box p:last-child {
-  margin-top: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.learning_content_box .text_box .desc_box p:last-child:hover {
-  color: #F18888;
-  transform: translateX(5px);
+  margin-bottom: 40px;
 }
 
 .card_box {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  gap: 30px;
+  gap: 5%;
   position: absolute;
-  top: 80%;
+  top: 55%;
   right: 0;
   width: 100%;
-  height: 43vh;
+  height: min(80%, 48vh);
   max-height: 390px;
 }
 
 .card1,
 .card2 {
   position: relative;
-  width: 280px;
+  width: 30%;
   height: 100%;
   border-radius: 15px;
   padding: 30px;
@@ -1044,8 +1051,6 @@ button {
   z-index: 2;
   font-size: 1.75rem;
   font-weight: 400;
-  line-height: 110%;
-  margin: 0;
 }
 .card1:hover,
 .card2:hover {
@@ -1055,18 +1060,18 @@ button {
 
 .card1 {
   background: #fff;
-  border: 3px solid #F18888;
+  border: solid 3px #F18888;
 }
 .card1 p {
   color: #F18888;
 }
 .card1 .card1_img {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
-  width: 120px;
-  height: 120px;
-  background-image: url("./images/Learning/guitar_icon.svg");
+  bottom: -30px;
+  right: -30px;
+  width: 85%;
+  height: 85%;
+  background-image: url("./images/Learning/card1_guitar.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -1074,46 +1079,28 @@ button {
   z-index: 1;
 }
 .card1:hover .card1_img {
-  background-image: url("./images/Learning/guitar_icon_hover.svg");
   transform: scale(1.1) rotate(5deg);
 }
 
 .card2 {
   background: #F18888;
-  border: 3px solid #F18888;
 }
 .card2 p {
   color: #fff;
 }
 .card2 .card2_img {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
-  width: 120px;
-  height: 120px;
-  background-image: url("./images/Learning/music_theory_icon.svg");
+  bottom: -30px;
+  right: -30px;
+  width: 80%;
+  height: 80%;
+  background-image: url("./images/Learning/card2_note.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   transition: all 0.3s ease;
   z-index: 1;
 }
-.card2 .card2_img::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url("./images/Learning/music_lines.svg") no-repeat;
-  background-size: contain;
-  opacity: 0.3;
-}
 .card2:hover .card2_img {
-  background-image: url("./images/Learning/music_theory_icon_hover.svg");
   transform: scale(1.1) rotate(-5deg);
-}
-.card2:hover .card2_img::before {
-  opacity: 0.6;
-  transform: scale(1.2);
 }

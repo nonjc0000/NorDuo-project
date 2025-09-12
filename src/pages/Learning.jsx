@@ -7,6 +7,7 @@ const Learning = () => {
                 <polygon points="100,0 100,100 0,100" fill='none' />
             </svg>
 
+
             <div className="learning_content_box">
                 <div className="text_box">
                     <h1><span>Learn</span> with us!</h1>
