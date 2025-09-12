@@ -8,7 +8,7 @@ const SongCard = () => {
                 <h3>Songtitle</h3>
                 <p>desc</p>
             </div>
-            <p>times</p>
+            <p>3:52</p>
         </div>
     )
 }
