@@ -19,18 +19,19 @@
 
     .slogan {
         font-size: $f-s-display;
+        letter-spacing: $letter-spacing-basic;
 
         p {
             margin-bottom: $spacing-xxxl;
         }
     }
 
-    .socials{
+    .socials {
         display: flex;
         margin-bottom: $spacing-sm;
 
         $icons: fb, ig, spotify, soundcloud, yt;
-    
+
         @each $icon in $icons {
             .icon-#{$icon} {
                 width: 50px;
@@ -38,25 +39,28 @@
                 margin-right: $spacing-xl;
                 background: url('/images/Footer/#{$icon}.svg') no-repeat center;
                 background-size: contain;
-    
+
                 &:hover {
                     filter: brightness(0.8);
                 }
             }
-        };
+        }
+
+        ;
     }
 
 
-    small{
+    small {
         font-size: $f-s-xs;
+        @extend %line_height_letter_spacing;
     }
 }
 
 .footer_right {
-    .arrow{
+    .arrow {
         transition: transform 0.3s ease;
 
-        &:hover{
+        &:hover {
             cursor: pointer;
             transform: translateY(-10px);
         }

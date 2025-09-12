@@ -21,6 +21,7 @@
 .nav_item a{
     margin-left: $spacing-lg;
     font-size: $f-s-lg;
+    @extend %line_height_letter_spacing;
 
     &:hover {
         color: $accent;

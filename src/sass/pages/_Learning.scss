@@ -16,7 +16,7 @@
         height: 100%;
         z-index: -1;
 
-        polygon{
+        polygon {
             fill: $gray-bg;
         }
     }
@@ -24,7 +24,7 @@
 
 .learning_content_box {
     width: $w-100;
-    height: 100%;
+    // height: 100%;
     padding: $spacing-xxxxl;
     display: flex;
     flex-direction: column;
@@ -33,6 +33,7 @@
     z-index: 1;
 
     .text_box {
+        position: relative;
         @include bordered;
         width: 100%;
 
@@ -74,134 +75,136 @@
     }
 }
 
-
-.card_box {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    gap: $spacing-xl;
-    position: relative;
-    width: 100%;
-    height: 350px;
-
-    &::before {
-        content: 'Click me';
+    .card_box {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        gap: $spacing-xl;
         position: absolute;
-        bottom: -50px;
-        right: 200px;
-        font-size: $f-s-lg;
-        color: $text;
-        transform: rotate(-15deg);
-        letter-spacing: $letter-spacing-basic;
+        top: 80%;
+        right: 0;
+        width: 100%;
+        height: 43vh;
+        max-height: 390px;
+
+        // &::before {
+        //     content: 'Click me';
+        //     position: absolute;
+        //     bottom: -50px;
+        //     right: 200px;
+        //     font-size: $f-s-lg;
+        //     color: $text;
+        //     transform: rotate(-15deg);
+        //     letter-spacing: $letter-spacing-basic;
+        // }
+
+        // &::after {
+        //     content: 'Click me';
+        //     position: absolute;
+        //     bottom: -50px;
+        //     right: 50px;
+        //     font-size: $f-s-lg;
+        //     color: $text;
+        //     transform: rotate(-15deg);
+        //     letter-spacing: $letter-spacing-basic;
+        // }
     }
 
-    &::after {
-        content: 'Click me';
-        position: absolute;
-        bottom: -50px;
-        right: 50px;
-        font-size: $f-s-lg;
-        color: $text;
-        transform: rotate(-15deg);
-        letter-spacing: $letter-spacing-basic;
-    }
-}
-
-.card1,
-.card2 {
-    position: relative;
-    width: 280px;
-    height: 280px;
-    border-radius: $rad-basic;
-    padding: $spacing-xl;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    overflow: hidden;
-
-    p {
+    .card1,
+    .card2 {
         position: relative;
-        z-index: 2;
-        font-size: $f-s-xxl;
-        font-weight: $f-w-r;
-        line-height: 110%;
-        margin: 0;
-    }
-
-    &:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 40px rgba($accent, 0.2);
-    }
-}
-
-.card1 {
-    background: $white;
-    border: 3px solid $accent;
-
-    p {
-        color: $accent;
-    }
-
-    .card1_img {
-        position: absolute;
-        bottom: $spacing-md;
-        right: $spacing-md;
-        width: 120px;
-        height: 120px;
-        background-image: url('./images/Learning/guitar_icon.svg');
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: contain;
+        width: 280px;
+        height: 100%;
+        border-radius: $rad-basic;
+        padding: $spacing-xl;
+        cursor: pointer;
         transition: all 0.3s ease;
-        z-index: 1;
+        overflow: hidden;
+
+        p {
+            position: relative;
+            z-index: 2;
+            font-size: $f-s-xxl;
+            font-weight: $f-w-r;
+            line-height: 110%;
+            margin: 0;
+        }
+
+        &:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba($accent, 0.2);
+        }
     }
 
-    &:hover .card1_img {
-        background-image: url('./images/Learning/guitar_icon_hover.svg');
-        transform: scale(1.1) rotate(5deg);
-    }
-}
+    .card1 {
+        background: $white;
+        border: 3px solid $accent;
 
-.card2 {
-    background: $accent;
-    border: 3px solid $accent;
+        p {
+            color: $accent;
+        }
 
-    p {
-        color: $white;
-    }
-
-    .card2_img {
-        position: absolute;
-        bottom: $spacing-md;
-        right: $spacing-md;
-        width: 120px;
-        height: 120px;
-        background-image: url('./images/Learning/music_theory_icon.svg');
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: contain;
-        transition: all 0.3s ease;
-        z-index: 1;
-
-        &::before {
-            content: '';
+        .card1_img {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('./images/Learning/music_lines.svg') no-repeat;
+            bottom: $spacing-md;
+            right: $spacing-md;
+            width: 120px;
+            height: 120px;
+            background-image: url('./images/Learning/guitar_icon.svg');
+            background-repeat: no-repeat;
+            background-position: center;
             background-size: contain;
-            opacity: 0.3;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        &:hover .card1_img {
+            background-image: url('./images/Learning/guitar_icon_hover.svg');
+            transform: scale(1.1) rotate(5deg);
         }
     }
 
-    &:hover .card2_img {
-        background-image: url('./images/Learning/music_theory_icon_hover.svg');
-        transform: scale(1.1) rotate(-5deg);
+    .card2 {
+        background: $accent;
+        border: 3px solid $accent;
 
-        &::before {
-            opacity: 0.6;
-            transform: scale(1.2);
+        p {
+            color: $white;
+        }
+
+        .card2_img {
+            position: absolute;
+            bottom: $spacing-md;
+            right: $spacing-md;
+            width: 120px;
+            height: 120px;
+            background-image: url('./images/Learning/music_theory_icon.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            transition: all 0.3s ease;
+            z-index: 1;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url('./images/Learning/music_lines.svg') no-repeat;
+                background-size: contain;
+                opacity: 0.3;
+            }
+        }
+
+        &:hover .card2_img {
+            background-image: url('./images/Learning/music_theory_icon_hover.svg');
+            transform: scale(1.1) rotate(-5deg);
+
+            &::before {
+                opacity: 0.6;
+                transform: scale(1.2);
+            }
         }
     }
-}

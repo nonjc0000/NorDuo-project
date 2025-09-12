@@ -3,7 +3,7 @@ body, .Listen_on_Spotify, .more, .creator_controls .sound_selection .sound_numbe
   font-family: "Roboto Mono", "Noto Sans TC", san-serif;
 }
 
-.learning_content_box .text_box .desc_box p {
+.learning_content_box .text_box .desc_box p, .songlist_title p, .upper_info_box > p, .bottom_info_box > p, .hero_content .deco_top .deco_rec .rec_text, .hero_content .deco_bottom .deco_battery .battery_label, .creator_header .datetime_info .datetime, .creator_header .datetime_info .earth_date, .creator_header .creation_status .creating_title, .creator_header .creation_status .file_info, .creator_controls .sound_selection .selection_title, .creator_controls .control_panel .control_group .control_label, .creator_controls .control_panel .control_group .sound_toggle, .creator_controls .control_panel .control_group .share_btn, .footer_left small, .nav_item a {
   line-height: 150%;
   letter-spacing: 0.1em;
 }
@@ -216,6 +216,7 @@ button {
 }
 .footer_left .slogan {
   font-size: 3.75rem;
+  letter-spacing: 0.1em;
 }
 .footer_left .slogan p {
   margin-bottom: 50px;
@@ -366,13 +367,12 @@ button {
   color: #F18888;
   margin-bottom: 10px;
   border: 3px solid #F18888;
-  padding: 15px 20px;
+  padding: 10px 20px;
   border-radius: 5px;
 }
 .creator_header .creation_status .file_info {
   font-size: 1.25rem;
   color: #F18888;
-  margin-top: 15px;
 }
 
 .creator_controls {
@@ -389,7 +389,7 @@ button {
 .creator_controls .sound_selection .selection_title {
   font-size: 1.25rem;
   color: #F18888;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 .creator_controls .sound_selection .sound_numbers {
   display: flex;
@@ -446,7 +446,7 @@ button {
 .creator_controls .control_panel .control_group .control_label {
   font-size: 1.25rem;
   color: #FFFFFF;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 .creator_controls .control_panel .control_group .random_btn {
   background-color: transparent;
@@ -538,6 +538,7 @@ button {
   color: #FFFFFF;
   margin: 0;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.1em;
 }
 .hero_content .deco_bottom .deco_slogan .slogan_line:first-child {
   margin-bottom: 30px;
@@ -558,7 +559,7 @@ button {
 .hero_content .deco_bottom .deco_battery .battery_label {
   font-size: 1.75rem;
   color: #F18888;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 .hero_content .deco_bottom .deco_battery .battery_indicator {
@@ -600,11 +601,12 @@ button {
   font-size: 3.75rem;
   color: #FFFFFF;
   line-height: 100%;
+  letter-spacing: 0.1em;
 }
 .slogan_box img {
   position: absolute;
   top: 1.8rem;
-  left: 1.8rem;
+  left: 4.5rem;
   max-width: 350px;
   height: 45px;
   filter: drop-shadow(0 0 4px rgba(241, 136, 136, 0.3));
@@ -671,6 +673,7 @@ button {
   font-weight: 700;
   color: #F18888;
   padding-bottom: 2px;
+  letter-spacing: 0.1em;
 }
 .upper_info_box .artist1_box a span {
   display: flex;
@@ -688,7 +691,7 @@ button {
   width: 100%;
   height: 50%;
   display: flex;
-  gap: 15%;
+  gap: 12%;
   position: relative;
 }
 .bottom_info_box .artist2_box {
@@ -748,6 +751,7 @@ button {
   font-weight: 700;
   color: #F18888;
   padding-bottom: 2px;
+  letter-spacing: 0.1em;
 }
 .bottom_info_box .artist2_box a span {
   display: flex;
@@ -758,7 +762,7 @@ button {
   font-size: 1.25rem;
   color: #FFFFFF;
   text-align: left;
-  width: 38%;
+  width: 40%;
 }
 
 .latest_release_wrap {
@@ -834,6 +838,7 @@ button {
 .songlist_title h2 {
   font-size: 2rem;
   font-weight: 700;
+  letter-spacing: 0.1em;
   color: #FFFFFF;
   margin-bottom: 10px;
   text-align: center;
@@ -889,11 +894,13 @@ button {
   font-weight: 400;
   margin-bottom: 5px;
   white-space: nowrap;
+  letter-spacing: 0.1em;
 }
 .SongCard_wrap .text_box p {
   font-size: 0.875rem;
   color: #adb5bd;
   white-space: nowrap;
+  letter-spacing: 0.1em;
 }
 .SongCard_wrap > p {
   font-size: 0.875rem;
@@ -901,6 +908,7 @@ button {
   flex-shrink: 0;
   min-width: 40px;
   text-align: right;
+  letter-spacing: 0.1em;
 }
 
 .btn_box {
@@ -964,7 +972,6 @@ button {
 
 .learning_content_box {
   width: 100%;
-  height: 100%;
   padding: 60px;
   display: flex;
   flex-direction: column;
@@ -973,6 +980,7 @@ button {
   z-index: 1;
 }
 .learning_content_box .text_box {
+  position: relative;
   border: solid 3px #F18888;
   width: 100%;
 }
@@ -1011,36 +1019,19 @@ button {
   justify-content: flex-end;
   align-items: flex-end;
   gap: 30px;
-  position: relative;
+  position: absolute;
+  top: 80%;
+  right: 0;
   width: 100%;
-  height: 350px;
-}
-.card_box::before {
-  content: "Click me";
-  position: absolute;
-  bottom: -50px;
-  right: 200px;
-  font-size: 1.25rem;
-  color: #FFFFFF;
-  transform: rotate(-15deg);
-  letter-spacing: 0.1em;
-}
-.card_box::after {
-  content: "Click me";
-  position: absolute;
-  bottom: -50px;
-  right: 50px;
-  font-size: 1.25rem;
-  color: #FFFFFF;
-  transform: rotate(-15deg);
-  letter-spacing: 0.1em;
+  height: 43vh;
+  max-height: 390px;
 }
 
 .card1,
 .card2 {
   position: relative;
   width: 280px;
-  height: 280px;
+  height: 100%;
   border-radius: 15px;
   padding: 30px;
   cursor: pointer;

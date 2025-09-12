@@ -30,12 +30,13 @@
         color: $text;
         // margin-bottom: $spacing-xl;
         line-height: 100%;
+        letter-spacing: $letter-spacing-basic;
     }
 
     img {
         position: absolute;
         top: 1.8rem;
-        left: 1.8rem;
+        left: 4.5rem;
         max-width: 350px;
         height: 45px;
         filter: drop-shadow(0 0 4px rgba($accent, 0.3));
@@ -114,6 +115,7 @@
                 font-weight: $f-w-b;
                 color: $accent;
                 padding-bottom: 2px;
+                letter-spacing: $letter-spacing-basic;
             }
 
             span {
@@ -129,6 +131,7 @@
         color: $text;
         text-align: left;
         width: 35%;
+        @extend %line_height_letter_spacing;
     }
 }
 
@@ -136,7 +139,7 @@
     width: 100%;
     height: 50%;
     display: flex;
-    gap: 15%;
+    gap: 12%;
     position: relative;
 
     .artist2_box {
@@ -206,6 +209,7 @@
                 font-weight: $f-w-b;
                 color: $accent;
                 padding-bottom: 2px;
+                letter-spacing: $letter-spacing-basic;
             }
 
             span {
@@ -220,6 +224,7 @@
         font-size: $f-s-lg;
         color: $text;
         text-align: left;
-        width: 38%;
+        width: 40%;
+        @extend %line_height_letter_spacing;
     }
 }

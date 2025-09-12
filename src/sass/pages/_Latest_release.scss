@@ -87,6 +87,7 @@
     h2 {
         font-size: $f-s-xxxl;
         font-weight: $f-w-b;
+        letter-spacing: $letter-spacing-basic;
         color: $text;
         margin-bottom: $spacing-xs;
         text-align: center;
@@ -95,6 +96,7 @@
     p {
         font-size: $f-s-sm;
         color: $gray-400;
+        @extend %line_height_letter_spacing;
         // font-style: italic;
         text-align: center;
     }
@@ -150,12 +152,14 @@
             font-weight: $f-w-r;
             margin-bottom: $spacing-xxs;
             white-space: nowrap;
+            letter-spacing: $letter-spacing-basic;
         }
 
         p {
             font-size: $f-s-sm;
             color: $gray-500;
             white-space: nowrap;
+            letter-spacing: $letter-spacing-basic;
         }
     }
 
@@ -165,6 +169,7 @@
         flex-shrink: 0;
         min-width: 40px;
         text-align: right;
+        letter-spacing: $letter-spacing-basic;
     }
 }
 
