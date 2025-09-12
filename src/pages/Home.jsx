@@ -3,6 +3,7 @@ import SoundCreator from './SoundCreator';
 import HeroSection from './HeroSection';
 import About_us from './About_us';
 import Latest_release from './Latest_release';
+import Learning from './Learning';
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <HeroSection />
       <About_us />
       <Latest_release />
+      <Learning />
     </>
   )
 }

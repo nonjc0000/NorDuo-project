@@ -102,7 +102,7 @@ const SoundCreator = () => {
 
                         <div className='control_group'>
                             <h4 className='control_label'>Share</h4>
-                            <button className='share_btn'>Copy</button>
+                            <button className='share_btn'>Link</button>
                         </div>
                     </div>
                 </div>
