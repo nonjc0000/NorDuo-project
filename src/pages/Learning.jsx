@@ -2,8 +2,10 @@ import React from 'react'
 
 const Learning = () => {
     return (
-        <div className="learning_wrap">
-            <svg></svg> {/* 背景三角形 */}
+        <div className="learning_wrap">{/* 背景三角形 */}
+            <svg className="bg_triangle" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <polygon points="100,0 100,0 100,100 0,100" fill='white'/>
+            </svg>
 
             <div className="learning_content_box">
                 <div className="text_box">
@@ -18,13 +20,13 @@ const Learning = () => {
                     <div className='card1'>
                         <p>Learn<br />
                             Guitar</p>
-                            <figure className='card1_img'></figure> {/* 用bg-image切換hover */}
+                        <figure className='card1_img'></figure> {/* 用bg-image切換hover */}
                     </div>
                     <div className='card2'>
                         <p>Learn<br />
-                           Music<br />
-                           Theory</p>
-                           <figure className='card2_img'></figure>
+                            Music<br />
+                            Theory</p>
+                        <figure className='card2_img'></figure>
                     </div>
                 </div>
             </div>
