@@ -4,6 +4,11 @@
     font-family: "Roboto Mono", "Noto Sans TC", san-serif;
 }
 
+%line_height_letter_spacing {
+    line-height: 150%;
+    letter-spacing: $letter-spacing-basic;
+}
+
 %flex-center {
     display: flex;
     justify-content: center;
