@@ -4,6 +4,7 @@ import HeroSection from './HeroSection';
 import About_us from './About_us';
 import Latest_release from './Latest_release';
 import Learning from './Learning';
+import Shop from './Shop';
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <About_us />
       <Latest_release />
       <Learning />
+      <Shop/>
     </>
   )
 }
