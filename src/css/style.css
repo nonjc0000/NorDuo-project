@@ -3,7 +3,7 @@ body, .Listen_on_Spotify, .more, .creator_controls .sound_selection .sound_numbe
   font-family: "Roboto Mono", "Noto Sans TC", san-serif;
 }
 
-.tag_component, .shop_wrap .desc_box h1, .shop_wrap .desc_box > p, .shop_wrap .product_container p, .shop_wrap .categories_box > p, .shop_wrap .catagories_item h3, .learning_content_box .text_box .desc_box p, .card1 p,
+.contact_wrap .tag_component, .shop_wrap .desc_box h1, .shop_wrap .desc_box > p, .shop_wrap .product_container p, .shop_wrap .categories_box > p, .shop_wrap .catagories_item h3, .learning_content_box .text_box .desc_box p, .card1 p,
 .card2 p, .songlist_title p, .upper_info_box > p, .bottom_info_box > p, .hero_content .deco_top .deco_rec .rec_text, .hero_content .deco_bottom .deco_battery .battery_label, .creator_header .datetime_info .datetime, .creator_header .datetime_info .earth_date, .creator_header .creation_status .creating_title, .creator_header .creation_status .file_info, .creator_controls .sound_selection .selection_title, .creator_controls .control_panel .control_group .control_label, .creator_controls .control_panel .control_group .sound_toggle, .creator_controls .control_panel .control_group .share_btn, .footer_left small, .nav_item a {
   line-height: 150%;
   letter-spacing: 0.1em;
@@ -1268,16 +1268,25 @@ button {
   border-width: 0;
 }
 
-.tag_component {
+.contact_wrap {
+  border: solid 3px #F18888;
+  height: 100vh;
+  width: 100%;
+}
+.contact_wrap .falling {
+  height: 80%;
+  width: 100%;
+}
+.contact_wrap .tag_component {
   font-size: 1.75rem;
   display: inline-block;
   padding: 10px 30px;
   background-color: #F18888;
   border-radius: 999px;
 }
-.tag_component:first-child {
+.contact_wrap .tag_component:first-child {
   padding: 5px 30px;
-  background-color: transparent;
+  background-color: #fff;
   border: 5px solid #F18888;
   color: #F18888;
 }

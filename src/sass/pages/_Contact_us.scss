@@ -1,18 +1,30 @@
 @use '../variables/' as *;
 @use '../functions/' as *;
 
-.tag_component{
-    font-size: $f-s-xxl;
-    @extend %line_height_letter_spacing;
-    display: inline-block;
-    padding: $spacing-xs $spacing-xl;
-    background-color: $accent;
-    border-radius: $rad-ex;
+.contact_wrap {
+    @include bordered;
+    height: 100vh;
+    width: 100%;
 
-    &:first-child{
-        padding: calc($spacing-xs - 5px) $spacing-xl;
-        background-color: transparent;
-        border: 5px solid $accent;
-        color: $accent;
+
+    .falling {
+        height: 80%;
+        width: 100%;
+    }
+
+    .tag_component {
+        font-size: $f-s-xxl;
+        @extend %line_height_letter_spacing;
+        display: inline-block;
+        padding: $spacing-xs $spacing-xl;
+        background-color: $accent;
+        border-radius: $rad-ex;
+
+        &:first-child {
+            padding: calc($spacing-xs - 5px) $spacing-xl;
+            background-color: $white;
+            border: 5px solid $accent;
+            color: $accent;
+        }
     }
 }

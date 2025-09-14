@@ -7,7 +7,7 @@ const Contact_us = () => {
         'Composition', 'Harmony', 'Bass', 'Drum', 'Vocal'
     ];
 
-    const TagComponent = ({tag}) => {
+    const TagComponent = ({ tag }) => {
         return (
             <p className='tag_component'>{tag}</p>
         )
@@ -16,16 +16,17 @@ const Contact_us = () => {
 
     return (
         <div className='contact_wrap'>
-            <p>Got a question?</p>
-
-            {
-                tags.map(tag => <TagComponent tag={tag} />)
-            }
-
+            {/* <div className='falling'> */}
+                <p>Got a question?</p>
+                {
+                    tags.map(tag => <TagComponent tag={tag} key={tag}/>)
+                }
+            {/* </div> */}
+            
             <div className='carousel'>
                 <span className='carousel_content'>
-                <p>CONTACT US</p>
-                <img src="./images/Contact_us/arrow_up_right.svg" alt="" />
+                    <p>CONTACT US</p>
+                    <img src="./images/Contact_us/arrow_up_right.svg" alt="" />
                 </span>
             </div>
         </div>
