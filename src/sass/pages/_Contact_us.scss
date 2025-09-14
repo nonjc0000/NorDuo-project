@@ -10,6 +10,11 @@
     .falling {
         height: 80%;
         width: 100%;
+
+        .title{
+            text-align: center;
+            margin: auto 0;
+        }
     }
 
     .tag_component {
@@ -20,9 +25,9 @@
         background-color: $accent;
         border-radius: $rad-ex;
 
-        &:first-child {
+        &:nth-child(2) {
             padding: calc($spacing-xs - 5px) $spacing-xl;
-            background-color: $white;
+            background-color: transparent;
             border: 5px solid $accent;
             color: $accent;
         }

@@ -16,12 +16,12 @@ const Contact_us = () => {
 
     return (
         <div className='contact_wrap'>
-            {/* <div className='falling'> */}
-                <p>Got a question?</p>
+            <div className='falling'>
+                <p className='title'>Got a question?</p>
                 {
                     tags.map(tag => <TagComponent tag={tag} key={tag}/>)
                 }
-            {/* </div> */}
+            </div>
             
             <div className='carousel'>
                 <span className='carousel_content'>

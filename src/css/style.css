@@ -1277,6 +1277,10 @@ button {
   height: 80%;
   width: 100%;
 }
+.contact_wrap .falling .title {
+  text-align: center;
+  margin: auto 0;
+}
 .contact_wrap .tag_component {
   font-size: 1.75rem;
   display: inline-block;
@@ -1284,9 +1288,9 @@ button {
   background-color: #F18888;
   border-radius: 999px;
 }
-.contact_wrap .tag_component:first-child {
+.contact_wrap .tag_component:nth-child(2) {
   padding: 5px 30px;
-  background-color: #fff;
+  background-color: transparent;
   border: 5px solid #F18888;
   color: #F18888;
 }
