@@ -1,62 +1,53 @@
 @use '../variables/' as *;
 @use '../functions/' as *;
 
+%item_underline {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    height: 0;
+    border: 2px solid $accent;
+}
+
 .shop_wrap {
-    @include bordered;
+    // @include bordered;
     width: $w-100;
     height: 100vh;
     position: relative;
-    // overflow: hidden;
-    @extend %flex-center;
-    // padding: $spacing-xxxxl;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 
 
     .deco_cube {
-        @include bordered($color: blue);
+        // @include bordered($color: blue);
         position: absolute;
         top: 0;
         left: -3rem;
-        width: 100vw;
+        width: 98.5vw;
         height: 25%;
         background-image: url('/images/deco/cubes.svg');
         background-repeat: no-repeat;
-        background-position: top;
+        background-position: top center;
         background-size: cover;
         opacity: 0.8;
         z-index: -1;
-
-        // &::before,
-        // &::after {
-        //     content: '';
-        //     position: absolute;
-        //     width: 40px;
-        //     height: 40px;
-        //     background: $accent;
-        //     border-radius: $rad-basic-sm;
-        // }
-
-        // &::before {
-        //     top: $spacing-xxxxl;
-        //     left: $spacing-sm;
-        // }
-
-        // &::after {
-        //     top: $spacing-xxxl;
-        //     right: $spacing-xxxl;
-        // }
     }
 
     .desc_box {
-        @include bordered($color: red);
+        // @include bordered($color: red);
         width: 50%;
-        height: 100%;
+        height: 80%;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
         position: relative;
         z-index: 1;
+        padding-bottom: $spacing-xxl;
 
         h1 {
+            flex: 1;
             font-size: $f-s-display;
             color: $text;
             font-weight: $f-w-r;
@@ -72,68 +63,56 @@
         }
     }
 
-    .product_box {
-        position: relative;
-        width: 100%;
-        max-width: 500px;
+    .product_container {
+        .product_box {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 100%;
+            max-height: 190px;
 
-        img {
-            object-fit: contain;
-            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
-            transition: all 0.3s ease;
+            img {
+                object-position: left;
+                object-fit: contain;
+                filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+                transition: all 0.3s ease;
 
-            &:hover {
-                transform: scale(1.02);
-                filter: drop-shadow(0 15px 40px rgba($accent, 0.2));
+                &:hover {
+                    transform: scale(1.02);
+                    filter: drop-shadow(0 15px 40px rgba($accent, 0.2));
+                }
             }
+
         }
 
-        figcaption {
-            margin-top: $spacing-xxs;
-            font-size: $f-s-lg;
+        p {
+            margin-top: $spacing-xs;
+            font-size: $f-s-md;
             color: $text;
-            white-space: nowrap;
-            letter-spacing: $letter-spacing-basic;
+            word-wrap: break-word;
+            @extend %line_height_letter_spacing;
         }
     }
 
     .categories_box {
+        // @include bordered($color: tomato);
         width: 50%;
-        height: 100%;
+        height: 80%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: flex-end;
-        padding-left: $spacing-xxxl;
         position: relative;
-
-        // &::before,
-        // &::after {
-        //     content: '';
-        //     position: absolute;
-        //     width: 35px;
-        //     height: 35px;
-        //     background: $accent;
-        //     border-radius: $rad-basic-sm;
-        // }
-
-        // &::before {
-        //     top: $spacing-xxxl;
-        //     left: 50%;
-        // }
-
-        // &::after {
-        //     bottom: $spacing-xxxl;
-        //     right: $spacing-xl;
-        // }
+        padding-bottom: $spacing-xxl;
 
         >p {
-            font-size: $f-s-xl;
+            font-size: $f-s-xxl;
             color: $text;
-            font-weight: $f-w-m;
-            margin-bottom: $spacing-xxxl;
+            // font-weight: $f-w-m;
+            margin-bottom: min(9%, 80px);
             cursor: pointer;
             transition: all 0.3s ease;
+            @extend %line_height_letter_spacing;
 
             &:hover {
                 color: $accent;
@@ -146,40 +125,106 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: $spacing-lg;
+        gap: $spacing-md;
     }
 
     .catagories_item {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: $spacing-md $spacing-lg;
+        padding: $spacing-xs $spacing-lg;
         border: 2px solid transparent;
         border-radius: $rad-basic-sm;
         cursor: pointer;
         transition: all 0.3s ease;
 
         &:hover {
-            border-color: $accent;
+            // border-color: $accent;
             background: rgba($accent, 0.05);
-            transform: translateX(-5px);
+            // transform: translateX(-5px);
 
             h3 {
                 color: $accent;
             }
+
+            .guitar {
+                &::before {
+                    @extend %item_underline;
+                    width: 109px;
+                }
+            }
+
+            .bass {
+                &::before {
+                    @extend %item_underline;
+                    width: 73px;
+                }
+            }
+
+            .kb {
+                &::before {
+                    @extend %item_underline;
+                    width: 151px;
+                }
+            }
+
+            .others {
+                &::before {
+                    @extend %item_underline;
+                    width: 110px;
+                }
+            }
         }
 
         h3 {
-            font-size: $f-s-xl;
+            font-size: $f-s-xxl;
             color: $text;
             font-weight: $f-w-r;
-            margin: 0;
             transition: all 0.3s ease;
-            letter-spacing: $letter-spacing-basic;
+            @extend %line_height_letter_spacing;
 
-            &:last-child {
-                color: $accent;
-                font-weight: $f-w-m;
+            &:first-child {
+                position: relative;
+            }
+
+            &:last-child{
+                flex-shrink: 0;
+            }
+        }
+
+        .guitar {
+            &::before {
+                transition: all 0.3s ease;
+                @extend %item_underline;
+                width: 0px;
+                border-width: 0;
+            }
+        }
+
+        .bass {
+            &::before {
+                transition: all 0.3s ease;
+                @extend %item_underline;
+                width: 0px;
+                border-width: 0;
+            }
+        }
+
+        .kb {
+            &::before {
+                transition: all 0.3s ease;
+                @extend %item_underline;
+                width: 0px;
+                border-width: 0;
+            }
+        }
+
+        .others {
+            &::before {
+                transition: all 0.3s ease;
+                @extend %item_underline;
+                width: 0px;
+                border-width: 0;
             }
         }
     }

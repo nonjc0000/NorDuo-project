@@ -3,13 +3,13 @@ body, .Listen_on_Spotify, .more, .creator_controls .sound_selection .sound_numbe
   font-family: "Roboto Mono", "Noto Sans TC", san-serif;
 }
 
-.shop_wrap .desc_box h1, .shop_wrap .desc_box > p, .learning_content_box .text_box .desc_box p, .card1 p,
+.shop_wrap .desc_box h1, .shop_wrap .desc_box > p, .shop_wrap .product_container p, .shop_wrap .categories_box > p, .shop_wrap .catagories_item h3, .learning_content_box .text_box .desc_box p, .card1 p,
 .card2 p, .songlist_title p, .upper_info_box > p, .bottom_info_box > p, .hero_content .deco_top .deco_rec .rec_text, .hero_content .deco_bottom .deco_battery .battery_label, .creator_header .datetime_info .datetime, .creator_header .datetime_info .earth_date, .creator_header .creation_status .creating_title, .creator_header .creation_status .file_info, .creator_controls .sound_selection .selection_title, .creator_controls .control_panel .control_group .control_label, .creator_controls .control_panel .control_group .sound_toggle, .creator_controls .control_panel .control_group .share_btn, .footer_left small, .nav_item a {
   line-height: 150%;
   letter-spacing: 0.1em;
 }
 
-.shop_wrap, .latest_release_content, .album_cover, .btn_box, .hero_content .deco_top .deco_rec {
+.latest_release_content, .album_cover, .btn_box, .hero_content .deco_top .deco_rec {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1107,37 +1107,48 @@ button {
   transform: scale(1.1) rotate(-5deg);
 }
 
+.shop_wrap .catagories_item .others::before, .shop_wrap .catagories_item .kb::before, .shop_wrap .catagories_item .bass::before, .shop_wrap .catagories_item .guitar::before, .shop_wrap .catagories_item:hover .others::before, .shop_wrap .catagories_item:hover .kb::before, .shop_wrap .catagories_item:hover .bass::before, .shop_wrap .catagories_item:hover .guitar::before {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  height: 0;
+  border: 2px solid #F18888;
+}
+
 .shop_wrap {
-  border: solid 3px #F18888;
   width: 100%;
   height: 100vh;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }
 .shop_wrap .deco_cube {
-  border: solid 3px blue;
   position: absolute;
   top: 0;
   left: -3rem;
-  width: 100vw;
+  width: 98.5vw;
   height: 25%;
   background-image: url("/images/deco/cubes.svg");
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: top center;
   background-size: cover;
   opacity: 0.8;
   z-index: -1;
 }
 .shop_wrap .desc_box {
-  border: solid 3px red;
   width: 50%;
-  height: 100%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   position: relative;
   z-index: 1;
+  padding-bottom: 40px;
 }
 .shop_wrap .desc_box h1 {
+  flex: 1;
   font-size: 3.75rem;
   color: #FFFFFF;
   font-weight: 400;
@@ -1148,42 +1159,43 @@ button {
   color: #FFFFFF;
   margin-bottom: 50px;
 }
-.shop_wrap .product_box {
+.shop_wrap .product_container .product_box {
   position: relative;
   width: 100%;
   max-width: 500px;
+  height: 100%;
+  max-height: 190px;
 }
-.shop_wrap .product_box img {
+.shop_wrap .product_container .product_box img {
+  object-position: left;
   object-fit: contain;
   filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
   transition: all 0.3s ease;
 }
-.shop_wrap .product_box img:hover {
+.shop_wrap .product_container .product_box img:hover {
   transform: scale(1.02);
   filter: drop-shadow(0 15px 40px rgba(241, 136, 136, 0.2));
 }
-.shop_wrap .product_box figcaption {
-  margin-top: 5px;
-  font-size: 1.25rem;
+.shop_wrap .product_container p {
+  margin-top: 10px;
+  font-size: 1rem;
   color: #FFFFFF;
-  white-space: nowrap;
-  letter-spacing: 0.1em;
+  word-wrap: break-word;
 }
 .shop_wrap .categories_box {
   width: 50%;
-  height: 100%;
+  height: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: flex-end;
-  padding-left: 50px;
   position: relative;
+  padding-bottom: 40px;
 }
 .shop_wrap .categories_box > p {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   color: #FFFFFF;
-  font-weight: 500;
-  margin-bottom: 50px;
+  margin-bottom: min(9%, 80px);
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -1195,35 +1207,65 @@ button {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 20px;
 }
 .shop_wrap .catagories_item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 25px;
+  padding: 10px 25px;
   border: 2px solid transparent;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 .shop_wrap .catagories_item:hover {
-  border-color: #F18888;
   background: rgba(241, 136, 136, 0.05);
-  transform: translateX(-5px);
 }
 .shop_wrap .catagories_item:hover h3 {
   color: #F18888;
 }
+.shop_wrap .catagories_item:hover .guitar::before {
+  width: 109px;
+}
+.shop_wrap .catagories_item:hover .bass::before {
+  width: 73px;
+}
+.shop_wrap .catagories_item:hover .kb::before {
+  width: 151px;
+}
+.shop_wrap .catagories_item:hover .others::before {
+  width: 110px;
+}
 .shop_wrap .catagories_item h3 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   color: #FFFFFF;
   font-weight: 400;
-  margin: 0;
   transition: all 0.3s ease;
-  letter-spacing: 0.1em;
+}
+.shop_wrap .catagories_item h3:first-child {
+  position: relative;
 }
 .shop_wrap .catagories_item h3:last-child {
-  color: #F18888;
-  font-weight: 500;
+  flex-shrink: 0;
+}
+.shop_wrap .catagories_item .guitar::before {
+  transition: all 0.3s ease;
+  width: 0px;
+  border-width: 0;
+}
+.shop_wrap .catagories_item .bass::before {
+  transition: all 0.3s ease;
+  width: 0px;
+  border-width: 0;
+}
+.shop_wrap .catagories_item .kb::before {
+  transition: all 0.3s ease;
+  width: 0px;
+  border-width: 0;
+}
+.shop_wrap .catagories_item .others::before {
+  transition: all 0.3s ease;
+  width: 0px;
+  border-width: 0;
 }
