@@ -3,22 +3,31 @@ import React from 'react'
 const Contact_us = () => {
 
     const tags = [
-        'Improvisation', 'BE CREATIVE', 'Guitar', 'Keyboard',
+        'BE CREATIVE', 'Improvisation', 'Guitar', 'Keyboard',
         'Composition', 'Harmony', 'Bass', 'Drum', 'Vocal'
     ];
 
-    const tag_component = (tag) => {
+    const TagComponent = ({tag}) => {
         return (
-            <div className='tag_component'>{tag}</div>
+            <p className='tag_component'>{tag}</p>
         )
     }
 
 
     return (
-        <div>
+        <div className='contact_wrap'>
+            <p>Got a question?</p>
+
             {
-                tags.map(tag => <tag_component tag={tag} />)
+                tags.map(tag => <TagComponent tag={tag} />)
             }
+
+            <div className='carousel'>
+                <span className='carousel_content'>
+                <p>CONTACT US</p>
+                <img src="./images/Contact_us/arrow_up_right.svg" alt="" />
+                </span>
+            </div>
         </div>
     )
 }

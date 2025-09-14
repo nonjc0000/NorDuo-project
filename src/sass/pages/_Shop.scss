@@ -108,7 +108,7 @@
         >p {
             font-size: $f-s-xxl;
             color: $text;
-            // font-weight: $f-w-m;
+            padding: 0 $spacing-lg;
             margin-bottom: min(9%, 80px);
             cursor: pointer;
             transition: all 0.3s ease;
@@ -139,9 +139,6 @@
         transition: all 0.3s ease;
 
         &:hover {
-            // border-color: $accent;
-            background: rgba($accent, 0.05);
-            // transform: translateX(-5px);
 
             h3 {
                 color: $accent;
