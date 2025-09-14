@@ -5,6 +5,7 @@ import About_us from './About_us';
 import Latest_release from './Latest_release';
 import Learning from './Learning';
 import Shop from './Shop';
+import Contact_us from './Contact_us';
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <Latest_release />
       <Learning />
       <Shop/>
+      <Contact_us/>
     </>
   )
 }
