@@ -112,9 +112,10 @@
 
     .card1_img {
         position: absolute;
-        bottom: -30px;
+        bottom: -45px;
         right: -30px;
         width: 85%;
+        min-width: 260px;
         height: 85%;
         background-image: url('/images/Learning/card1_guitar.svg');
         background-repeat: no-repeat;
@@ -141,6 +142,7 @@
         bottom: -30px;
         right: -30px;
         width: 80%;
+        min-width: 270px;
         height: 80%;
         background-image: url('/images/Learning/card2_note.svg');
         background-repeat: no-repeat;
