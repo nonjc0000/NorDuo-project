@@ -2,13 +2,13 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './css/style.min.css'
 // import App from './App_NorDuo.jsx'
-import App from './pages/Matter.js_test'
+import App from './pages/MatterJsDemo'
 import { HashRouter } from 'react-router-dom'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <HashRouter>
       <App />
     </HashRouter>
-  </StrictMode>,
+  // </StrictMode>,
 )
