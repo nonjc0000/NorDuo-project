@@ -13,7 +13,6 @@
 
     .falling {
         position: relative;
-        // z-index: -1;
         height: 700px;
         width: 100%;
         display: flex;
@@ -24,12 +23,14 @@
 
         .title {
             position: absolute;
-            top:50%;
+            top: 50%;
             transform: translateY(-50%);
             text-align: center;
             font-size: $f-s-display;
             color: $text;
             margin-bottom: $spacing-xl;
+            z-index: 10;
+            pointer-events: none; // 讓標題不干擾滑鼠事件
         }
     }
 
@@ -39,7 +40,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
 
         .carousel_content {
             display: flex;
@@ -72,21 +72,40 @@
     }
 }
 
-
-#fallingTags{
+#fallingTags {
     width: 100%;
     height: 100%;
-    // overflow: hidden;
     border: 2px solid $white;
     position: relative;
     background: transparent;
-
-    // 確保容器在父元素中置中
     margin: 0 auto;
-
-    // 確保內部元素可以被正確定位
     transform: translateZ(0);
-
-    // 防止元素超出邊界
     contain: layout style paint;
+    
+    // 關鍵設置：容器不攔截指針事件，讓滾動穿透
+    pointer-events: none;
+    
+    // 優化滾動體驗
+    touch-action: pan-y; // 允許垂直滾動
+    
+    // 物理元素可以接收事件
+    p {
+        position: relative;
+        z-index: 5;
+        
+        // 關鍵：重新啟用指針事件
+        pointer-events: auto !important;
+        
+        // 改善拖拽體驗
+        &:active {
+            cursor: grabbing !important;
+        }
+        
+        // 確保元素可以被選中拖拽
+        &:hover {
+            cursor: grab;
+            transform: scale(1.02);
+            transition: transform 0.2s ease;
+        }
+    }
 }

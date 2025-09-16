@@ -10,7 +10,7 @@ const FallingTags = () => {
   // 容器尺寸
   const CONTAINER_WIDTH = 1440;
   const CONTAINER_HEIGHT = 700;
-  const WALL_THICKNESS = 20;
+  const WALL_THICKNESS = 60;
 
   useEffect(() => {
     // Matter.js 模組別名
@@ -47,7 +47,7 @@ const FallingTags = () => {
     // 隱藏 canvas（我們只用 DOM 元素顯示）
     render.canvas.style.display = 'none';
 
-    // 創建邊界 - 確保物體不會掉出容器
+    // 創建邊界
     const ground = Bodies.rectangle(
       CONTAINER_WIDTH / 2, 
       CONTAINER_HEIGHT + WALL_THICKNESS / 2, 
@@ -81,7 +81,6 @@ const FallingTags = () => {
       }
     );
 
-    // 可選：添加頂部邊界防止物體飛出
     const ceiling = Bodies.rectangle(
       CONTAINER_WIDTH / 2, 
       -WALL_THICKNESS / 2, 
@@ -93,11 +92,11 @@ const FallingTags = () => {
       }
     );
 
-    // 創建一些 HTML 物理元素
+    // 創建 HTML 物理元素
     const htmlElements = [
       {
         id: 'Improvisation',
-        body: Bodies.rectangle(200, 100, 315, 62, {
+        body: Bodies.rectangle(230, 100, 315, 62, {
           restitution: 0.6,
           friction: 0.3,
           frictionAir: 0.01,
@@ -120,7 +119,7 @@ const FallingTags = () => {
           justifyContent: 'center',
           cursor: 'grab',
           userSelect: 'none',
-          pointerEvents: 'auto',
+          pointerEvents: 'auto', // 關鍵：讓元素可以接收事件
         }
       },
       {
@@ -154,7 +153,7 @@ const FallingTags = () => {
       },
       {
         id: 'Guitar',
-        body: Bodies.rectangle(400, 80, 178, 62, {
+        body: Bodies.rectangle(320, 80, 178, 62, {
           restitution: 0.6,
           friction: 0.3,
           frictionAir: 0.01,
@@ -210,7 +209,7 @@ const FallingTags = () => {
       },
       {
         id: 'Composition',
-        body: Bodies.rectangle(1000, 60, 276, 62, {
+        body: Bodies.rectangle(1050, 60, 276, 62, {
           restitution: 0.6,
           friction: 0.3,
           frictionAir: 0.01,
@@ -238,7 +237,7 @@ const FallingTags = () => {
       },
       {
         id: 'Harmony',
-        body: Bodies.rectangle(500, 90, 198, 62, {
+        body: Bodies.rectangle(400, 90, 198, 62, {
           restitution: 0.6,
           friction: 0.3,
           frictionAir: 0.01,
@@ -294,7 +293,7 @@ const FallingTags = () => {
       },
       {
         id: 'Drum',
-        body: Bodies.rectangle(500, 70, 139, 62, {
+        body: Bodies.rectangle(450, 70, 139, 62, {
           restitution: 0.6,
           friction: 0.3,
           frictionAir: 0.01,
@@ -362,8 +361,13 @@ const FallingTags = () => {
     ];
     World.add(engine.world, allBodies);
 
-    // 添加滑鼠控制
+    // 添加滑鼠控制 - 使用特殊的滑鼠設置
     const mouse = Mouse.create(containerRef.current);
+    
+    // 關鍵設置：讓滑鼠只對特定元素有效
+    mouse.element.removeEventListener("mousewheel", mouse.mousewheel);
+    mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
+    
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse: mouse,
       constraint: {
@@ -371,6 +375,7 @@ const FallingTags = () => {
         render: { visible: false }
       }
     });
+    
     World.add(engine.world, mouseConstraint);
 
     // 創建 runner
@@ -418,9 +423,19 @@ const FallingTags = () => {
 
   return (
     <div 
-      // className="fallingTags"
+      className="fallingTags"
       ref={containerRef}
       id="fallingTags"
+      style={{ 
+        width: '100%', 
+        height: '100%', 
+        overflow: 'hidden', 
+        border: '2px solid white',
+        position: 'relative',
+        margin: '0 auto',
+        // 關鍵設置：容器本身不攔截指針事件
+        pointerEvents: 'none',
+      }}
     >
       {elements.map((element) => {
         const Tag = element.type;
@@ -431,7 +446,8 @@ const FallingTags = () => {
             style={{
               position: 'absolute',
               ...element.style
-            }}>
+            }}
+          >
             {element.content}
           </Tag>
         );
