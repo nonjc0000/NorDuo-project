@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Matter from 'matter-js';
 
 const FallingTags = () => {
@@ -7,17 +7,19 @@ const FallingTags = () => {
   const runnerRef = useRef();
   const renderRef = useRef();
   const animationRef = useRef();
+  const groundRef = useRef();
+  const leftWallRef = useRef();
+  const rightWallRef = useRef();
+  
   const [elements, setElements] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
   const [physicsStarted, setPhysicsStarted] = useState(false);
   const [shouldRenderElements, setShouldRenderElements] = useState(false);
+  const [containerSize, setContainerSize] = useState({ width: 1440, height: 700 });
 
-  // 容器尺寸
-  const CONTAINER_WIDTH = 1440;
-  const CONTAINER_HEIGHT = 700;
   const WALL_THICKNESS = 60;
 
-  // 初始標籤數據 - 設定在容器上方，讓它們自然掉落
+  // 初始標籤數據
   const initialElements = [
     {
       id: 'Improvisation',
@@ -25,7 +27,7 @@ const FallingTags = () => {
       width: 315,
       height: 62,
       x: 230,
-      y: -150, // 在容器上方開始
+      y: -150,
       style: {
         fontSize: '1.75rem',
         lineHeight: '150%',
@@ -49,7 +51,7 @@ const FallingTags = () => {
       width: 285,
       height: 62,
       x: 720,
-      y: -200, // 在容器上方開始
+      y: -200,
       style: {
         fontSize: '1.75rem',
         lineHeight: '150%',
@@ -97,7 +99,7 @@ const FallingTags = () => {
       content: 'Keyboard',
       width: 217,
       height: 62,
-      x: 1120,
+      x: 1200,
       y: -250,
       style: {
         fontSize: '1.75rem',
@@ -169,7 +171,7 @@ const FallingTags = () => {
       content: 'Bass',
       width: 139,
       height: 62,
-      x: 860,
+      x: 900,
       y: -220,
       style: {
         fontSize: '1.75rem',
@@ -238,6 +240,86 @@ const FallingTags = () => {
     },
   ];
 
+  // 獲取容器尺寸
+  const updateContainerSize = useCallback(() => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      setContainerSize({
+        width: rect.width,
+        height: rect.height
+      });
+    }
+  }, []);
+
+  // 更新物理邊界
+  const updatePhysicalBoundaries = useCallback(() => {
+    if (!engineRef.current || !groundRef.current || !leftWallRef.useRef || !rightWallRef.current) {
+      return;
+    }
+
+    const { Body } = Matter;
+    const { width, height } = containerSize;
+
+    // 更新地面位置和尺寸
+    Body.setPosition(groundRef.current, {
+      x: width / 2,
+      y: height + WALL_THICKNESS / 2
+    });
+    Body.scale(groundRef.current, 
+      (width + WALL_THICKNESS * 2) / groundRef.current.bounds.max.x - groundRef.current.bounds.min.x,
+      1
+    );
+
+    // 更新左牆位置和尺寸
+    Body.setPosition(leftWallRef.current, {
+      x: -WALL_THICKNESS / 2,
+      y: height / 2
+    });
+    Body.scale(leftWallRef.current, 
+      1,
+      (height + WALL_THICKNESS * 2 + 300) / (leftWallRef.current.bounds.max.y - leftWallRef.current.bounds.min.y)
+    );
+
+    // 更新右牆位置和尺寸
+    Body.setPosition(rightWallRef.current, {
+      x: width + WALL_THICKNESS / 2 - 110,
+      y: height / 2
+    });
+    Body.scale(rightWallRef.current, 
+      1,
+      (height + WALL_THICKNESS * 2 + 300) / (rightWallRef.current.bounds.max.y - rightWallRef.current.bounds.min.y)
+    );
+
+    // 更新渲染器尺寸
+    if (renderRef.current) {
+      renderRef.current.options.width = width;
+      renderRef.current.options.height = height;
+      if (renderRef.current.canvas) {
+        renderRef.current.canvas.width = width;
+        renderRef.current.canvas.height = height;
+      }
+    }
+  }, [containerSize, WALL_THICKNESS]);
+
+  // 監聽視窗大小變化
+  useEffect(() => {
+    updateContainerSize();
+    
+    const handleResize = () => {
+      updateContainerSize();
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [updateContainerSize]);
+
+  // 當容器尺寸變化時更新物理邊界
+  useEffect(() => {
+    if (physicsStarted) {
+      updatePhysicalBoundaries();
+    }
+  }, [containerSize, physicsStarted, updatePhysicalBoundaries]);
+
   // Intersection Observer 監聽可見性
   useEffect(() => {
     if (!containerRef.current) return;
@@ -252,8 +334,8 @@ const FallingTags = () => {
         });
       },
       {
-        threshold: 0, // 當 0% 可見時觸發
-        rootMargin: '0px 0px -100px 0px' // 提前一點觸發
+        threshold: 0,
+        rootMargin: '0px 0px -100px 0px'
       }
     );
 
@@ -283,13 +365,15 @@ const FallingTags = () => {
     // 設置重力
     engine.world.gravity.y = 1;
 
+    const { width, height } = containerSize;
+
     // 創建隱形渲染器
     const render = Render.create({
       element: containerRef.current,
       engine: engine,
       options: {
-        width: CONTAINER_WIDTH,
-        height: CONTAINER_HEIGHT,
+        width: width,
+        height: height,
         wireframes: false,
         background: 'transparent',
         showVelocity: false,
@@ -302,60 +386,65 @@ const FallingTags = () => {
     // 隱藏 canvas
     render.canvas.style.display = 'none';
 
-    // 創建邊界 - 擴展上方邊界，讓物體有空間從上方開始
+    // 創建邊界並保存引用
     const ground = Bodies.rectangle(
-      CONTAINER_WIDTH / 2, 
-      CONTAINER_HEIGHT + WALL_THICKNESS / 2, 
-      CONTAINER_WIDTH + WALL_THICKNESS * 2, 
+      width / 2, 
+      height + WALL_THICKNESS / 2, 
+      width + WALL_THICKNESS * 2, 
       WALL_THICKNESS, 
       { isStatic: true, label: 'ground' }
     );
+    groundRef.current = ground;
 
     const leftWall = Bodies.rectangle(
       -WALL_THICKNESS / 2, 
-      CONTAINER_HEIGHT / 2, 
+      height / 2, 
       WALL_THICKNESS, 
-      CONTAINER_HEIGHT + WALL_THICKNESS * 2 + 300, // 擴展高度
+      height + WALL_THICKNESS * 2 + 300,
       { isStatic: true, label: 'leftWall' }
     );
+    leftWallRef.current = leftWall;
 
     const rightWall = Bodies.rectangle(
-      CONTAINER_WIDTH + WALL_THICKNESS / 2 - 110, 
-      CONTAINER_HEIGHT / 2, 
+      width + WALL_THICKNESS / 2, 
+      height / 2, 
       WALL_THICKNESS, 
-      CONTAINER_HEIGHT + WALL_THICKNESS * 2 + 300, // 擴展高度
+      height + WALL_THICKNESS * 2 + 300,
       { isStatic: true, label: 'rightWall' }
     );
+    rightWallRef.current = rightWall;
 
-    // 移除上方邊界，讓物體可以從上方自然落下
-
-    // 創建物理元素 - 立即設定元素，讓它們在容器外準備好
+    // 創建物理元素
     const htmlElements = initialElements.map(element => ({
       ...element,
       type: 'p',
-      body: Bodies.rectangle(element.x, element.y, element.width, element.height, {
-        restitution: 0.6,
-        friction: 0.3,
-        frictionAir: 0.01,
-        density: 0.001,
-        label: 'htmlText'
-      })
+      body: Bodies.rectangle(
+        element.x * (width / 1440), // 根據新尺寸調整初始位置
+        element.y, 
+        element.width, 
+        element.height, 
+        {
+          restitution: 0.6,
+          friction: 0.3,
+          frictionAir: 0.01,
+          density: 0.001,
+          label: 'htmlText'
+        }
+      )
     }));
 
-    // 立即設定元素狀態
+    // 設定元素狀態
     setElements(htmlElements);
     
-    // 短暫延遲後再顯示元素，讓物理引擎有時間初始化
     setTimeout(() => {
       setShouldRenderElements(true);
     }, 100);
 
-    // 將所有物體加入世界 - 移除天花板讓物體自然落下
+    // 將所有物體加入世界
     const allBodies = [
       ground,
       leftWall,
       rightWall,
-      // 不加入天花板，讓物體從上方自然掉落
       ...htmlElements.map(el => el.body)
     ];
     World.add(engine.world, allBodies);
@@ -383,7 +472,7 @@ const FallingTags = () => {
     Runner.run(runner, engine);
     Render.run(render);
 
-    // 動畫迴圈 - 同步 DOM 元素位置
+    // 動畫迴圈
     const animate = () => {
       htmlElements.forEach(element => {
         const { x, y } = element.body.position;
@@ -424,15 +513,15 @@ const FallingTags = () => {
         Engine.clear(engineRef.current);
       }
     };
-  }, [isVisible]);
+  }, [isVisible, containerSize]);
 
   return (
     <div 
       className="fallingTags"
       ref={containerRef}
       id="fallingTags"
+      style={{ width: '100%', height: '100%' }}
     >
-      {/* 只有在應該渲染元素時才渲染，避免初始閃爍 */}
       {shouldRenderElements && elements.map((element) => {
         const Tag = element.type;
         return (
@@ -442,9 +531,7 @@ const FallingTags = () => {
             style={{
               position: 'absolute',
               ...element.style,
-              // 確保元素在容器外部時也能正確顯示（溢出隱藏會處理）
               zIndex: 5,
-              // 初始透明度設為 0，通過 CSS 動畫漸現
               opacity: physicsStarted ? 1 : 0,
               transition: 'opacity 0.3s ease-in-out'
             }}
@@ -453,7 +540,6 @@ const FallingTags = () => {
           </Tag>
         );
       })}
-      
     </div>
   );
 };
