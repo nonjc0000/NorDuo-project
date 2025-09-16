@@ -47,7 +47,7 @@ const HtmlPhysicsDemo = () => {
       isStatic: true,
       label: 'wall'
     });
-    const rightWall = Bodies.rectangle(790, 300, 20, 600, {
+    const rightWall = Bodies.rectangle(800, 300, 20, 600, {
       isStatic: true,
       label: 'wall'
     });
@@ -56,96 +56,301 @@ const HtmlPhysicsDemo = () => {
     const htmlElements = [
       {
         id: 'Improvisation',
-        body: Bodies.rectangle(200, 100, 80, 80, {
+        body: Bodies.rectangle(200, 31, 315, 62, {
           restitution: 0.8,
           friction: 0.3,
-          label: 'htmlBox'
-        }),
-        type: 'div',
-        content: 'Improvisation',
-        style: {
-          width: '80px',
-          height: '80px',
-          backgroundColor: '#ff6b6b',
-          color: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '2rem',
-          borderRadius: '8px',
-          cursor: 'grab',
-          userSelect: 'none',
-        }
-      },
-      {
-        id: 'text1',
-        body: Bodies.rectangle(300, 50, 120, 40, {
-          restitution: 0.6,
-          friction: 0.5,
           label: 'htmlText'
         }),
         type: 'p',
-        content: 'Hello Physics!',
+        content: 'Improvisation',
         style: {
-          width: '120px',
-          height: '40px',
-          backgroundColor: '#4ecdc4',
+          fontSize: '1.75rem',
+          lineHeight: '150%',
+          letterSpacing: '0.1em',
+          width: '315px',
+          height: '62px',
+          borderRadius: '999px',
+          backgroundColor: '#F18888',
           color: 'white',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          margin: '0',
-          padding: '0',
-          borderRadius: '20px',
-          fontWeight: 'bold',
           cursor: 'grab',
           userSelect: 'none',
         }
       },
       {
-        id: 'button1',
-        body: Bodies.rectangle(500, 80, 100, 50, {
-          restitution: 0.9,
-          friction: 0.2,
-          label: 'htmlButton'
+        id: 'BE CREATIVE',
+        body: Bodies.rectangle(500, 31, 285, 62, {
+          restitution: 0.8,
+          friction: 0.3,
+          label: 'htmlText'
         }),
-        type: 'button',
-        content: 'Click Me!',
+        type: 'p',
+        content: 'BE CREATIVE',
         style: {
-          width: '100px',
-          height: '50px',
-          backgroundColor: '#45b7d1',
-          color: 'white',
-          border: 'none',
-          borderRadius: '25px',
-          fontSize: '14px',
-          fontWeight: 'bold',
-          cursor: 'pointer',
+          fontSize: '1.75rem',
+          lineHeight: '150%',
+          letterSpacing: '0.1em',
+          width: '285px',
+          height: '62px',
+          borderRadius: '999px',
+          border: '5px solid #F18888',
+          backgroundColor: 'transparent',
+          color: '#F18888',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'grab',
+          userSelect: 'none',
         }
       },
       {
-        id: 'circle1',
-        body: Bodies.circle(150, 30, 30, {
-          restitution: 1.0,
-          friction: 0.1,
-          label: 'htmlCircle'
+        id: 'Guitar',
+        body: Bodies.rectangle(200, 31, 178, 62, {
+          restitution: 0.8,
+          friction: 0.3,
+          label: 'htmlText'
         }),
-        type: 'div',
-        content: '⚽',
+        type: 'p',
+        content: 'Guitar',
         style: {
-          width: '60px',
-          height: '60px',
-          backgroundColor: '#96ceb4',
+          fontSize: '1.75rem',
+          lineHeight: '150%',
+          letterSpacing: '0.1em',
+          width: '178px',
+          height: '62px',
+          borderRadius: '999px',
+          backgroundColor: '#F18888',
           color: 'white',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '1.5rem',
-          borderRadius: '50%',
           cursor: 'grab',
           userSelect: 'none',
         }
-      }
+      },
+      {
+        id: 'Keyboard',
+        body: Bodies.rectangle(400, 31, 217, 62, {
+          restitution: 0.8,
+          friction: 0.3,
+          label: 'htmlText'
+        }),
+        type: 'p',
+        content: 'Keyboard',
+        style: {
+          fontSize: '1.75rem',
+          lineHeight: '150%',
+          letterSpacing: '0.1em',
+          width: '217px',
+          height: '62px',
+          borderRadius: '999px',
+          backgroundColor: '#F18888',
+          color: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'grab',
+          userSelect: 'none',
+        }
+      },
+      {
+        id: 'Composition',
+        body: Bodies.rectangle(600, 31, 276, 62, {
+          restitution: 0.8,
+          friction: 0.3,
+          label: 'htmlText'
+        }),
+        type: 'p',
+        content: 'Composition',
+        style: {
+          fontSize: '1.75rem',
+          lineHeight: '150%',
+          letterSpacing: '0.1em',
+          width: '276px',
+          height: '62px',
+          borderRadius: '999px',
+          backgroundColor: '#F18888',
+          color: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'grab',
+          userSelect: 'none',
+        }
+      },
+      {
+        id: 'Harmony',
+        body: Bodies.rectangle(500, 31, 198, 62, {
+          restitution: 0.8,
+          friction: 0.3,
+          label: 'htmlText'
+        }),
+        type: 'p',
+        content: 'Harmony',
+        style: {
+          fontSize: '1.75rem',
+          lineHeight: '150%',
+          letterSpacing: '0.1em',
+          width: '198px',
+          height: '62px',
+          borderRadius: '999px',
+          backgroundColor: '#F18888',
+          color: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'grab',
+          userSelect: 'none',
+        }
+      },
+      {
+        id: 'Bass',
+        body: Bodies.rectangle(500, 31, 139, 62, {
+          restitution: 0.8,
+          friction: 0.3,
+          label: 'htmlText'
+        }),
+        type: 'p',
+        content: 'Bass',
+        style: {
+          fontSize: '1.75rem',
+          lineHeight: '150%',
+          letterSpacing: '0.1em',
+          width: '139px',
+          height: '62px',
+          borderRadius: '999px',
+          backgroundColor: '#F18888',
+          color: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'grab',
+          userSelect: 'none',
+        }
+      },
+      {
+        id: 'Drum',
+        body: Bodies.rectangle(700, 31, 139, 62, {
+          restitution: 0.8,
+          friction: 0.3,
+          label: 'htmlText'
+        }),
+        type: 'p',
+        content: 'Drum',
+        style: {
+          fontSize: '1.75rem',
+          lineHeight: '150%',
+          letterSpacing: '0.1em',
+          width: '139px',
+          height: '62px',
+          borderRadius: '999px',
+          backgroundColor: '#F18888',
+          color: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'grab',
+          userSelect: 'none',
+        }
+      },
+      {
+        id: 'Vocal',
+        body: Bodies.rectangle(600, 31, 158, 62, {
+          restitution: 0.8,
+          friction: 0.3,
+          label: 'htmlText'
+        }),
+        type: 'p',
+        content: 'Vocal',
+        style: {
+          fontSize: '1.75rem',
+          lineHeight: '150%',
+          letterSpacing: '0.1em',
+          width: '158px',
+          height: '62px',
+          borderRadius: '999px',
+          backgroundColor: '#F18888',
+          color: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'grab',
+          userSelect: 'none',
+        }
+      },
+
+
+      // {
+      //   id: 'text1',
+      //   body: Bodies.rectangle(300, 50, 120, 40, {
+      //     restitution: 0.6,
+      //     friction: 0.5,
+      //     label: 'htmlText'
+      //   }),
+      //   type: 'p',
+      //   content: 'Hello Physics!',
+      //   style: {
+      //     width: '120px',
+      //     height: '40px',
+      //     backgroundColor: '#4ecdc4',
+      //     color: 'white',
+      //     display: 'flex',
+      //     alignItems: 'center',
+      //     justifyContent: 'center',
+      //     margin: '0',
+      //     padding: '0',
+      //     borderRadius: '20px',
+      //     fontWeight: 'bold',
+      //     cursor: 'grab',
+      //     userSelect: 'none',
+      //   }
+      // },
+      // {
+      //   id: 'button1',
+      //   body: Bodies.rectangle(500, 80, 100, 50, {
+      //     restitution: 0.9,
+      //     friction: 0.2,
+      //     label: 'htmlButton'
+      //   }),
+      //   type: 'button',
+      //   content: 'Click Me!',
+      //   style: {
+      //     width: '100px',
+      //     height: '50px',
+      //     backgroundColor: '#45b7d1',
+      //     color: 'white',
+      //     border: 'none',
+      //     borderRadius: '25px',
+      //     fontSize: '14px',
+      //     fontWeight: 'bold',
+      //     cursor: 'pointer',
+      //   }
+      // },
+      // {
+      //   id: 'circle1',
+      //   body: Bodies.circle(150, 30, 30, {
+      //     restitution: 1.0,
+      //     friction: 0.1,
+      //     label: 'htmlCircle'
+      //   }),
+      //   type: 'div',
+      //   content: '⚽',
+      //   style: {
+      //     width: '60px',
+      //     height: '60px',
+      //     backgroundColor: '#96ceb4',
+      //     color: 'white',
+      //     display: 'flex',
+      //     alignItems: 'center',
+      //     justifyContent: 'center',
+      //     fontSize: '1.5rem',
+      //     borderRadius: '50%',
+      //     cursor: 'grab',
+      //     userSelect: 'none',
+      //   }
+      // }
     ];
 
     setElements(htmlElements);
@@ -213,81 +418,14 @@ const HtmlPhysicsDemo = () => {
     };
   }, []);
 
-  // const addRandomElement = () => {
-  //   if (!engineRef.current) return;
-
-  //   const newElement = {
-  //     id: `random-${Date.now()}`,
-  //     body: Bodies.rectangle(
-  //       Math.random() * 700 + 50,
-  //       50,
-  //       60,
-  //       60,
-  //       {
-  //         restitution: Math.random() * 0.8 + 0.2,
-  //         friction: Math.random() * 0.5,
-  //         label: 'randomBox'
-  //       }
-  //     ),
-  //     type: 'div',
-  //     content: ['🎯', '🎪', '🎨', '🎭', '🎪'][Math.floor(Math.random() * 5)],
-  //     style: {
-  //       width: '60px',
-  //       height: '60px',
-  //       backgroundColor: `hsl(${Math.random() * 360}, 70%, 60%)`,
-  //       color: 'white',
-  //       display: 'flex',
-  //       alignItems: 'center',
-  //       justifyContent: 'center',
-  //       fontSize: '1.5rem',
-  //       borderRadius: '8px',
-  //       cursor: 'grab',
-  //       userSelect: 'none',
-  //     }
-  //   };
-
-  //   setElements(prev => [...prev, newElement]);
-  //   Matter.World.add(engineRef.current.world, newElement.body);
-  // };
-
-  // const resetElements = () => {
-  //   if (!engineRef.current || !runnerRef.current) return;
-
-  //   // 清除所有非靜態物體
-  //   const allBodies = Matter.Composite.allBodies(engineRef.current.world);
-  //   const dynamicBodies = allBodies.filter(body => !body.isStatic);
-  //   Matter.World.remove(engineRef.current.world, dynamicBodies);
-
-  //   // 重設元素狀態
-  //   setElements([]);
-
-  //   // 重新添加初始元素
-  //   setTimeout(() => {
-  //     // 這裡會觸發 useEffect 重新初始化
-  //     window.location.reload();
-  //   }, 100);
-  // };
-
   return (
     <div className="w-full h-full">
       <div className="mb-4 flex gap-2">
-        {/* <button
-          onClick={addRandomElement}
-        // className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          添加隨機元素
-        </button> */}
-        {/* <button
-          onClick={resetElements}
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-        >
-          重設
-        </button> */}
       </div>
 
       <div
         ref={containerRef}
-        className="relative border-2 border-gray-300 bg-gray-50"
+        // className="relative border-2 border-gray-300 bg-gray-50"
         style={{ width: '800px', height: '600px', overflow: 'hidden', border: '2px solid white' }}
       >
         {elements.map((element) => {
