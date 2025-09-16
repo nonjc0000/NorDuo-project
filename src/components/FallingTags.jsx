@@ -16,7 +16,7 @@ const FallingTags = () => {
   const CONTAINER_HEIGHT = 700;
   const WALL_THICKNESS = 60;
 
-  // 初始標籤數據
+  // 初始標籤數據 - 設定在容器上方，讓它們自然掉落
   const initialElements = [
     {
       id: 'Improvisation',
@@ -24,7 +24,7 @@ const FallingTags = () => {
       width: 315,
       height: 62,
       x: 230,
-      y: 100,
+      y: -150, // 在容器上方開始
       style: {
         fontSize: '1.75rem',
         lineHeight: '150%',
@@ -48,7 +48,7 @@ const FallingTags = () => {
       width: 285,
       height: 62,
       x: 600,
-      y: 50,
+      y: -200, // 在容器上方開始
       style: {
         fontSize: '1.75rem',
         lineHeight: '150%',
@@ -73,7 +73,7 @@ const FallingTags = () => {
       width: 178,
       height: 62,
       x: 320,
-      y: 80,
+      y: -120,
       style: {
         fontSize: '1.75rem',
         lineHeight: '150%',
@@ -97,7 +97,7 @@ const FallingTags = () => {
       width: 217,
       height: 62,
       x: 800,
-      y: 30,
+      y: -250,
       style: {
         fontSize: '1.75rem',
         lineHeight: '150%',
@@ -121,7 +121,7 @@ const FallingTags = () => {
       width: 276,
       height: 62,
       x: 1050,
-      y: 60,
+      y: -80,
       style: {
         fontSize: '1.75rem',
         lineHeight: '150%',
@@ -145,7 +145,7 @@ const FallingTags = () => {
       width: 198,
       height: 62,
       x: 400,
-      y: 90,
+      y: -100,
       style: {
         fontSize: '1.75rem',
         lineHeight: '150%',
@@ -169,7 +169,7 @@ const FallingTags = () => {
       width: 139,
       height: 62,
       x: 700,
-      y: 40,
+      y: -220,
       style: {
         fontSize: '1.75rem',
         lineHeight: '150%',
@@ -193,7 +193,7 @@ const FallingTags = () => {
       width: 139,
       height: 62,
       x: 450,
-      y: 70,
+      y: -170,
       style: {
         fontSize: '1.75rem',
         lineHeight: '150%',
@@ -217,7 +217,7 @@ const FallingTags = () => {
       width: 158,
       height: 62,
       x: 900,
-      y: 80,
+      y: -130,
       style: {
         fontSize: '1.75rem',
         lineHeight: '150%',
@@ -237,6 +237,15 @@ const FallingTags = () => {
     },
   ];
 
+  // 預設初始化元素（在物理啟動前就先設定靜態元素）
+  useEffect(() => {
+    const staticElements = initialElements.map(element => ({
+      ...element,
+      type: 'p',
+    }));
+    setElements(staticElements);
+  }, []);
+
   // Intersection Observer 監聽可見性
   useEffect(() => {
     if (!containerRef.current) return;
@@ -251,7 +260,7 @@ const FallingTags = () => {
         });
       },
       {
-        threshold: 0.3, // 當 30% 可見時觸發
+        threshold: 0, // 當 0% 可見時觸發
         rootMargin: '0px 0px -100px 0px' // 提前一點觸發
       }
     );
@@ -301,7 +310,7 @@ const FallingTags = () => {
     // 隱藏 canvas
     render.canvas.style.display = 'none';
 
-    // 創建邊界
+    // 創建邊界 - 擴展上方邊界，讓物體有空間從上方開始
     const ground = Bodies.rectangle(
       CONTAINER_WIDTH / 2, 
       CONTAINER_HEIGHT + WALL_THICKNESS / 2, 
@@ -314,7 +323,7 @@ const FallingTags = () => {
       -WALL_THICKNESS / 2, 
       CONTAINER_HEIGHT / 2, 
       WALL_THICKNESS, 
-      CONTAINER_HEIGHT + WALL_THICKNESS * 2, 
+      CONTAINER_HEIGHT + WALL_THICKNESS * 2 + 300, // 擴展高度
       { isStatic: true, label: 'leftWall' }
     );
 
@@ -322,19 +331,14 @@ const FallingTags = () => {
       CONTAINER_WIDTH + WALL_THICKNESS / 2, 
       CONTAINER_HEIGHT / 2, 
       WALL_THICKNESS, 
-      CONTAINER_HEIGHT + WALL_THICKNESS * 2, 
+      CONTAINER_HEIGHT + WALL_THICKNESS * 2 + 300, // 擴展高度
       { isStatic: true, label: 'rightWall' }
     );
 
-    const ceiling = Bodies.rectangle(
-      CONTAINER_WIDTH / 2, 
-      -WALL_THICKNESS / 2, 
-      CONTAINER_WIDTH + WALL_THICKNESS * 2, 
-      WALL_THICKNESS, 
-      { isStatic: true, label: 'ceiling' }
-    );
+    // 移除上方邊界，讓物體可以從上方自然落下
+    // const ceiling = Bodies.rectangle(...)
 
-    // 創建物理元素
+    // 創建物理元素 - 立即設定元素，讓它們在容器外準備好
     const htmlElements = initialElements.map(element => ({
       ...element,
       type: 'p',
@@ -347,14 +351,15 @@ const FallingTags = () => {
       })
     }));
 
+    // 立即設定元素狀態，讓DOM元素先渲染在正確位置
     setElements(htmlElements);
 
-    // 將所有物體加入世界
+    // 將所有物體加入世界 - 移除天花板讓物體自然落下
     const allBodies = [
       ground,
       leftWall,
       rightWall,
-      ceiling,
+      // 不加入天花板，讓物體從上方自然掉落
       ...htmlElements.map(el => el.body)
     ];
     World.add(engine.world, allBodies);
@@ -427,11 +432,21 @@ const FallingTags = () => {
 
   return (
     <div 
+      className="fallingTags"
       ref={containerRef}
       id="fallingTags"
+      style={{ 
+        width: '100%', 
+        height: '100%', 
+        overflow: 'hidden', 
+        border: '2px solid white',
+        position: 'relative',
+        margin: '0 auto',
+        pointerEvents: 'none',
+      }}
     >
-      {/* 只有在物理啟動後才渲染元素 */}
-      {physicsStarted && elements.map((element) => {
+      {/* 立即渲染元素，不管物理是否啟動，但只有啟動後才有物理效果 */}
+      {elements.map((element) => {
         const Tag = element.type;
         return (
           <Tag
@@ -439,7 +454,9 @@ const FallingTags = () => {
             id={element.id}
             style={{
               position: 'absolute',
-              ...element.style
+              ...element.style,
+              // 確保元素在容器外部時也能正確顯示（溢出隱藏會處理）
+              zIndex: 5,
             }}
           >
             {element.content}

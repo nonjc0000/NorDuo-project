@@ -65,11 +65,14 @@
 
     .album_deco {
         position: absolute;
-        bottom: -65px;
-        right: -50px;
-        width: 264px;
+        bottom: -70px;
+        right: -55px;
+        width: 290px;
         aspect-ratio: 1;
         z-index: -1;
+        img{
+            object-fit: contain;
+        }
     }
 }
 
