@@ -32,4 +32,11 @@
             color: $accent;
         }
     }
+
+    .fallingTags{
+        width: 1440px;
+        height: 900px;
+        overflow: hidden;
+        border: 2px solid $white;
+    }
 }

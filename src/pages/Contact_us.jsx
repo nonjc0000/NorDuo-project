@@ -1,4 +1,5 @@
 import React from 'react'
+import FallingTags from '../components/FallingTags';
 
 const Contact_us = () => {
 
@@ -18,11 +19,12 @@ const Contact_us = () => {
         <div className='contact_wrap'>
             <div className='falling'>
                 <p className='title'>Got a question?</p>
-                {
+                {/* {
                     tags.map(tag => <TagComponent tag={tag} key={tag}/>)
-                }
+                } */}
+                <FallingTags />
             </div>
-            
+
             <div className='carousel'>
                 <span className='carousel_content'>
                     <p>CONTACT US</p>

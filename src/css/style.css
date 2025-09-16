@@ -1294,3 +1294,9 @@ button {
   border: 5px solid #F18888;
   color: #F18888;
 }
+.contact_wrap .fallingTags {
+  width: 1440px;
+  height: 900px;
+  overflow: hidden;
+  border: 2px solid #fff;
+}

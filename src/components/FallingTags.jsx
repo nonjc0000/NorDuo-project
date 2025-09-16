@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Matter from 'matter-js';
 
-const HtmlPhysicsDemo = () => {
+const FallingTags = () => {
   const containerRef = useRef();
   const engineRef = useRef();
   const runnerRef = useRef();
@@ -39,15 +39,15 @@ const HtmlPhysicsDemo = () => {
     render.canvas.style.display = 'none';
 
     // 創建邊界
-    const ground = Bodies.rectangle(400, 600, 800, 20, {
+    const ground = Bodies.rectangle(720, 899, 1440, 20, {
       isStatic: true,
       label: 'ground'
     });
-    const leftWall = Bodies.rectangle(10, 300, 20, 600, {
+    const leftWall = Bodies.rectangle(10, 450, 20, 900, {
       isStatic: true,
       label: 'wall'
     });
-    const rightWall = Bodies.rectangle(800, 300, 20, 600, {
+    const rightWall = Bodies.rectangle(1430, 450, 20, 900, {
       isStatic: true,
       label: 'wall'
     });
@@ -419,45 +419,33 @@ const HtmlPhysicsDemo = () => {
   }, []);
 
   return (
-    <div className="w-full h-full">
-      <div className="mb-4 flex gap-2">
-      </div>
-
-      <div
-        ref={containerRef}
-        // className="relative border-2 border-gray-300 bg-gray-50"
-        style={{ width: '800px', height: '600px', overflow: 'hidden', border: '2px solid white' }}
+    <div className="fallingTags"
+      ref={containerRef}
+      // style={{ width: '1440px', height: '900px', overflow: 'hidden', border: '2px solid white' }}
       >
-        {elements.map((element) => {
-          const Tag = element.type;
-          return (
-            <Tag
-              key={element.id}
-              id={element.id}
-              style={{
-                position: 'absolute',
-                ...element.style
-              }}
-              onClick={(e) => {
-                if (element.type === 'button') {
-                  e.preventDefault();
-                  alert('按鈕被點擊了！即使在物理世界中也能正常工作！');
-                }
-              }}
-            >
-              {element.content}
-            </Tag>
-          );
-        })}
-
-        {/* 顯示邊界指示 */}
-
-        <div className="absolute top-2 left-2 text-sm text-gray-600 bg-white p-2 rounded">
-          提示：拖曳元素移動它們！按鈕仍然可以點擊！
-        </div>
-      </div>
+      {elements.map((element) => {
+        const Tag = element.type;
+        return (
+          <Tag
+            key={element.id}
+            id={element.id}
+            style={{
+              position: 'absolute',
+              ...element.style
+            }}
+            onClick={(e) => {
+              if (element.type === 'button') {
+                e.preventDefault();
+                alert('按鈕被點擊了！即使在物理世界中也能正常工作！');
+              }
+            }}
+          >
+            {element.content}
+          </Tag>
+        );
+      })}
     </div>
   );
 };
 
-export default HtmlPhysicsDemo;
+export default FallingTags;
