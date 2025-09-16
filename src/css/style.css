@@ -3,7 +3,7 @@ body, .Listen_on_Spotify, .more, .creator_controls .sound_selection .sound_numbe
   font-family: "Roboto Mono", "Noto Sans TC", san-serif;
 }
 
-.contact_wrap .tag_component, .shop_wrap .desc_box h1, .shop_wrap .desc_box > p, .shop_wrap .product_container p, .shop_wrap .categories_box > p, .shop_wrap .catagories_item h3, .learning_content_box .text_box .desc_box p, .card1 p,
+.contact_wrap .carousel .carousel_content p, .shop_wrap .desc_box h1, .shop_wrap .desc_box > p, .shop_wrap .product_container p, .shop_wrap .categories_box > p, .shop_wrap .catagories_item h3, .learning_content_box .text_box .desc_box p, .card1 p,
 .card2 p, .songlist_title p, .upper_info_box > p, .bottom_info_box > p, .hero_content .deco_top .deco_rec .rec_text, .hero_content .deco_bottom .deco_battery .battery_label, .creator_header .datetime_info .datetime, .creator_header .datetime_info .earth_date, .creator_header .creation_status .creating_title, .creator_header .creation_status .file_info, .creator_controls .sound_selection .selection_title, .creator_controls .control_panel .control_group .control_label, .creator_controls .control_panel .control_group .sound_toggle, .creator_controls .control_panel .control_group .share_btn, .footer_left small, .nav_item a {
   line-height: 150%;
   letter-spacing: 0.1em;
@@ -1269,34 +1269,70 @@ button {
 }
 
 .contact_wrap {
+  position: relative;
   border: solid 3px #F18888;
-  height: 100vh;
+  height: 900px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 .contact_wrap .falling {
-  height: 80%;
+  position: relative;
+  height: 700px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
 }
 .contact_wrap .falling .title {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   text-align: center;
-  margin: auto 0;
+  font-size: 3.75rem;
+  color: #FFFFFF;
+  margin-bottom: 30px;
 }
-.contact_wrap .tag_component {
+.contact_wrap .carousel {
+  height: 20%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contact_wrap .carousel .carousel_content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
   font-size: 1.75rem;
-  display: inline-block;
-  padding: 10px 30px;
-  background-color: #F18888;
-  border-radius: 999px;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
-.contact_wrap .tag_component:nth-child(2) {
-  padding: 5px 30px;
-  background-color: transparent;
-  border: 5px solid #F18888;
+.contact_wrap .carousel .carousel_content:hover {
   color: #F18888;
+  transform: translateX(5px);
 }
-.contact_wrap .fallingTags {
-  width: 1440px;
-  height: 900px;
-  overflow: hidden;
+.contact_wrap .carousel .carousel_content img {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease;
+}
+.contact_wrap .carousel .carousel_content:hover img {
+  transform: translateX(3px);
+}
+
+#fallingTags {
+  width: 100%;
+  height: 100%;
   border: 2px solid #fff;
+  position: relative;
+  background: transparent;
+  margin: 0 auto;
+  transform: translateZ(0);
+  contain: layout style paint;
 }

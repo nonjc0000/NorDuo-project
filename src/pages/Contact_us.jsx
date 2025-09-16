@@ -3,16 +3,16 @@ import FallingTags from '../components/FallingTags';
 
 const Contact_us = () => {
 
-    const tags = [
-        'BE CREATIVE', 'Improvisation', 'Guitar', 'Keyboard',
-        'Composition', 'Harmony', 'Bass', 'Drum', 'Vocal'
-    ];
+    // const tags = [
+    //     'BE CREATIVE', 'Improvisation', 'Guitar', 'Keyboard',
+    //     'Composition', 'Harmony', 'Bass', 'Drum', 'Vocal'
+    // ];
 
-    const TagComponent = ({ tag }) => {
-        return (
-            <p className='tag_component'>{tag}</p>
-        )
-    }
+    // const TagComponent = ({ tag }) => {
+    //     return (
+    //         <p className='tag_component'>{tag}</p>
+    //     )
+    // }
 
 
     return (

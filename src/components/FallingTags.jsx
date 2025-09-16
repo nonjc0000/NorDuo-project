@@ -7,6 +7,11 @@ const FallingTags = () => {
   const runnerRef = useRef();
   const [elements, setElements] = useState([]);
 
+  // 容器尺寸
+  const CONTAINER_WIDTH = 1440;
+  const CONTAINER_HEIGHT = 700;
+  const WALL_THICKNESS = 20;
+
   useEffect(() => {
     // Matter.js 模組別名
     const Engine = Matter.Engine;
@@ -21,44 +26,82 @@ const FallingTags = () => {
     const engine = Engine.create();
     engineRef.current = engine;
 
+    // 設置重力
+    engine.world.gravity.y = 1;
+
     // 創建隱形渲染器（只用於物理運算，不顯示）
     const render = Render.create({
       element: containerRef.current,
       engine: engine,
       options: {
-        width: 800,
-        height: 600,
-        wireframes: true,
+        width: CONTAINER_WIDTH,
+        height: CONTAINER_HEIGHT,
+        wireframes: false,
         background: 'transparent',
         showVelocity: false,
         showAngleIndicator: false,
+        showDebug: false,
       },
     });
 
     // 隱藏 canvas（我們只用 DOM 元素顯示）
     render.canvas.style.display = 'none';
 
-    // 創建邊界
-    const ground = Bodies.rectangle(720, 899, 1440, 20, {
-      isStatic: true,
-      label: 'ground'
-    });
-    const leftWall = Bodies.rectangle(10, 450, 20, 900, {
-      isStatic: true,
-      label: 'wall'
-    });
-    const rightWall = Bodies.rectangle(1430, 450, 20, 900, {
-      isStatic: true,
-      label: 'wall'
-    });
+    // 創建邊界 - 確保物體不會掉出容器
+    const ground = Bodies.rectangle(
+      CONTAINER_WIDTH / 2, 
+      CONTAINER_HEIGHT + WALL_THICKNESS / 2, 
+      CONTAINER_WIDTH + WALL_THICKNESS * 2, 
+      WALL_THICKNESS, 
+      {
+        isStatic: true,
+        label: 'ground'
+      }
+    );
+
+    const leftWall = Bodies.rectangle(
+      -WALL_THICKNESS / 2, 
+      CONTAINER_HEIGHT / 2, 
+      WALL_THICKNESS, 
+      CONTAINER_HEIGHT + WALL_THICKNESS * 2, 
+      {
+        isStatic: true,
+        label: 'leftWall'
+      }
+    );
+
+    const rightWall = Bodies.rectangle(
+      CONTAINER_WIDTH + WALL_THICKNESS / 2, 
+      CONTAINER_HEIGHT / 2, 
+      WALL_THICKNESS, 
+      CONTAINER_HEIGHT + WALL_THICKNESS * 2, 
+      {
+        isStatic: true,
+        label: 'rightWall'
+      }
+    );
+
+    // 可選：添加頂部邊界防止物體飛出
+    const ceiling = Bodies.rectangle(
+      CONTAINER_WIDTH / 2, 
+      -WALL_THICKNESS / 2, 
+      CONTAINER_WIDTH + WALL_THICKNESS * 2, 
+      WALL_THICKNESS, 
+      {
+        isStatic: true,
+        label: 'ceiling'
+      }
+    );
 
     // 創建一些 HTML 物理元素
     const htmlElements = [
       {
         id: 'Improvisation',
-        body: Bodies.rectangle(200, 31, 315, 62, {
-          restitution: 0.8,
+        body: Bodies.rectangle(200, 100, 315, 62, {
+          restitution: 0.6,
           friction: 0.3,
+          frictionAir: 0.01,
+          density: 0.001,
           label: 'htmlText'
         }),
         type: 'p',
@@ -77,13 +120,16 @@ const FallingTags = () => {
           justifyContent: 'center',
           cursor: 'grab',
           userSelect: 'none',
+          pointerEvents: 'auto',
         }
       },
       {
         id: 'BE CREATIVE',
-        body: Bodies.rectangle(500, 31, 285, 62, {
-          restitution: 0.8,
+        body: Bodies.rectangle(600, 50, 285, 62, {
+          restitution: 0.6,
           friction: 0.3,
+          frictionAir: 0.01,
+          density: 0.001,
           label: 'htmlText'
         }),
         type: 'p',
@@ -103,13 +149,16 @@ const FallingTags = () => {
           justifyContent: 'center',
           cursor: 'grab',
           userSelect: 'none',
+          pointerEvents: 'auto',
         }
       },
       {
         id: 'Guitar',
-        body: Bodies.rectangle(200, 31, 178, 62, {
-          restitution: 0.8,
+        body: Bodies.rectangle(400, 80, 178, 62, {
+          restitution: 0.6,
           friction: 0.3,
+          frictionAir: 0.01,
+          density: 0.001,
           label: 'htmlText'
         }),
         type: 'p',
@@ -128,13 +177,16 @@ const FallingTags = () => {
           justifyContent: 'center',
           cursor: 'grab',
           userSelect: 'none',
+          pointerEvents: 'auto',
         }
       },
       {
         id: 'Keyboard',
-        body: Bodies.rectangle(400, 31, 217, 62, {
-          restitution: 0.8,
+        body: Bodies.rectangle(800, 30, 217, 62, {
+          restitution: 0.6,
           friction: 0.3,
+          frictionAir: 0.01,
+          density: 0.001,
           label: 'htmlText'
         }),
         type: 'p',
@@ -153,13 +205,16 @@ const FallingTags = () => {
           justifyContent: 'center',
           cursor: 'grab',
           userSelect: 'none',
+          pointerEvents: 'auto',
         }
       },
       {
         id: 'Composition',
-        body: Bodies.rectangle(600, 31, 276, 62, {
-          restitution: 0.8,
+        body: Bodies.rectangle(1000, 60, 276, 62, {
+          restitution: 0.6,
           friction: 0.3,
+          frictionAir: 0.01,
+          density: 0.001,
           label: 'htmlText'
         }),
         type: 'p',
@@ -178,13 +233,16 @@ const FallingTags = () => {
           justifyContent: 'center',
           cursor: 'grab',
           userSelect: 'none',
+          pointerEvents: 'auto',
         }
       },
       {
         id: 'Harmony',
-        body: Bodies.rectangle(500, 31, 198, 62, {
-          restitution: 0.8,
+        body: Bodies.rectangle(500, 90, 198, 62, {
+          restitution: 0.6,
           friction: 0.3,
+          frictionAir: 0.01,
+          density: 0.001,
           label: 'htmlText'
         }),
         type: 'p',
@@ -203,13 +261,16 @@ const FallingTags = () => {
           justifyContent: 'center',
           cursor: 'grab',
           userSelect: 'none',
+          pointerEvents: 'auto',
         }
       },
       {
         id: 'Bass',
-        body: Bodies.rectangle(500, 31, 139, 62, {
-          restitution: 0.8,
+        body: Bodies.rectangle(700, 40, 139, 62, {
+          restitution: 0.6,
           friction: 0.3,
+          frictionAir: 0.01,
+          density: 0.001,
           label: 'htmlText'
         }),
         type: 'p',
@@ -228,13 +289,16 @@ const FallingTags = () => {
           justifyContent: 'center',
           cursor: 'grab',
           userSelect: 'none',
+          pointerEvents: 'auto',
         }
       },
       {
         id: 'Drum',
-        body: Bodies.rectangle(700, 31, 139, 62, {
-          restitution: 0.8,
+        body: Bodies.rectangle(500, 70, 139, 62, {
+          restitution: 0.6,
           friction: 0.3,
+          frictionAir: 0.01,
+          density: 0.001,
           label: 'htmlText'
         }),
         type: 'p',
@@ -253,13 +317,16 @@ const FallingTags = () => {
           justifyContent: 'center',
           cursor: 'grab',
           userSelect: 'none',
+          pointerEvents: 'auto',
         }
       },
       {
         id: 'Vocal',
-        body: Bodies.rectangle(600, 31, 158, 62, {
-          restitution: 0.8,
+        body: Bodies.rectangle(900, 80, 158, 62, {
+          restitution: 0.6,
           friction: 0.3,
+          frictionAir: 0.01,
+          density: 0.001,
           label: 'htmlText'
         }),
         type: 'p',
@@ -278,79 +345,9 @@ const FallingTags = () => {
           justifyContent: 'center',
           cursor: 'grab',
           userSelect: 'none',
+          pointerEvents: 'auto',
         }
       },
-
-
-      // {
-      //   id: 'text1',
-      //   body: Bodies.rectangle(300, 50, 120, 40, {
-      //     restitution: 0.6,
-      //     friction: 0.5,
-      //     label: 'htmlText'
-      //   }),
-      //   type: 'p',
-      //   content: 'Hello Physics!',
-      //   style: {
-      //     width: '120px',
-      //     height: '40px',
-      //     backgroundColor: '#4ecdc4',
-      //     color: 'white',
-      //     display: 'flex',
-      //     alignItems: 'center',
-      //     justifyContent: 'center',
-      //     margin: '0',
-      //     padding: '0',
-      //     borderRadius: '20px',
-      //     fontWeight: 'bold',
-      //     cursor: 'grab',
-      //     userSelect: 'none',
-      //   }
-      // },
-      // {
-      //   id: 'button1',
-      //   body: Bodies.rectangle(500, 80, 100, 50, {
-      //     restitution: 0.9,
-      //     friction: 0.2,
-      //     label: 'htmlButton'
-      //   }),
-      //   type: 'button',
-      //   content: 'Click Me!',
-      //   style: {
-      //     width: '100px',
-      //     height: '50px',
-      //     backgroundColor: '#45b7d1',
-      //     color: 'white',
-      //     border: 'none',
-      //     borderRadius: '25px',
-      //     fontSize: '14px',
-      //     fontWeight: 'bold',
-      //     cursor: 'pointer',
-      //   }
-      // },
-      // {
-      //   id: 'circle1',
-      //   body: Bodies.circle(150, 30, 30, {
-      //     restitution: 1.0,
-      //     friction: 0.1,
-      //     label: 'htmlCircle'
-      //   }),
-      //   type: 'div',
-      //   content: '⚽',
-      //   style: {
-      //     width: '60px',
-      //     height: '60px',
-      //     backgroundColor: '#96ceb4',
-      //     color: 'white',
-      //     display: 'flex',
-      //     alignItems: 'center',
-      //     justifyContent: 'center',
-      //     fontSize: '1.5rem',
-      //     borderRadius: '50%',
-      //     cursor: 'grab',
-      //     userSelect: 'none',
-      //   }
-      // }
     ];
 
     setElements(htmlElements);
@@ -360,12 +357,13 @@ const FallingTags = () => {
       ground,
       leftWall,
       rightWall,
+      ceiling,
       ...htmlElements.map(el => el.body)
     ];
     World.add(engine.world, allBodies);
 
     // 添加滑鼠控制
-    const mouse = Mouse.create(document.getElementById('container'));
+    const mouse = Mouse.create(containerRef.current);
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse: mouse,
       constraint: {
@@ -419,10 +417,11 @@ const FallingTags = () => {
   }, []);
 
   return (
-    <div className="fallingTags"
+    <div 
+      // className="fallingTags"
       ref={containerRef}
-      // style={{ width: '1440px', height: '900px', overflow: 'hidden', border: '2px solid white' }}
-      >
+      id="fallingTags"
+    >
       {elements.map((element) => {
         const Tag = element.type;
         return (
@@ -432,14 +431,7 @@ const FallingTags = () => {
             style={{
               position: 'absolute',
               ...element.style
-            }}
-            onClick={(e) => {
-              if (element.type === 'button') {
-                e.preventDefault();
-                alert('按鈕被點擊了！即使在物理世界中也能正常工作！');
-              }
-            }}
-          >
+            }}>
             {element.content}
           </Tag>
         );
