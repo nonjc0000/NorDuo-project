@@ -3,7 +3,7 @@ body, .Listen_on_Spotify, .more, .creator_controls .sound_selection .sound_numbe
   font-family: "Roboto Mono", "Noto Sans TC", san-serif;
 }
 
-.contact_wrap .carousel .carousel_content p, .shop_wrap .desc_box h1, .shop_wrap .desc_box > p, .shop_wrap .product_container p, .shop_wrap .categories_box > p, .shop_wrap .catagories_item h3, .learning_content_box .text_box .desc_box p, .card1 p,
+.contact_wrap .falling .title, .contact_wrap .carousel .carousel_content p, .shop_wrap .desc_box h1, .shop_wrap .desc_box > p, .shop_wrap .product_container p, .shop_wrap .categories_box > p, .shop_wrap .catagories_item h3, .learning_content_box .text_box .desc_box p, .card1 p,
 .card2 p, .songlist_title p, .upper_info_box > p, .bottom_info_box > p, .hero_content .deco_top .deco_rec .rec_text, .hero_content .deco_bottom .deco_battery .battery_label, .creator_header .datetime_info .datetime, .creator_header .datetime_info .earth_date, .creator_header .creation_status .creating_title, .creator_header .creation_status .file_info, .creator_controls .sound_selection .selection_title, .creator_controls .control_panel .control_group .control_label, .creator_controls .control_panel .control_group .sound_toggle, .creator_controls .control_panel .control_group .share_btn, .footer_left small, .nav_item a {
   line-height: 150%;
   letter-spacing: 0.1em;
@@ -1270,8 +1270,7 @@ button {
 
 .contact_wrap {
   position: relative;
-  border: solid 3px #F18888;
-  height: 900px;
+  height: 800px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -1299,39 +1298,64 @@ button {
   z-index: 10;
   pointer-events: none;
 }
-.contact_wrap .carousel {
-  height: 20%;
+.contact_wrap .carousel_box {
+  height: 100px;
   width: 100%;
+  overflow: hidden;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+}
+.contact_wrap .carousel {
+  height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  animation: marquee 40s linear alternate infinite;
+}
+.contact_wrap .carousel:hover {
+  animation-play-state: paused;
+}
+.contact_wrap .carousel:hover img {
+  transform: translateX(3px);
 }
 .contact_wrap .carousel .carousel_content {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  gap: 20px;
-  font-size: 1.75rem;
-  color: #FFFFFF;
+  width: 333px;
+  height: 100%;
+  margin-right: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.contact_wrap .carousel .carousel_content:hover {
-  color: #F18888;
-  transform: translateX(5px);
+.contact_wrap .carousel .carousel_content p {
+  flex-shrink: 0;
+  display: inline-block;
+  font-size: 2.5rem;
+  color: #FFFFFF;
+  margin-right: 20px;
+  white-space: nowrap;
 }
 .contact_wrap .carousel .carousel_content img {
-  width: 24px;
-  height: 24px;
+  flex-shrink: 0;
+  display: inline-block;
+  width: 32px;
+  object-fit: contain;
+  padding-top: 3px;
   transition: all 0.3s ease;
 }
-.contact_wrap .carousel .carousel_content:hover img {
-  transform: translateX(3px);
-}
 
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 #fallingTags {
   width: 100%;
   height: 100%;
-  border: 2px solid #fff;
   position: relative;
   background: transparent;
   margin: 0 auto;

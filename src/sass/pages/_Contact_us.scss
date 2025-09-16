@@ -3,13 +3,14 @@
 
 .contact_wrap {
     position: relative;
-    @include bordered;
-    height: 900px;
+    // @include bordered;
+    height: 800px;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+
 
     .falling {
         position: relative;
@@ -31,76 +32,114 @@
             margin-bottom: $spacing-xl;
             z-index: 10;
             pointer-events: none; // 讓標題不干擾滑鼠事件
+            @extend %line_height_letter_spacing;
         }
     }
 
-    .carousel {
-        height: 20%;
+    .carousel_box {
+        height: 100px;
         width: 100%;
+        overflow: hidden;
+        border-top: 1px solid $white;
+        border-bottom: 1px solid $white;
+    }
+
+    .carousel {
+        // @include bordered($color: green);
+        height: 100%;
+        // width: 100%;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
+        animation: marquee 40s linear alternate infinite;
+
+
+        &:hover {
+            animation-play-state: paused;
+
+            img {
+                transform: translateX(3px);
+            }
+        }
 
         .carousel_content {
             display: flex;
+            justify-content: flex-start;
             align-items: center;
-            gap: $spacing-md;
-            font-size: $f-s-xxl;
-            color: $text;
+            // gap: $spacing-md;
+
+            width: 333px;
+            height: 100%;
+            margin-right: $spacing-xl;
             cursor: pointer;
             transition: all 0.3s ease;
 
-            &:hover {
-                color: $accent;
-                transform: translateX(5px);
-            }
-
             p {
+                flex-shrink: 0;
+                display: inline-block;
+                font-size: $f-s-xxxxxl;
+                color: $text;
                 @extend %line_height_letter_spacing;
+                margin-right: $spacing-md;
+                white-space: nowrap;
             }
 
             img {
-                width: 24px;
-                height: 24px;
+                flex-shrink: 0;
+                display: inline-block;
+                width: 32px;
+                object-fit: contain;
+                padding-top: 3px;
+                // height: 24px;
                 transition: all 0.3s ease;
             }
 
-            &:hover img {
-                transform: translateX(3px);
-            }
+
         }
     }
 }
 
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+
 #fallingTags {
     width: 100%;
     height: 100%;
-    border: 2px solid $white;
+    // border: 2px solid $white;
     position: relative;
+    // bottom: 0;
     background: transparent;
     margin: 0 auto;
     transform: translateZ(0);
     contain: layout style paint;
-    
+
     // 關鍵設置：容器不攔截指針事件，讓滾動穿透
     pointer-events: none;
-    
+
     // 優化滾動體驗
     touch-action: pan-y; // 允許垂直滾動
-    
+
     // 物理元素可以接收事件
     p {
         position: relative;
         z-index: 5;
-        
+
         // 關鍵：重新啟用指針事件
         pointer-events: auto !important;
-        
+
         // 改善拖拽體驗
         &:active {
             cursor: grabbing !important;
         }
-        
+
         // 確保元素可以被選中拖拽
         &:hover {
             cursor: grab;

@@ -1,35 +1,33 @@
 import React from 'react'
 import FallingTags from '../components/FallingTags';
 
+const CarouselItem = () => {
+    return (
+        <span className='carousel_content'>
+            <p>CONTACT US</p>
+            <img src="./images/Contact_us/arrow_up_right.svg" alt="" />
+        </span>
+    )
+}
+
 const Contact_us = () => {
-
-    // const tags = [
-    //     'BE CREATIVE', 'Improvisation', 'Guitar', 'Keyboard',
-    //     'Composition', 'Harmony', 'Bass', 'Drum', 'Vocal'
-    // ];
-
-    // const TagComponent = ({ tag }) => {
-    //     return (
-    //         <p className='tag_component'>{tag}</p>
-    //     )
-    // }
-
 
     return (
         <div className='contact_wrap'>
             <div className='falling'>
-                <p className='title'>Got a question?</p>
-                {/* {
-                    tags.map(tag => <TagComponent tag={tag} key={tag}/>)
-                } */}
+                <h1 className='title'>Got a question?</h1>
                 <FallingTags />
             </div>
 
-            <div className='carousel'>
-                <span className='carousel_content'>
-                    <p>CONTACT US</p>
-                    <img src="./images/Contact_us/arrow_up_right.svg" alt="" />
-                </span>
+            <div className='carousel_box'>
+                <div className='carousel'>
+                    <CarouselItem />
+                    <CarouselItem />
+                    <CarouselItem />
+                    <CarouselItem />
+                    <CarouselItem />
+                    <CarouselItem />
+                </div>
             </div>
         </div>
     )

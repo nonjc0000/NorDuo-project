@@ -427,8 +427,18 @@ const FallingTags = () => {
 
   return (
     <div 
+      className="fallingTags"
       ref={containerRef}
       id="fallingTags"
+      style={{ 
+        width: '100%', 
+        height: '100%', 
+        overflow: 'hidden', 
+        border: '2px solid white',
+        position: 'relative',
+        margin: '0 auto',
+        pointerEvents: 'none',
+      }}
     >
       {/* 只有在物理啟動後才渲染元素 */}
       {physicsStarted && elements.map((element) => {
