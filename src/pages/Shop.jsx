@@ -11,7 +11,7 @@ const Shop = () => {
                 <p>Find Your Sound.<br />Play Your Style.</p>
                 <div className='product_container'>
                 <figure className='product_box'>
-                    <img src="/images/shop/guitar.png" alt="" />
+                    <img src="./images/shop/guitar.png" alt="" />
                 </figure>
                 <p>Foundwave Player II Terecaster </p>
                 </div>
