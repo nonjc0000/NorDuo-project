@@ -10,6 +10,7 @@ const FallingTags = () => {
   const [elements, setElements] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
   const [physicsStarted, setPhysicsStarted] = useState(false);
+  const [shouldRenderElements, setShouldRenderElements] = useState(false);
 
   // 容器尺寸
   const CONTAINER_WIDTH = 1440;
@@ -47,7 +48,7 @@ const FallingTags = () => {
       content: 'BE CREATIVE',
       width: 285,
       height: 62,
-      x: 600,
+      x: 720,
       y: -200, // 在容器上方開始
       style: {
         fontSize: '1.75rem',
@@ -96,7 +97,7 @@ const FallingTags = () => {
       content: 'Keyboard',
       width: 217,
       height: 62,
-      x: 800,
+      x: 1120,
       y: -250,
       style: {
         fontSize: '1.75rem',
@@ -144,7 +145,7 @@ const FallingTags = () => {
       content: 'Harmony',
       width: 198,
       height: 62,
-      x: 400,
+      x: 500,
       y: -100,
       style: {
         fontSize: '1.75rem',
@@ -168,7 +169,7 @@ const FallingTags = () => {
       content: 'Bass',
       width: 139,
       height: 62,
-      x: 700,
+      x: 860,
       y: -220,
       style: {
         fontSize: '1.75rem',
@@ -216,7 +217,7 @@ const FallingTags = () => {
       content: 'Vocal',
       width: 158,
       height: 62,
-      x: 900,
+      x: 1170,
       y: -130,
       style: {
         fontSize: '1.75rem',
@@ -236,15 +237,6 @@ const FallingTags = () => {
       }
     },
   ];
-
-  // 預設初始化元素（在物理啟動前就先設定靜態元素）
-  useEffect(() => {
-    const staticElements = initialElements.map(element => ({
-      ...element,
-      type: 'p',
-    }));
-    setElements(staticElements);
-  }, []);
 
   // Intersection Observer 監聽可見性
   useEffect(() => {
@@ -328,7 +320,7 @@ const FallingTags = () => {
     );
 
     const rightWall = Bodies.rectangle(
-      CONTAINER_WIDTH + WALL_THICKNESS / 2, 
+      CONTAINER_WIDTH + WALL_THICKNESS / 2 - 110, 
       CONTAINER_HEIGHT / 2, 
       WALL_THICKNESS, 
       CONTAINER_HEIGHT + WALL_THICKNESS * 2 + 300, // 擴展高度
@@ -336,7 +328,6 @@ const FallingTags = () => {
     );
 
     // 移除上方邊界，讓物體可以從上方自然落下
-    // const ceiling = Bodies.rectangle(...)
 
     // 創建物理元素 - 立即設定元素，讓它們在容器外準備好
     const htmlElements = initialElements.map(element => ({
@@ -351,8 +342,13 @@ const FallingTags = () => {
       })
     }));
 
-    // 立即設定元素狀態，讓DOM元素先渲染在正確位置
+    // 立即設定元素狀態
     setElements(htmlElements);
+    
+    // 短暫延遲後再顯示元素，讓物理引擎有時間初始化
+    setTimeout(() => {
+      setShouldRenderElements(true);
+    }, 100);
 
     // 將所有物體加入世界 - 移除天花板讓物體自然落下
     const allBodies = [
@@ -435,18 +431,9 @@ const FallingTags = () => {
       className="fallingTags"
       ref={containerRef}
       id="fallingTags"
-      style={{ 
-        width: '100%', 
-        height: '100%', 
-        overflow: 'hidden', 
-        border: '2px solid white',
-        position: 'relative',
-        margin: '0 auto',
-        pointerEvents: 'none',
-      }}
     >
-      {/* 立即渲染元素，不管物理是否啟動，但只有啟動後才有物理效果 */}
-      {elements.map((element) => {
+      {/* 只有在應該渲染元素時才渲染，避免初始閃爍 */}
+      {shouldRenderElements && elements.map((element) => {
         const Tag = element.type;
         return (
           <Tag
@@ -457,6 +444,9 @@ const FallingTags = () => {
               ...element.style,
               // 確保元素在容器外部時也能正確顯示（溢出隱藏會處理）
               zIndex: 5,
+              // 初始透明度設為 0，通過 CSS 動畫漸現
+              opacity: physicsStarted ? 1 : 0,
+              transition: 'opacity 0.3s ease-in-out'
             }}
           >
             {element.content}
@@ -464,21 +454,6 @@ const FallingTags = () => {
         );
       })}
       
-      {/* 在物理效果啟動前顯示靜態內容 */}
-      {!physicsStarted && (
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          color: 'white',
-          fontSize: '1.5rem',
-          textAlign: 'center',
-          pointerEvents: 'none'
-        }}>
-          {/* 可以在這裡放一些預覽內容或載入提示 */}
-        </div>
-      )}
     </div>
   );
 };
