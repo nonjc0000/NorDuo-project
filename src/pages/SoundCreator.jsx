@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 const SoundCreator = () => {
+    const soundCreatorRef = useRef(null);
+
     const [selectedSound, setSelectedSound] = useState(1)
     const [isPlaying, setIsPlaying] = useState(false)
 
@@ -15,7 +17,7 @@ const SoundCreator = () => {
     }
 
     return (
-        <div className='sound_creator_content_wrap'>
+        <div className='sound_creator_content_wrap' ref={soundCreatorRef}>
             <div className='sound_deco_left'>
                 <img className='left1' src="./images/SoundCreator/left-deco1.svg" alt="" />
                 <img className='left2' src="./images/SoundCreator/left-deco2.svg" alt="" />

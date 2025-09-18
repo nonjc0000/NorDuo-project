@@ -1,6 +1,16 @@
 import React from 'react'
 
 const Footer = () => {
+
+  // 捲動到頂
+  function gotoSoundCreator() {
+    window.scrollTo({
+      top: soundCreatorRef.current.offsetTop,
+      behavior: 'smooth'
+    })
+  }
+
+
   return (
     <div className='footer_wrap'>
       <div className='footer_left'>
@@ -10,7 +20,7 @@ const Footer = () => {
         </div>
         <div className='footer_down_left'>
           <ul className='socials'>
-            <li><a className='icon-fb' href="#"></a></li> 
+            <li><a className='icon-fb' href="#"></a></li>
             <li><a className='icon-ig' href="#"></a></li>
             <li><a className='icon-spotify' href="#"></a></li>
             <li><a className='icon-soundcloud' href="#"></a></li>
@@ -21,7 +31,7 @@ const Footer = () => {
       </div>
       <div className='footer_right'>
         <figure className='arrow'>
-          <img src="./images/Footer/arrow.svg" alt="" />
+          <img src="./images/Footer/arrow.svg" alt="" onClick={gotoSoundCreator} />
         </figure>
       </div>
     </div>
