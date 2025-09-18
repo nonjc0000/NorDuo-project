@@ -45,6 +45,8 @@
     padding: $spacing-xs $spacing-xxxl $spacing-xxxl;
     background-image: url('/images/SoundCreator/hud-bg.png');
     background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     color: $text;
     display: flex;
     flex-direction: column;
@@ -53,7 +55,19 @@
     overflow: hidden;
 }
 
+.sound_creator_vid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    filter: brightness(.8);
+    mix-blend-mode: screen;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .creator_header {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -119,6 +133,7 @@
 
 
 .creator_controls {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -216,16 +231,16 @@
                 cursor: pointer;
                 // transition: all .3s ease;
 
-                rect{
+                rect {
                     stroke: $accent;
                 }
 
-                circle{
+                circle {
                     fill: $accent;
                     transition: all .2s ease
                 }
 
-                svg{
+                svg {
                     transition: all .3s ease;
                 }
 

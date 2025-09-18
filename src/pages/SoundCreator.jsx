@@ -24,6 +24,7 @@ const SoundCreator = () => {
                 <img className='left3' src="./images/SoundCreator/left-deco3.svg" alt="" />
             </div>
             <div className='sound_creator_wrap'>
+                <video src="./videos/noise.mp4" autoPlay loop muted playsInline className='sound_creator_vid' />
                 <div className='creator_header'>
                     <div className='datetime_info'>
                         <p className='datetime'>2025.08.11 MON 21:50</p>
