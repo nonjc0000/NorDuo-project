@@ -3,9 +3,9 @@ import React from 'react'
 const Footer = () => {
 
   // 捲動到頂
-  function gotoSoundCreator() {
+  function gotoTop() {
     window.scrollTo({
-      top: soundCreatorRef.current.offsetTop,
+      top: 0,
       behavior: 'smooth'
     })
   }
@@ -31,7 +31,7 @@ const Footer = () => {
       </div>
       <div className='footer_right'>
         <figure className='arrow'>
-          <img src="./images/Footer/arrow.svg" alt="" onClick={gotoSoundCreator} />
+          <img src="./images/Footer/arrow.svg" alt="" onClick={gotoTop} />
         </figure>
       </div>
     </div>

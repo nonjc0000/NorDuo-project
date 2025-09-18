@@ -7,26 +7,43 @@ import Learning from './Learning';
 import Shop from './Shop';
 import Contact_us from './Contact_us';
 
-const Home = () => {
+const Home = ({ refs }) => {
   
-  const heroRef = useRef(null);
-  const about_usRef = useRef(null);
-  const latest_releaseRef = useRef(null);
-  const learningeRef = useRef(null);
-  const shopRef = useRef(null);
-  const contact_usRef = useRef(null);
+  const {
+    soundCreatorRef,
+    heroRef,
+    aboutUsRef,
+    latestReleaseRef,
+    learningRef,
+    shopRef,
+    contactUsRef
+  } = refs;
 
   return (
     <>
-      <SoundCreator />
-      <HeroSection />
-      <About_us />
-      <Latest_release />
-      <Learning />
-      <Shop/>
-      <Contact_us/>
+      <div ref={soundCreatorRef}>
+        <SoundCreator />
+      </div>
+      <div ref={heroRef}>
+        <HeroSection />
+      </div>
+      <div ref={aboutUsRef}>
+        <About_us />
+      </div>
+      <div ref={latestReleaseRef}>
+        <Latest_release />
+      </div>
+      <div ref={learningRef}>
+        <Learning />
+      </div>
+      <div ref={shopRef}>
+        <Shop />
+      </div>
+      <div ref={contactUsRef}>
+        <Contact_us />
+      </div>
     </>
   )
 }
 
-export default Home
+export default Home;
