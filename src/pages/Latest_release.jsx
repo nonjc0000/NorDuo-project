@@ -1,17 +1,5 @@
 import React from 'react'
-
-const SongCard = () => {
-    return (
-        <div className='SongCard_wrap'>
-            <button className='play_btn'></button> {/* bg-img切換樣式 */}
-            <div className='text_box'>
-                <h3>Songtitle</h3>
-                <p>desc</p>
-            </div>
-            <p>3:52</p>
-        </div>
-    )
-}
+import SongCard from '../components/SongCard'
 
 const Latest_release = () => {
     return (
@@ -33,7 +21,7 @@ const Latest_release = () => {
                         <p>an intimate, after-hours soundtrack</p>
                     </div>
                     <div className="songlist_items">
-                        <SongCard />
+                        <SongCard audioSrc='./audios/Is_This_It.mp3' />
                         <SongCard />
                         <SongCard />
                         <SongCard />
