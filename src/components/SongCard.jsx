@@ -16,6 +16,11 @@ const SongCard = ({ songTitle, desc, audioSrc }) => {
         setDuration(audioRef.current.duration);
     }
 
+    // handle when metadata is loaded (duration included)
+    const handleLoadedMetadata = () => {
+        setDuration(audioRef.current.duration);
+    }
+
     // format duration
     const formatDuration = (durationSeconds) => {
         const minutes = Math.floor(durationSeconds / 60);
@@ -50,17 +55,24 @@ const SongCard = ({ songTitle, desc, audioSrc }) => {
 
     // listen for time update
     useEffect(() => {
-        audioRef.current.addEventListener('timeupdate', handleTimeUpdate);
+        const audio = audioRef.current;
 
-        // clean up the eventListener when component unmount
+        // 監聽 timeupdate 事件
+        audio.addEventListener('timeupdate', handleTimeUpdate);
+
+        // 監聽 loadedmetadata 事件 - 這會在 duration 可用時觸發
+        audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+
+        // clean up the eventListeners when component unmount
         return () => {
-            audioRef.current.removeEventListener('timeupdate', handleTimeUpdate)
+            audio.removeEventListener('timeupdate', handleTimeUpdate);
+            audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
         };
     }, []);
 
     return (
         <div className='SongCard_wrap'>
-            <audio ref={audioRef} src={audioSrc} />
+            <audio ref={audioRef} src={audioSrc} preload="metadata"/>
             <button className={
                 isPlaying ? 'play_btn pause' : 'play_btn play'
             } onClick={handlePlayPause}>
@@ -71,9 +83,9 @@ const SongCard = ({ songTitle, desc, audioSrc }) => {
             </div>
             <p>
                 {
-                    isPlaying? 
-                    formatDuration(currentTime) : 
-                    formatDuration(duration)
+                    isPlaying ?
+                        formatDuration(currentTime) :
+                        formatDuration(duration)
                 }
             </p>
         </div>
