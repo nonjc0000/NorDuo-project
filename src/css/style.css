@@ -918,7 +918,7 @@ button {
 .SongCard_wrap .play_btn:hover {
   background-image: url("/images/Latest_release/play_icon_hover.svg");
 }
-.SongCard_wrap .play_btn:active {
+.SongCard_wrap .play_btn .pause {
   background-image: url("/images/Latest_release/pause_icon.svg");
 }
 .SongCard_wrap .text_box {

@@ -8,19 +8,18 @@ const SongCard = ({audioSrc}) => {
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
 
-    const audioRef = useRef(null);
+    // const audioRef = useRef(null);
 
     return (
         <div className='SongCard_wrap'>
-            <audio ref={audioRef} src={audioSrc} />
-            <button className='play_btn' onClick={handlePlayPause}>
-                
+            {/* <audio ref={audioRef} src={audioSrc} /> */}
+            <button className='play_btn pause' /* onClick={handlePlayPause} */>
                 </button> {/* bg-img切換樣式 */}
             <div className='text_box'>
                 <h3>Songtitle</h3>
-                <p>{duration}</p>
+                <p>desc</p>
             </div>
-            <p>3:52</p>
+            <p>{duration}</p>
         </div>
     )
 }
