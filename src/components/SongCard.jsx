@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-const SongCard = ({ audioSrc }) => {
+const SongCard = ({ songTitle, desc, audioSrc }) => {
 
     // playing state
 
@@ -17,7 +17,7 @@ const SongCard = ({ audioSrc }) => {
     }
 
     // format duration
-    function formatDuration(durationSeconds) {
+    const formatDuration = (durationSeconds) => {
         const minutes = Math.floor(durationSeconds / 60);
         const seconds = Math.floor(durationSeconds % 60);
         const formattedSeconds = seconds.toString().padStart(2, "0");
@@ -66,10 +66,16 @@ const SongCard = ({ audioSrc }) => {
             } onClick={handlePlayPause}>
             </button> {/* bg-img切換樣式 */}
             <div className='text_box'>
-                <h3>Songtitle</h3>
-                <p>desc</p>
+                <h3>{songTitle}</h3>
+                <p>{desc}</p>
             </div>
-            <p>{formatDuration(duration)}</p>
+            <p>
+                {
+                    isPlaying? 
+                    formatDuration(currentTime) : 
+                    formatDuration(duration)
+                }
+            </p>
         </div>
     )
 }

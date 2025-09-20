@@ -1,7 +1,36 @@
 import React from 'react'
 import SongCard from '../components/SongCard'
 
+const neonAtticSongs = [
+    {
+        songTitle: "Midnight Glow",
+        desc: "A dreamy opener.",
+        audioSrc: "./audios/midnightGlow.mp3"
+    },
+    {
+        songTitle: "Velvet Shadows",
+        desc: "An intimate ballad.",
+        audioSrc: "./audios/VelvetShadows.mp3"
+    },
+    {
+        songTitle: "Electric Dreams",
+        desc: "A nostalgic journey.",
+        audioSrc: "./audios/ElectricDreams.mp3"
+    },
+    {
+        songTitle: "Whispers in the Static",
+        desc: "In an empty room.",
+        audioSrc: "./audios/WhispersInTheStatic.mp3"
+    },
+    {
+        songTitle: "Dawn's Edge",
+        desc: "From night to early morning light.",
+        audioSrc: "./audios/DawnsEdge.mp3"
+    }
+];
+
 const Latest_release = () => {
+
     return (
         <div className="latest_release_wrap">
             <div className="latest_release_content">
@@ -21,11 +50,9 @@ const Latest_release = () => {
                         <p>an intimate, after-hours soundtrack</p>
                     </div>
                     <div className="songlist_items">
-                        <SongCard audioSrc='./audios/Is_This_It.mp3' />
-                        <SongCard />
-                        <SongCard />
-                        <SongCard />
-                        <SongCard />
+                        {
+                            neonAtticSongs.map(song => <SongCard {...song}/>)
+                        }
                     </div>
                     <div className="btn_box">
                         <button className='Listen_on_Spotify'>
