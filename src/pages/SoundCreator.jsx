@@ -48,11 +48,11 @@ const SoundCreator = () => {
     // 狀態管理
     const [isInitialized, setIsInitialized] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [loadingProgress, setLoadingProgress] = useState(0);
     const [isGlobalMuted, setIsGlobalMuted] = useState(false);
     const [globalVolume, setGlobalVolume] = useState(GLOBAL_SETTINGS.masterVolume);
     const [errorSounds, setErrorSounds] = useState(new Set());
-    const [selectedSound, setSelectedSound] = useState(null); // 當前選中的音效
+    const [currentDateTime, setCurrentDateTime] = useState(new Date()); // 日期state
+    const [isCopied, setIsCopied] = useState(false);
 
     const [soundStates, setSoundStates] = useState(() => {
         const states = {};
@@ -160,8 +160,6 @@ const SoundCreator = () => {
     // 初始化單個音頻
     const initializeSound = useCallback(async (soundConfig, index) => {
         try {
-            // 更新載入進度
-            setLoadingProgress(Math.round((index / AUDIO_CONFIG.length) * 100));
 
             const audioBuffer = await loadAudioFile(soundConfig);
             const audioNodes = createAudioNode(soundConfig, audioBuffer);
@@ -196,7 +194,6 @@ const SoundCreator = () => {
         if (isInitialized) return;
 
         setIsLoading(true);
-        setLoadingProgress(0);
         setErrorSounds(new Set());
 
         try {
@@ -228,7 +225,6 @@ const SoundCreator = () => {
             const successful = results.filter(result => result.status === 'fulfilled' && result.value).length;
             const failed = results.length - successful;
 
-            setLoadingProgress(100);
             setIsInitialized(true);
 
             console.log(`✅ 音頻系統初始化完成! 成功: ${successful}, 失敗: ${failed}`);
@@ -325,7 +321,7 @@ const SoundCreator = () => {
         }
     }, [isGlobalMuted, soundStates]);
 
-    // 隨機切換音效（新增功能）
+    // 隨機切換音效
     const randomizeSounds = useCallback(() => {
         if (!isInitialized) return;
 
@@ -356,6 +352,56 @@ const SoundCreator = () => {
         };
     }, []);
 
+    // 格式化日期時間的函數
+    const formatDateTime = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        const weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+        const weekday = weekdays[date.getDay()];
+
+        return `${year}.${month}.${day} ${weekday} ${hours}:${minutes}`;
+    };
+
+    // 更新時間的 useEffect
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentDateTime(new Date());
+        }, 1000); // 每秒更新一次
+
+        return () => clearInterval(timer);
+    }, []);
+
+    // 複製URL的函數
+    const handleShare = async () => {
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            setIsCopied(true);
+
+            // 2秒後恢復原始文字
+            setTimeout(() => {
+                setIsCopied(false);
+            }, 2000);
+        } catch (error) {
+            console.error('複製失敗:', error);
+            // 如果複製失敗，可以用舊方法
+            const textArea = document.createElement('textarea');
+            textArea.value = window.location.href;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+
+            setIsCopied(true);
+            setTimeout(() => {
+                setIsCopied(false);
+            }, 2000);
+        }
+    };
+
     return (
         <div className='sound_creator_content_wrap'>
 
@@ -364,37 +410,51 @@ const SoundCreator = () => {
                 <img className='left2' src="./images/SoundCreator/left-deco2.svg" alt="" />
                 <img className='left3' src="./images/SoundCreator/left-deco3.svg" alt="" />
             </div>
-            
+
             <div className='sound_creator_wrap'>
                 <video src="./videos/noise.mp4" autoPlay loop muted playsInline className='sound_creator_vid' />
-                
+
                 <div className='creator_header'>
                     <div className='datetime_info'>
-                        <p className='datetime'>2025.08.11 MON 21:50</p>
+                        <p className='datetime'>{formatDateTime(currentDateTime)}</p>
                         <p className='earth_date'>Earth date</p>
-                        <input
-                            type="range"
-                            min="0"
-                            max="100"
-                            value={globalVolume}
-                            onChange={(e) => handleGlobalVolumeChange(parseInt(e.target.value))}
-                            disabled={!isInitialized}
-                            style={{ marginTop: '10px' }}
-                        />
-                        <span>{globalVolume}%</span>
-                        
+                        <div className='signal_bars' style={{ marginTop: '10px' }}>
+                            {Array.from({ length: 10 }, (_, index) => {
+                                const barLevel = (index + 1) * 10;
+                                const isActive = globalVolume >= barLevel;
+                                return (
+                                    <span
+                                        key={index}
+                                        className="bar"
+                                        style={{
+                                            backgroundColor: isActive ? '#F18888' : '#adb5bd',
+                                            opacity: isActive ? 1 : 0.3,
+                                            cursor: isInitialized ? 'pointer' : 'not-allowed',
+                                            transition: 'all 0.2s ease'
+                                        }}
+                                        onClick={() => {
+                                            if (isInitialized) {
+                                                handleGlobalVolumeChange(barLevel);
+                                            }
+                                        }}
+                                    />
+                                );
+                            })}
+                            <p>Volume: {globalVolume}%</p>
+                        </div>
+
                         {/* 錯誤提示 */}
                         {errorSounds.size > 0 && (
-                            <div style={{ 
-                                marginTop: '10px', 
-                                fontSize: '0.8rem', 
-                                color: '#ff6b6b' 
+                            <div style={{
+                                marginTop: '10px',
+                                fontSize: '0.8rem',
+                                color: '#ff6b6b'
                             }}>
                                 ⚠️ {errorSounds.size} 個音頻載入失敗
                             </div>
                         )}
                     </div>
-                    
+
                     <div className='creation_status'>
                         <h2 className='creating_title'>
                             {isInitialized ? 'Creating...' : 'Waiting...'}
@@ -411,7 +471,7 @@ const SoundCreator = () => {
                                 {AUDIO_CONFIG.map((sound) => {
                                     const isActive = isInitialized && !soundStates[sound.id].isMuted && !isGlobalMuted;
                                     const hasError = soundStates[sound.id].hasError;
-                                    
+
                                     return (
                                         <button
                                             key={sound.id}
@@ -429,7 +489,7 @@ const SoundCreator = () => {
                                 })}
                             </div>
                         </div>
-                        
+
                         <div className='sound_visualizer'>
                             <div className='visualizer_bars'>
                                 <span className='vis_bar'></span>
@@ -444,7 +504,7 @@ const SoundCreator = () => {
                     <div className='control_panel'>
                         <div className='control_group'>
                             <h4 className='control_label'>Random</h4>
-                            <button 
+                            <button
                                 className='random_btn'
                                 onClick={randomizeSounds}
                                 disabled={!isInitialized}
@@ -473,34 +533,18 @@ const SoundCreator = () => {
 
                         <div className='control_group'>
                             <h4 className='control_label'>Share</h4>
-                            <button 
+                            <button
                                 className='share_btn'
-                                onClick={() => {
-                                    const activeTrackNumbers = AUDIO_CONFIG
-                                        .filter(sound => !soundStates[sound.id].isMuted && !isGlobalMuted)
-                                        .map(sound => sound.displayNumber);
-                                    
-                                    if (activeTrackNumbers.length > 0) {
-                                        const shareText = `正在播放音軌: ${activeTrackNumbers.join(', ')}`;
-                                        if (navigator.share) {
-                                            navigator.share({ text: shareText });
-                                        } else {
-                                            navigator.clipboard.writeText(shareText);
-                                            alert('分享內容已複製到剪貼板！');
-                                        }
-                                    } else {
-                                        alert('沒有播放中的音軌可分享');
-                                    }
-                                }}
+                                onClick={handleShare}
                                 disabled={!isInitialized}
                             >
-                                Link
+                                {isCopied ? 'Copied!' : 'Link'}
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div className='sound_deco_right'>
                 <img src="./images/SoundCreator/right-deco.svg" alt="" />
             </div>

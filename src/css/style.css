@@ -382,7 +382,7 @@ button {
   font-size: 1.75rem;
   color: #F18888;
   margin-bottom: 10px;
-  border: 3px solid #F18888;
+  border: 6px double #F18888;
   padding: 10px 20px;
   border-radius: 5px;
 }

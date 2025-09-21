@@ -117,7 +117,7 @@
             @extend %line_height_letter_spacing;
             color: $accent;
             margin-bottom: $spacing-xs;
-            border: 3px solid $accent;
+            border: 6px double $accent;
             padding: $spacing-xs $spacing-md;
             border-radius: $rad-basic-sm;
         }

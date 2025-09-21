@@ -51,7 +51,7 @@ const Latest_release = () => {
                     </div>
                     <div className="songlist_items">
                         {
-                            neonAtticSongs.map(song => <SongCard {...song}/>)
+                            neonAtticSongs.map(song => <SongCard {...song} key={song.songTitle}/>)
                         }
                     </div>
                     <div className="btn_box">
