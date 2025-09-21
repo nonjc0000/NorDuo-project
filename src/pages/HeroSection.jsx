@@ -139,7 +139,7 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* 電池指示器*/}
+          {/* 電池指示器 */}
           <motion.div 
             className="deco_battery"
             style={{
