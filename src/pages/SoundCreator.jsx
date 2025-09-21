@@ -45,14 +45,14 @@ const GLOBAL_SETTINGS = {
 };
 
 const SoundCreator = () => {
-
     // 狀態管理
-    const [isInitialized, setIsInitialized] = useState(false);
+    const [isPreloaded, setIsPreloaded] = useState(false); // 音頻是否已預載
+    const [isPlaying, setIsPlaying] = useState(false); // 是否正在播放
     const [isLoading, setIsLoading] = useState(false);
     const [isGlobalMuted, setIsGlobalMuted] = useState(false);
     const [globalVolume, setGlobalVolume] = useState(GLOBAL_SETTINGS.masterVolume);
     const [errorSounds, setErrorSounds] = useState(new Set());
-    const [currentDateTime, setCurrentDateTime] = useState(new Date()); // 日期state
+    const [currentDateTime, setCurrentDateTime] = useState(new Date());
     const [isCopied, setIsCopied] = useState(false);
 
     const [soundStates, setSoundStates] = useState(() => {
@@ -62,7 +62,6 @@ const SoundCreator = () => {
                 isMuted: false,
                 volume: GLOBAL_SETTINGS.defaultVolume,
                 isLoaded: false,
-                isPlaying: false,
                 hasError: false,
             };
         });
@@ -72,15 +71,15 @@ const SoundCreator = () => {
     // Web Audio API 引用
     const audioContextRef = useRef(null);
     const masterGainRef = useRef(null);
-    const soundNodesRef = useRef(new Map());
+    const audioBuffersRef = useRef(new Map()); // 存儲預載的音頻緩衝區
+    const soundNodesRef = useRef(new Map()); // 存儲播放節點
 
+    // 載入音頻文件但不播放
     const loadAudioFile = useCallback(async (soundConfig) => {
         try {
             console.log(`🔄 正在載入音頻: ${soundConfig.name} (${soundConfig.audioUrl})`);
 
-            // 檢查文件是否存在
             const response = await fetch(soundConfig.audioUrl);
-
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
@@ -91,20 +90,20 @@ const SoundCreator = () => {
             }
 
             const arrayBuffer = await response.arrayBuffer();
-
             if (arrayBuffer.byteLength === 0) {
                 throw new Error('音頻文件為空');
             }
 
             const audioBuffer = await audioContextRef.current.decodeAudioData(arrayBuffer);
-
             console.log(`✅ 音頻載入成功: ${soundConfig.name} (時長: ${audioBuffer.duration.toFixed(1)}秒)`);
+            
+            // 存儲音頻緩衝區，但不播放
+            audioBuffersRef.current.set(soundConfig.id, audioBuffer);
+            
             return audioBuffer;
 
         } catch (error) {
             console.error(`❌ 音頻載入失敗: ${soundConfig.name}`, error);
-
-            // 記錄錯誤
             setErrorSounds(prev => new Set([...prev, soundConfig.id]));
             setSoundStates(prev => ({
                 ...prev,
@@ -113,13 +112,73 @@ const SoundCreator = () => {
                     hasError: true
                 }
             }));
-
             throw error;
         }
     }, []);
 
-    // 創建音頻節點
-    const createAudioNode = useCallback((soundConfig, audioBuffer) => {
+    // 預載所有音頻文件
+    const preloadAllAudio = useCallback(async () => {
+        if (isPreloaded) return;
+
+        setIsLoading(true);
+        setErrorSounds(new Set());
+
+        try {
+            console.log('🎵 開始預載音頻系統...');
+
+            // 創建 AudioContext
+            audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
+            
+            // 創建主音量節點
+            masterGainRef.current = audioContextRef.current.createGain();
+            masterGainRef.current.connect(audioContextRef.current.destination);
+            masterGainRef.current.gain.value = globalVolume / 100;
+
+            console.log(`🎛️ AudioContext 創建成功 (狀態: ${audioContextRef.current.state})`);
+
+            // 並行載入所有音頻文件
+            const loadPromises = AUDIO_CONFIG.map(sound => loadAudioFile(sound));
+            const results = await Promise.allSettled(loadPromises);
+
+            // 統計載入結果
+            const successful = results.filter(result => result.status === 'fulfilled').length;
+            const failed = results.length - successful;
+
+            if (successful > 0) {
+                // 更新成功載入的音頻狀態
+                AUDIO_CONFIG.forEach(sound => {
+                    if (audioBuffersRef.current.has(sound.id)) {
+                        setSoundStates(prev => ({
+                            ...prev,
+                            [sound.id]: {
+                                ...prev[sound.id],
+                                isLoaded: true,
+                                hasError: false
+                            }
+                        }));
+                    }
+                });
+
+                setIsPreloaded(true);
+                console.log(`✅ 音頻預載完成! 成功: ${successful}, 失敗: ${failed}`);
+            } else {
+                throw new Error('沒有任何音頻文件載入成功');
+            }
+
+            if (failed > 0) {
+                console.warn(`⚠️ ${failed} 個音頻文件載入失敗，請檢查文件路徑`);
+            }
+
+        } catch (error) {
+            console.error('❌ 音頻預載失敗:', error);
+            alert(`音頻預載失敗: ${error.message}`);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [isPreloaded, globalVolume, loadAudioFile]);
+
+    // 創建音頻播放節點
+    const createPlaybackNode = useCallback((soundId, audioBuffer) => {
         try {
             const source = audioContextRef.current.createBufferSource();
             const gainNode = audioContextRef.current.createGain();
@@ -127,124 +186,117 @@ const SoundCreator = () => {
             source.buffer = audioBuffer;
             source.loop = true;
 
-            // 計算最終音量
-            const soundVolume = soundStates[soundConfig.id].volume / 100;
-            const isMuted = soundStates[soundConfig.id].isMuted || isGlobalMuted;
+            // 計算初始音量
+            const soundVolume = soundStates[soundId].volume / 100;
+            const isMuted = soundStates[soundId].isMuted || isGlobalMuted;
             const finalVolume = isMuted ? 0 : soundVolume * (globalVolume / 100);
 
-            // 設置音量（支援淡入效果）
-            if (GLOBAL_SETTINGS.enableCrossfade) {
-                gainNode.gain.setValueAtTime(0, audioContextRef.current.currentTime);
-                gainNode.gain.linearRampToValueAtTime(
-                    finalVolume,
-                    audioContextRef.current.currentTime + GLOBAL_SETTINGS.fadeInDuration / 1000
-                );
-            } else {
-                gainNode.gain.value = finalVolume;
-            }
+            // 設置音量
+            gainNode.gain.setValueAtTime(finalVolume, audioContextRef.current.currentTime);
 
             // 連接音頻圖
             source.connect(gainNode);
             gainNode.connect(masterGainRef.current);
 
-            // 開始播放
-            source.start();
-
+            console.log(`🎵 創建播放節點: ${soundId}, 音量: ${finalVolume}`);
             return { source, gainNode, audioBuffer };
 
         } catch (error) {
-            console.error(`❌ 創建音頻節點失敗: ${soundConfig.name}`, error);
+            console.error(`❌ 創建播放節點失敗: ${soundId}`, error);
             throw error;
         }
     }, [soundStates, isGlobalMuted, globalVolume]);
 
-    // 初始化單個音頻
-    const initializeSound = useCallback(async (soundConfig, index) => {
-        try {
-
-            const audioBuffer = await loadAudioFile(soundConfig);
-            const audioNodes = createAudioNode(soundConfig, audioBuffer);
-
-            // 存儲節點引用
-            soundNodesRef.current.set(soundConfig.id, {
-                ...audioNodes,
-                isPlaying: true
-            });
-
-            // 更新狀態
-            setSoundStates(prev => ({
-                ...prev,
-                [soundConfig.id]: {
-                    ...prev[soundConfig.id],
-                    isLoaded: true,
-                    isPlaying: true,
-                    hasError: false
-                }
-            }));
-
-            return true;
-
-        } catch (error) {
-            console.error(`❌ 初始化音頻失敗: ${soundConfig.name}`, error);
-            return false;
-        }
-    }, [loadAudioFile, createAudioNode]);
-
-    // 初始化音頻系統
-    const initializeAudioSystem = useCallback(async () => {
-        if (isInitialized) return;
-
-        setIsLoading(true);
-        setErrorSounds(new Set());
+    // 開始播放所有音頻
+    const startAllAudio = useCallback(async () => {
+        if (!isPreloaded || isPlaying) return;
 
         try {
-            console.log('🎵 開始初始化音頻系統...');
-
-            // 創建 AudioContext
-            audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
-
-            // 恢復 AudioContext
+            // 確保 AudioContext 處於運行狀態
             if (audioContextRef.current.state === 'suspended') {
                 await audioContextRef.current.resume();
             }
 
-            // 創建主音量節點
-            masterGainRef.current = audioContextRef.current.createGain();
-            masterGainRef.current.connect(audioContextRef.current.destination);
-            masterGainRef.current.gain.value = globalVolume / 100;
+            console.log('🎵 開始同步播放所有音頻...');
 
-            console.log(`🎛️ AudioContext 創建成功 (採樣率: ${audioContextRef.current.sampleRate}Hz)`);
+            // 停止並清除現有的播放節點
+            soundNodesRef.current.forEach((soundNode) => {
+                try {
+                    soundNode.source.stop();
+                    soundNode.source.disconnect();
+                    soundNode.gainNode.disconnect();
+                } catch (error) {
+                    console.warn('清理舊節點時出錯:', error);
+                }
+            });
+            soundNodesRef.current.clear();
 
-            // 並行載入所有音頻文件
-            const loadPromises = AUDIO_CONFIG.map((sound, index) =>
-                initializeSound(sound, index)
-            );
+            // 為所有已載入的音頻創建新的播放節點
+            const startTime = audioContextRef.current.currentTime + 0.1; // 稍微延遲確保同步
 
-            const results = await Promise.allSettled(loadPromises);
+            audioBuffersRef.current.forEach((audioBuffer, soundId) => {
+                if (!soundStates[soundId].hasError) {
+                    try {
+                        const playbackNode = createPlaybackNode(soundId, audioBuffer);
+                        soundNodesRef.current.set(soundId, playbackNode);
+                        
+                        // 在統一的時間點開始播放
+                        playbackNode.source.start(startTime);
+                    } catch (error) {
+                        console.error(`❌ 啟動 ${soundId} 播放失敗:`, error);
+                    }
+                }
+            });
 
-            // 統計載入結果
-            const successful = results.filter(result => result.status === 'fulfilled' && result.value).length;
-            const failed = results.length - successful;
-
-            setIsInitialized(true);
-
-            console.log(`✅ 音頻系統初始化完成! 成功: ${successful}, 失敗: ${failed}`);
-
-            if (failed > 0) {
-                console.warn(`⚠️ ${failed} 個音頻文件載入失敗，請檢查文件路徑`);
-            }
+            setIsPlaying(true);
+            console.log('✅ 所有音頻已同步開始播放');
 
         } catch (error) {
-            console.error('❌ 音頻系統初始化失敗:', error);
-            alert(`音頻系統初始化失敗: ${error.message}`);
-        } finally {
-            setIsLoading(false);
+            console.error('❌ 啟動播放失敗:', error);
+            alert(`啟動播放失敗: ${error.message}`);
+        }
+    }, [isPreloaded, isPlaying, soundStates, createPlaybackNode]);
+
+    // 停止所有音頻
+    const stopAllAudio = useCallback(() => {
+        if (!isPlaying) return;
+
+        console.log('🛑 停止所有音頻播放...');
+
+        soundNodesRef.current.forEach((soundNode) => {
+            try {
+                soundNode.source.stop();
+                soundNode.source.disconnect();
+                soundNode.gainNode.disconnect();
+            } catch (error) {
+                console.warn('停止音頻時出錯:', error);
+            }
+        });
+
+        soundNodesRef.current.clear();
+        setIsPlaying(false);
+        console.log('✅ 所有音頻已停止');
+    }, [isPlaying]);
+
+    // 切換播放/停止
+    const togglePlayback = useCallback(async () => {
+        if (!isPreloaded) {
+            // 如果還沒預載，先預載
+            await preloadAllAudio();
+            return;
         }
 
-    }, [isInitialized, globalVolume, initializeSound]);
+        if (isPlaying) {
+            stopAllAudio();
+        } else {
+            await startAllAudio();
+        }
+    }, [isPreloaded, isPlaying, preloadAllAudio, startAllAudio, stopAllAudio]);
 
     // 切換單個音頻靜音
     const toggleSoundMute = useCallback((soundId) => {
+        if (!isPlaying) return;
+
         const soundNode = soundNodesRef.current.get(soundId);
         if (!soundNode || soundStates[soundId].hasError) return;
 
@@ -272,12 +324,13 @@ const SoundCreator = () => {
             }
         }));
 
-        const soundName = AUDIO_CONFIG.find(s => s.id === soundId)?.name;
-        console.log(`🔇 ${soundName} ${newMutedState ? '靜音' : '取消靜音'}`);
-    }, [soundStates, isGlobalMuted, globalVolume]);
+        console.log(`🔇 ${soundId} ${newMutedState ? '靜音' : '取消靜音'}`);
+    }, [isPlaying, soundStates, isGlobalMuted, globalVolume]);
 
     // 切換全域靜音
     const toggleGlobalMute = useCallback(() => {
+        if (!isPlaying) return;
+
         const newGlobalMutedState = !isGlobalMuted;
 
         soundNodesRef.current.forEach((soundNode, soundId) => {
@@ -301,7 +354,7 @@ const SoundCreator = () => {
 
         setIsGlobalMuted(newGlobalMutedState);
         console.log(`🔇 全域${newGlobalMutedState ? '靜音' : '取消靜音'}`);
-    }, [isGlobalMuted, soundStates, globalVolume]);
+    }, [isPlaying, isGlobalMuted, soundStates, globalVolume]);
 
     // 調整全域音量
     const handleGlobalVolumeChange = useCallback((newVolume) => {
@@ -311,7 +364,7 @@ const SoundCreator = () => {
             masterGainRef.current.gain.value = newVolume / 100;
         }
 
-        if (!isGlobalMuted) {
+        if (isPlaying && !isGlobalMuted) {
             soundNodesRef.current.forEach((soundNode, soundId) => {
                 if (soundStates[soundId].hasError) return;
 
@@ -321,11 +374,11 @@ const SoundCreator = () => {
                 soundNode.gainNode.gain.value = finalVolume;
             });
         }
-    }, [isGlobalMuted, soundStates]);
+    }, [isPlaying, isGlobalMuted, soundStates]);
 
     // 隨機切換音效
     const randomizeSounds = useCallback(() => {
-        if (!isInitialized) return;
+        if (!isPlaying) return;
 
         AUDIO_CONFIG.forEach(sound => {
             const shouldMute = Math.random() > 0.5;
@@ -333,7 +386,12 @@ const SoundCreator = () => {
                 toggleSoundMute(sound.id);
             }
         });
-    }, [isInitialized, soundStates, toggleSoundMute]);
+    }, [isPlaying, soundStates, toggleSoundMute]);
+
+    // 組件掛載時自動預載
+    useEffect(() => {
+        preloadAllAudio();
+    }, [preloadAllAudio]);
 
     // 清理資源
     useEffect(() => {
@@ -354,64 +412,51 @@ const SoundCreator = () => {
         };
     }, []);
 
-
-    // 格式化日期時間的函數
-    const formatDateTime = (date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-
-        const weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-        const weekday = weekdays[date.getDay()];
-
-        return `${year}.${month}.${day} ${weekday} ${hours}:${minutes}`;
-    };
-
-    // 更新時間的 useEffect
+    // 時間更新
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentDateTime(new Date());
-        }, 1000); // 每秒更新一次
-
+        }, 1000);
         return () => clearInterval(timer);
     }, []);
 
-    // 複製URL的函數
+    // 分享功能
     const handleShare = async () => {
         try {
             await navigator.clipboard.writeText(window.location.href);
             setIsCopied(true);
-
-            // 2秒後恢復原始文字
-            setTimeout(() => {
-                setIsCopied(false);
-            }, 2000);
+            setTimeout(() => setIsCopied(false), 2000);
         } catch (error) {
             console.error('複製失敗:', error);
-            // 如果複製失敗，可以用舊方法
             const textArea = document.createElement('textarea');
             textArea.value = window.location.href;
             document.body.appendChild(textArea);
             textArea.select();
             document.execCommand('copy');
             document.body.removeChild(textArea);
-
             setIsCopied(true);
-            setTimeout(() => {
-                setIsCopied(false);
-            }, 2000);
+            setTimeout(() => setIsCopied(false), 2000);
         }
     };
 
+    // 格式化時間
+    const formatDateTime = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+        const weekday = weekdays[date.getDay()];
+        return `${year}.${month}.${day} ${weekday} ${hours}:${minutes}`;
+    };
+
     // 檢查是否有任何音頻在播放（用於視覺化）
-    const hasActiveAudio = isInitialized && !isGlobalMuted && 
+    const hasActiveAudio = isPlaying && !isGlobalMuted && 
         Object.values(soundStates).some(state => !state.isMuted && !state.hasError);
 
     return (
         <div className='sound_creator_content_wrap'>
-
             <div className='sound_deco_left'>
                 <img className='left1' src="./images/SoundCreator/left-deco1.svg" alt="" />
                 <img className='left2' src="./images/SoundCreator/left-deco2.svg" alt="" />
@@ -436,11 +481,11 @@ const SoundCreator = () => {
                                         style={{
                                             backgroundColor: isActive ? '#F18888' : '#adb5bd',
                                             opacity: isActive ? 1 : 0.3,
-                                            cursor: isInitialized ? 'pointer' : 'not-allowed',
+                                            cursor: isPreloaded ? 'pointer' : 'not-allowed',
                                             transition: 'all 0.2s ease'
                                         }}
                                         onClick={() => {
-                                            if (isInitialized) {
+                                            if (isPreloaded) {
                                                 handleGlobalVolumeChange(barLevel);
                                             }
                                         }}
@@ -450,13 +495,14 @@ const SoundCreator = () => {
                             <p>Volume: {globalVolume}%</p>
                         </div>
 
-                        {/* 錯誤提示 */}
+                        {/* 載入狀態和錯誤提示 */}
+                        {isLoading && (
+                            <div style={{ marginTop: '10px', fontSize: '0.8rem', color: '#F18888' }}>
+                                🔄 正在預載音頻文件...
+                            </div>
+                        )}
                         {errorSounds.size > 0 && (
-                            <div style={{
-                                marginTop: '10px',
-                                fontSize: '0.8rem',
-                                color: '#ff6b6b'
-                            }}>
+                            <div style={{ marginTop: '10px', fontSize: '0.8rem', color: '#ff6b6b' }}>
                                 ⚠️ {errorSounds.size} 個音頻載入失敗
                             </div>
                         )}
@@ -464,7 +510,9 @@ const SoundCreator = () => {
 
                     <div className='creation_status'>
                         <h2 className='creating_title'>
-                            {isInitialized ? 'Creating...' : 'Waiting...'}
+                            {isLoading ? 'Loading...' : 
+                             !isPreloaded ? 'Ready to Load' :
+                             isPlaying ? 'Creating...' : 'Ready to Play'}
                         </h2>
                         <p className='file_info'>File type: sound</p>
                     </div>
@@ -473,20 +521,27 @@ const SoundCreator = () => {
                 <div className='creator_controls'>
                     <div className='sound_selection'>
                         <div className='selection_panel'>
-                            <h3 className='selection_title'>Choose your sound!</h3>
+                            <h3 className='selection_title'>Click to create your sound!</h3>
                             <div className='sound_numbers'>
                                 {AUDIO_CONFIG.map((sound) => {
-                                    const isActive = isInitialized && !soundStates[sound.id].isMuted && !isGlobalMuted;
+                                    const isActive = isPreloaded && isPlaying && !soundStates[sound.id].isMuted && !isGlobalMuted;
                                     const hasError = soundStates[sound.id].hasError;
+                                    const isLoaded = soundStates[sound.id].isLoaded;
 
                                     return (
                                         <button
                                             key={sound.id}
                                             className={`sound_btn ${isActive ? 'active' : ''}`}
-                                            onClick={() => isInitialized ? toggleSoundMute(sound.id) : initializeAudioSystem()}
-                                            disabled={isLoading || hasError}
+                                            onClick={() => {
+                                                if (!isPreloaded) {
+                                                    preloadAllAudio();
+                                                } else if (isPlaying) {
+                                                    toggleSoundMute(sound.id);
+                                                }
+                                            }}
+                                            disabled={isLoading || hasError || (!isPreloaded && !isLoading)}
                                             style={{
-                                                opacity: hasError ? 0.5 : 1,
+                                                opacity: hasError ? 0.5 : isLoaded ? 1 : 0.7,
                                                 backgroundColor: hasError ? '#ff6b6b' : undefined
                                             }}
                                         >
@@ -517,7 +572,7 @@ const SoundCreator = () => {
                             <button
                                 className='random_btn'
                                 onClick={randomizeSounds}
-                                disabled={!isInitialized}
+                                disabled={!isPlaying}
                             >
                                 <svg width="56" height="57" viewBox="0 0 56 57" fill="transparent" xmlns="http://www.w3.org/2000/svg">
                                     <rect x="1.5" y="2.14307" width="53" height="53" rx="6.5" strokeWidth="3" />
@@ -533,20 +588,20 @@ const SoundCreator = () => {
                         <div className='control_group'>
                             <h4 className='control_label'>Sound</h4>
                             <button
-                                className={`sound_toggle ${!isGlobalMuted ? 'playing' : ''}`}
-                                onClick={isInitialized ? toggleGlobalMute : initializeAudioSystem}
+                                className={'sound_toggle'}
+                                onClick={isPlaying ? toggleGlobalMute : togglePlayback}
                                 disabled={isLoading}
                             >
-                                {!isInitialized ? 'Start' : isGlobalMuted ? 'On' : 'Off'}
+                                {isLoading ? 'Loading...' :
+                                 !isPreloaded ? 'Load' :
+                                 !isPlaying ? 'Start' :
+                                 isGlobalMuted ? 'Unmute' : 'Mute'}
                             </button>
                         </div>
 
                         <div className='control_group'>
                             <h4 className='control_label'>Share</h4>
-                            <button
-                                className='share_btn'
-                                onClick={handleShare}
-                            >
+                            <button className='share_btn' onClick={handleShare}>
                                 {isCopied ? 'Copied!' : 'Link'}
                             </button>
                         </div>

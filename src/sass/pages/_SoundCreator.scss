@@ -266,11 +266,8 @@
                 @extend %line_height_letter_spacing;
                 @extend %btn-style-basic;
                 @include bordered;
-
-                &.playing {
-                    background: transparent;
-                    color: $accent;
-                }
+                background: $accent;
+                color: $white;
             }
 
             .share_btn {

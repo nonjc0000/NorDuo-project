@@ -489,10 +489,8 @@ button {
 }
 .creator_controls .control_panel .control_group .sound_toggle {
   border: solid 3px #F18888;
-}
-.creator_controls .control_panel .control_group .sound_toggle.playing {
-  background: transparent;
-  color: #F18888;
+  background: #F18888;
+  color: #fff;
 }
 .creator_controls .control_panel .control_group .share_btn {
   border: solid 3px #F18888;
