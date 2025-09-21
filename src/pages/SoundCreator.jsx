@@ -358,27 +358,6 @@ const SoundCreator = () => {
 
     return (
         <div className='sound_creator_content_wrap'>
-            {/* 載入遮罩 */}
-            {isLoading && (
-                <div style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: 'rgba(0,0,0,0.8)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    zIndex: 9999,
-                    color: 'white'
-                }}>
-                    <div style={{ textAlign: 'center' }}>
-                        <div>Loading...</div>
-                        <div>{loadingProgress}% completed</div>
-                    </div>
-                </div>
-            )}
 
             <div className='sound_deco_left'>
                 <img className='left1' src="./images/SoundCreator/left-deco1.svg" alt="" />

@@ -454,7 +454,7 @@ button {
   animation-delay: 0.8s;
 }
 .creator_controls .control_panel {
-  width: 340px;
+  width: 365px;
   display: flex;
   justify-content: space-between;
   gap: 30px;
