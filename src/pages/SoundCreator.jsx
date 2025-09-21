@@ -6,26 +6,31 @@ const AUDIO_CONFIG = [
         id: 'MidnightGlow',
         name: 'MidnightGlow',
         audioUrl: './audios/midnightGlow.mp3',
+        displayNumber: 1
     },
     {
         id: 'VelvetShadows',
         name: 'VelvetShadows',
         audioUrl: './audios/VelvetShadows.mp3',
+        displayNumber: 2
     },
     {
         id: 'ElectricDreams',
         name: 'ElectricDreams',
         audioUrl: './audios/ElectricDreams.mp3',
+        displayNumber: 3
     },
     {
         id: 'WhispersInTheStatic',
         name: 'WhispersInTheStatic',
         audioUrl: './audios/WhispersInTheStatic.mp3',
+        displayNumber: 4
     },
     {
         id: 'DawnsEdge',
         name: 'DawnsEdge',
         audioUrl: './audios/DawnsEdge.mp3',
+        displayNumber: 5
     }
 ];
 
@@ -47,6 +52,7 @@ const SoundCreator = () => {
     const [isGlobalMuted, setIsGlobalMuted] = useState(false);
     const [globalVolume, setGlobalVolume] = useState(GLOBAL_SETTINGS.masterVolume);
     const [errorSounds, setErrorSounds] = useState(new Set());
+    const [selectedSound, setSelectedSound] = useState(null); // 當前選中的音效
 
     const [soundStates, setSoundStates] = useState(() => {
         const states = {};
@@ -319,6 +325,18 @@ const SoundCreator = () => {
         }
     }, [isGlobalMuted, soundStates]);
 
+    // 隨機切換音效（新增功能）
+    const randomizeSounds = useCallback(() => {
+        if (!isInitialized) return;
+
+        AUDIO_CONFIG.forEach(sound => {
+            const shouldMute = Math.random() > 0.5;
+            if (soundStates[sound.id].isMuted !== shouldMute) {
+                toggleSoundMute(sound.id);
+            }
+        });
+    }, [isInitialized, soundStates, toggleSoundMute]);
+
     // 清理資源
     useEffect(() => {
         return () => {
@@ -338,36 +356,43 @@ const SoundCreator = () => {
         };
     }, []);
 
-    const soundOptions = [1, 2, 3, 4, 5]
-
-
     return (
         <div className='sound_creator_content_wrap'>
+            {/* 載入遮罩 */}
+            {isLoading && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 9999,
+                    color: 'white'
+                }}>
+                    <div style={{ textAlign: 'center' }}>
+                        <div>Loading...</div>
+                        <div>{loadingProgress}% completed</div>
+                    </div>
+                </div>
+            )}
+
             <div className='sound_deco_left'>
                 <img className='left1' src="./images/SoundCreator/left-deco1.svg" alt="" />
                 <img className='left2' src="./images/SoundCreator/left-deco2.svg" alt="" />
                 <img className='left3' src="./images/SoundCreator/left-deco3.svg" alt="" />
             </div>
+            
             <div className='sound_creator_wrap'>
                 <video src="./videos/noise.mp4" autoPlay loop muted playsInline className='sound_creator_vid' />
+                
                 <div className='creator_header'>
                     <div className='datetime_info'>
                         <p className='datetime'>2025.08.11 MON 21:50</p>
                         <p className='earth_date'>Earth date</p>
-                        {/* <div className='signal_bars'>
-                            <span className='bar'></span>
-                            <span className='bar'></span>
-                            <span className='bar'></span>
-                            <span className='bar'></span>
-                            <span className='bar'></span>
-                            <span className='bar'></span>
-                            <span className='bar'></span>
-                            <span className='bar'></span>
-                            <span className='bar'></span>
-                            <span className='bar'></span>
-                            <span className='bar'></span>
-                            <p>100%</p>
-                        </div> */}
                         <input
                             type="range"
                             min="0"
@@ -375,11 +400,26 @@ const SoundCreator = () => {
                             value={globalVolume}
                             onChange={(e) => handleGlobalVolumeChange(parseInt(e.target.value))}
                             disabled={!isInitialized}
+                            style={{ marginTop: '10px' }}
                         />
-                        <span >{globalVolume}%</span>
+                        <span>{globalVolume}%</span>
+                        
+                        {/* 錯誤提示 */}
+                        {errorSounds.size > 0 && (
+                            <div style={{ 
+                                marginTop: '10px', 
+                                fontSize: '0.8rem', 
+                                color: '#ff6b6b' 
+                            }}>
+                                ⚠️ {errorSounds.size} 個音頻載入失敗
+                            </div>
+                        )}
                     </div>
+                    
                     <div className='creation_status'>
-                        <h2 className='creating_title'>Creating...</h2>
+                        <h2 className='creating_title'>
+                            {isInitialized ? 'Creating...' : 'Waiting...'}
+                        </h2>
                         <p className='file_info'>File type: sound</p>
                     </div>
                 </div>
@@ -389,16 +429,29 @@ const SoundCreator = () => {
                         <div className='selection_panel'>
                             <h3 className='selection_title'>Choose your sound!</h3>
                             <div className='sound_numbers'>
-                                {soundOptions.map((num) => (
-                                    <button
-                                        key={num}
-                                        className='sound_btn'
-                                    >
-                                        {num}
-                                    </button>
-                                ))}
+                                {AUDIO_CONFIG.map((sound) => {
+                                    const isActive = !soundStates[sound.id].isMuted && !isGlobalMuted;
+                                    const hasError = soundStates[sound.id].hasError;
+                                    
+                                    return (
+                                        <button
+                                            key={sound.id}
+                                            className={`sound_btn ${isActive ? 'active' : ''}`}
+                                            onClick={() => isInitialized ? toggleSoundMute(sound.id) : initializeAudioSystem()}
+                                            disabled={isLoading || hasError}
+                                            title={`${sound.name} - ${hasError ? '載入失敗' : isActive ? '播放中' : '已靜音'}`}
+                                            style={{
+                                                opacity: hasError ? 0.5 : 1,
+                                                backgroundColor: hasError ? '#ff6b6b' : undefined
+                                            }}
+                                        >
+                                            {sound.displayNumber}
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </div>
+                        
                         <div className='sound_visualizer'>
                             <div className='visualizer_bars'>
                                 <span className='vis_bar'></span>
@@ -413,7 +466,12 @@ const SoundCreator = () => {
                     <div className='control_panel'>
                         <div className='control_group'>
                             <h4 className='control_label'>Random</h4>
-                            <button className='random_btn'>
+                            <button 
+                                className='random_btn'
+                                onClick={randomizeSounds}
+                                disabled={!isInitialized}
+                                title="隨機切換音效組合"
+                            >
                                 <svg width="56" height="57" viewBox="0 0 56 57" fill="transparent" xmlns="http://www.w3.org/2000/svg">
                                     <rect x="1.5" y="2.14307" width="53" height="53" rx="6.5" strokeWidth="3" />
                                     <circle cx="28.5" cy="29.1431" r="3.5" />
@@ -422,30 +480,50 @@ const SoundCreator = () => {
                                     <circle cx="40.5" cy="17.1431" r="3.5" />
                                     <circle cx="40.5" cy="41.1431" r="3.5" />
                                 </svg>
-
                             </button>
                         </div>
 
                         <div className='control_group'>
                             <h4 className='control_label'>Sound</h4>
                             <button
-                                className='sound_toggle'
+                                className={`sound_toggle ${!isGlobalMuted ? 'playing' : ''}`}
                                 onClick={isInitialized ? toggleGlobalMute : initializeAudioSystem}
                                 disabled={isLoading}
                             >
-                                {
-                                    isGlobalMuted ? 'Off' : 'On'
-                                }
+                                {!isInitialized ? 'Start' : isGlobalMuted ? 'On' : 'Off'}
                             </button>
                         </div>
 
                         <div className='control_group'>
                             <h4 className='control_label'>Share</h4>
-                            <button className='share_btn'>Link</button>
+                            <button 
+                                className='share_btn'
+                                onClick={() => {
+                                    const activeTrackNumbers = AUDIO_CONFIG
+                                        .filter(sound => !soundStates[sound.id].isMuted && !isGlobalMuted)
+                                        .map(sound => sound.displayNumber);
+                                    
+                                    if (activeTrackNumbers.length > 0) {
+                                        const shareText = `正在播放音軌: ${activeTrackNumbers.join(', ')}`;
+                                        if (navigator.share) {
+                                            navigator.share({ text: shareText });
+                                        } else {
+                                            navigator.clipboard.writeText(shareText);
+                                            alert('分享內容已複製到剪貼板！');
+                                        }
+                                    } else {
+                                        alert('沒有播放中的音軌可分享');
+                                    }
+                                }}
+                                disabled={!isInitialized}
+                            >
+                                Link
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+            
             <div className='sound_deco_right'>
                 <img src="./images/SoundCreator/right-deco.svg" alt="" />
             </div>
