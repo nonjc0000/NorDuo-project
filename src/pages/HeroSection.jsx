@@ -29,9 +29,25 @@ const HeroSection = () => {
   const sloganOpacity = useTransform(springScrollY, [0, 0.6], [0, 1])
   const sloganScale = useTransform(springScrollY, [0, 0.5], [0.8, 1])
 
-  // 電池指示器
+  // 電池指示器 - 改為基於滾動的動畫
   const batteryY = useTransform(springScrollY, [0, 1], ["-150%", "0%"])
   const batteryOpacity = useTransform(springScrollY, [0, 0.4], [0, 1])
+  
+  // 電池條容器的透明度
+  const batteryIndicatorOpacity = useTransform(springScrollY, [0.4, 0.6], [0, 1])
+  
+  // 為每個電池條建立不同的動畫進度
+  const batteryBarsProgress = Array.from({ length: 6 }, (_, index) => {
+
+    // 每個電池條在不同的滾動進度開始動畫
+    const startProgress = 0.5 + (index * 0.05) // 從 0.5 開始，每個延遲 0.05
+    const endProgress = Math.min(startProgress + 0.15, 1) // 動畫持續 0.15 的滾動進度
+    
+    return {
+      scaleY: useTransform(springScrollY, [startProgress, endProgress], [0, 1]),
+      opacity: useTransform(springScrollY, [startProgress, endProgress], [0, 1])
+    }
+  })
 
   // REC 點閃爍效果（與滾動無關，保持原有動畫）
   const recVariants = {
@@ -40,7 +56,6 @@ const HeroSection = () => {
       opacity: [1, 0.7, 1]
     }
   }
-
 
   return (
     <motion.section 
@@ -139,7 +154,7 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* 電池指示器 */}
+          {/* 電池指示器 - 改為基於滾動的動畫 */}
           <motion.div 
             className="deco_battery"
             style={{
@@ -153,31 +168,23 @@ const HeroSection = () => {
               Battery
             </motion.p>
             
+            {/* 電池指示器容器 - 移除時間基礎的動畫 */}
             <motion.div 
               className='battery_indicator'
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1.4 }}
+              style={{
+                opacity: batteryIndicatorOpacity
+              }}
             >
-              {/* 電池條依序亮起的動畫 */}
-              {[...Array(6)].map((_, index) => (
+              {/* 電池條依序根據滾動進度出現 */}
+              {batteryBarsProgress.map((barProgress, index) => (
                 <motion.span 
                   key={index}
                   className='battery_bar'
-                  initial={{ scaleY: 0, opacity: 0 }}
-                  animate={{ scaleY: 1, opacity: 1 }}
-                  transition={{ 
-                    duration: 0.4, 
-                    delay: 1.6 + (index * 0.1),
-                    ease: "easeOut",
-                    type: "spring",
-                    stiffness: 120
+                  style={{
+                    scaleY: barProgress.scaleY,
+                    opacity: barProgress.opacity,
+                    transformOrigin: "bottom"
                   }}
-                  whileHover={{
-                    scaleY: 1.2,
-                    backgroundColor: "#FF6B6B"
-                  }}
-                  style={{ transformOrigin: "bottom" }}
                 />
               ))}
             </motion.div>
