@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { motion } from 'framer-motion'
 import SoundCreator from './SoundCreator';
 import HeroSection from './HeroSection';
 import About_us from './About_us';
@@ -8,7 +9,7 @@ import Shop from './Shop';
 import Contact_us from './Contact_us';
 
 const Home = ({ refs }) => {
-  
+
   const {
     soundCreatorRef,
     heroRef,
