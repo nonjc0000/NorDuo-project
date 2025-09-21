@@ -536,7 +536,6 @@ const SoundCreator = () => {
                             <button
                                 className='share_btn'
                                 onClick={handleShare}
-                                disabled={!isInitialized}
                             >
                                 {isCopied ? 'Copied!' : 'Link'}
                             </button>
