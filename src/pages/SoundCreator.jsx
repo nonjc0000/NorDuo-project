@@ -3,33 +3,33 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 // 音樂檔案陣列
 const AUDIO_CONFIG = [
     {
-        id: 'MidnightGlow',
-        name: 'MidnightGlow',
-        audioUrl: './audios/midnightGlow.mp3',
+        id: 'guitar',
+        name: 'guitar',
+        audioUrl: './audios/guitar.mp3',
         displayNumber: 1
     },
     {
-        id: 'VelvetShadows',
-        name: 'VelvetShadows',
-        audioUrl: './audios/VelvetShadows.mp3',
+        id: 'kb',
+        name: 'kb',
+        audioUrl: './audios/kb.mp3',
         displayNumber: 2
     },
     {
-        id: 'ElectricDreams',
-        name: 'ElectricDreams',
-        audioUrl: './audios/ElectricDreams.mp3',
+        id: 'bass',
+        name: 'bass',
+        audioUrl: './audios/bass.mp3',
         displayNumber: 3
     },
     {
-        id: 'WhispersInTheStatic',
-        name: 'WhispersInTheStatic',
-        audioUrl: './audios/WhispersInTheStatic.mp3',
+        id: 'drum',
+        name: 'drum',
+        audioUrl: './audios/drum.mp3',
         displayNumber: 4
     },
     {
-        id: 'DawnsEdge',
-        name: 'DawnsEdge',
-        audioUrl: './audios/DawnsEdge.mp3',
+        id: 'sax',
+        name: 'sax',
+        audioUrl: './audios/sax.mp3',
         displayNumber: 5
     }
 ];
@@ -430,7 +430,7 @@ const SoundCreator = () => {
                             <h3 className='selection_title'>Choose your sound!</h3>
                             <div className='sound_numbers'>
                                 {AUDIO_CONFIG.map((sound) => {
-                                    const isActive = !soundStates[sound.id].isMuted && !isGlobalMuted;
+                                    const isActive = isInitialized && !soundStates[sound.id].isMuted && !isGlobalMuted;
                                     const hasError = soundStates[sound.id].hasError;
                                     
                                     return (
@@ -439,7 +439,6 @@ const SoundCreator = () => {
                                             className={`sound_btn ${isActive ? 'active' : ''}`}
                                             onClick={() => isInitialized ? toggleSoundMute(sound.id) : initializeAudioSystem()}
                                             disabled={isLoading || hasError}
-                                            title={`${sound.name} - ${hasError ? '載入失敗' : isActive ? '播放中' : '已靜音'}`}
                                             style={{
                                                 opacity: hasError ? 0.5 : 1,
                                                 backgroundColor: hasError ? '#ff6b6b' : undefined
@@ -470,7 +469,6 @@ const SoundCreator = () => {
                                 className='random_btn'
                                 onClick={randomizeSounds}
                                 disabled={!isInitialized}
-                                title="隨機切換音效組合"
                             >
                                 <svg width="56" height="57" viewBox="0 0 56 57" fill="transparent" xmlns="http://www.w3.org/2000/svg">
                                     <rect x="1.5" y="2.14307" width="53" height="53" rx="6.5" strokeWidth="3" />

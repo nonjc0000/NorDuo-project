@@ -213,7 +213,9 @@
     }
 
     .control_panel {
+        width: 340px;
         display: flex;
+        justify-content: space-between;
         gap: $spacing-xl;
 
         .control_group {
