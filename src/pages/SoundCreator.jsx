@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { LiveAudioVisualizer } from 'react-audio-visualize';
 
 // 音樂檔案陣列
 const AUDIO_CONFIG = [
@@ -67,6 +68,10 @@ const SoundCreator = () => {
         });
         return states;
     });
+
+    // For Sound visualize
+    const mediaRecorderRef = useRef(null);
+    const [mediaRecorder, setMediaRecorder] = useState(null);
 
     // Web Audio API 引用
     const audioContextRef = useRef(null);
@@ -239,6 +244,21 @@ const SoundCreator = () => {
         } finally {
             setIsLoading(false);
         }
+
+        // 創建 MediaStreamDestination 用於捕獲音頻輸出
+        const streamDestination = audioContextRef.current.createMediaStreamDestination();
+
+        // 將 master gain 連接到 stream destination
+        masterGainRef.current.connect(streamDestination);
+
+        // 創建 MediaRecorder
+        const recorder = new MediaRecorder(streamDestination.stream);
+        mediaRecorderRef.current = recorder;
+        setMediaRecorder(recorder);
+
+        // 啟動錄製（但不保存，只用於視覺化）
+        recorder.start();
+
     }, [isInitialized, globalVolume, initializeSound]);
 
     // 切換單個音頻靜音
@@ -349,8 +369,13 @@ const SoundCreator = () => {
             if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
                 audioContextRef.current.close();
             }
+
+            if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+                mediaRecorderRef.current.stop();
+            }
         };
     }, []);
+
 
     // 格式化日期時間的函數
     const formatDateTime = (date) => {
@@ -491,13 +516,18 @@ const SoundCreator = () => {
                         </div>
 
                         <div className='sound_visualizer'>
-                            <div className='visualizer_bars'>
-                                <span className='vis_bar'></span>
-                                <span className='vis_bar'></span>
-                                <span className='vis_bar'></span>
-                                <span className='vis_bar'></span>
-                                <span className='vis_bar'></span>
-                            </div>
+                            {mediaRecorder && (
+                                <LiveAudioVisualizer
+                                    mediaRecorder={mediaRecorder}
+                                    width={200}           // 配合你的設計
+                                    height={75}
+                                    barWidth={6}          // 和你現有的 vis_bar 寬度一致
+                                    gap={10}             // 和你的 CSS gap 一致
+                                    barColor="#F18888"    // 使用你的 accent 色彩
+                                    backgroundColor="transparent"
+                                    smoothingTimeConstant={0.8}  // 讓動畫更平滑
+                                />
+                            )}
                         </div>
                     </div>
 
