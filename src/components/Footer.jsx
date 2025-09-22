@@ -26,7 +26,7 @@ const Footer = () => {
             <li><a className='icon-soundcloud' href="#"></a></li>
             <li><a className='icon-yt' href="#"></a></li>
           </ul>
-          <small>© 2023 NørDuo.studio. All rights reserved.</small>
+          <small>© 2025 NørDuo.studio. All rights reserved.</small>
         </div>
       </div>
       <div className='footer_right'>

@@ -1,16 +1,22 @@
+// FallingTags.jsx  — 修正版（JS 版）
+// 重點：rebuildWalls() 取代 Body.scale；enableSleeping；pill 用 chamfer；完整清理
+
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Matter from 'matter-js';
 
 const FallingTags = () => {
-  const containerRef = useRef();
-  const engineRef = useRef();
-  const runnerRef = useRef();
-  const renderRef = useRef();
-  const animationRef = useRef();
-  const groundRef = useRef();
-  const leftWallRef = useRef();
-  const rightWallRef = useRef();
-  
+  const containerRef = useRef(null);
+  const engineRef = useRef(null);
+  const runnerRef = useRef(null);
+  const renderRef = useRef(null);
+  const animationRef = useRef(null);
+
+  // 牆體參考
+  const groundRef = useRef(null);
+  const leftWallRef = useRef(null);
+  const rightWallRef = useRef(null);
+  const mouseConstraintRef = useRef(null);
+
   const [elements, setElements] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
   const [physicsStarted, setPhysicsStarted] = useState(false);
@@ -19,311 +25,118 @@ const FallingTags = () => {
 
   const WALL_THICKNESS = 60;
 
-  // 初始標籤數據
+  // 初始標籤數據（維持你的視覺樣式）
   const initialElements = [
-    {
-      id: 'Improvisation',
-      content: 'Improvisation',
-      width: 315,
-      height: 62,
-      x: 230,
-      y: -150,
-      style: {
-        fontSize: '1.75rem',
-        lineHeight: '150%',
-        letterSpacing: '0.1em',
-        width: '315px',
-        height: '62px',
-        borderRadius: '999px',
-        backgroundColor: '#F18888',
-        color: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'grab',
-        userSelect: 'none',
-        pointerEvents: 'auto',
-      }
-    },
-    {
-      id: 'BE CREATIVE',
-      content: 'BE CREATIVE',
-      width: 285,
-      height: 62,
-      x: 720,
-      y: -200,
-      style: {
-        fontSize: '1.75rem',
-        lineHeight: '150%',
-        letterSpacing: '0.1em',
-        width: '285px',
-        height: '62px',
-        borderRadius: '999px',
-        border: '5px solid #F18888',
-        backgroundColor: 'transparent',
-        color: '#F18888',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'grab',
-        userSelect: 'none',
-        pointerEvents: 'auto',
-      }
-    },
-    {
-      id: 'Guitar',
-      content: 'Guitar',
-      width: 178,
-      height: 62,
-      x: 320,
-      y: -120,
-      style: {
-        fontSize: '1.75rem',
-        lineHeight: '150%',
-        letterSpacing: '0.1em',
-        width: '178px',
-        height: '62px',
-        borderRadius: '999px',
-        backgroundColor: '#F18888',
-        color: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'grab',
-        userSelect: 'none',
-        pointerEvents: 'auto',
-      }
-    },
-    {
-      id: 'Keyboard',
-      content: 'Keyboard',
-      width: 217,
-      height: 62,
-      x: 1200,
-      y: -250,
-      style: {
-        fontSize: '1.75rem',
-        lineHeight: '150%',
-        letterSpacing: '0.1em',
-        width: '217px',
-        height: '62px',
-        borderRadius: '999px',
-        backgroundColor: '#F18888',
-        color: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'grab',
-        userSelect: 'none',
-        pointerEvents: 'auto',
-      }
-    },
-    {
-      id: 'Composition',
-      content: 'Composition',
-      width: 276,
-      height: 62,
-      x: 1050,
-      y: -80,
-      style: {
-        fontSize: '1.75rem',
-        lineHeight: '150%',
-        letterSpacing: '0.1em',
-        width: '276px',
-        height: '62px',
-        borderRadius: '999px',
-        backgroundColor: '#F18888',
-        color: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'grab',
-        userSelect: 'none',
-        pointerEvents: 'auto',
-      }
-    },
-    {
-      id: 'Harmony',
-      content: 'Harmony',
-      width: 198,
-      height: 62,
-      x: 500,
-      y: -100,
-      style: {
-        fontSize: '1.75rem',
-        lineHeight: '150%',
-        letterSpacing: '0.1em',
-        width: '198px',
-        height: '62px',
-        borderRadius: '999px',
-        backgroundColor: '#F18888',
-        color: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'grab',
-        userSelect: 'none',
-        pointerEvents: 'auto',
-      }
-    },
-    {
-      id: 'Bass',
-      content: 'Bass',
-      width: 139,
-      height: 62,
-      x: 900,
-      y: -220,
-      style: {
-        fontSize: '1.75rem',
-        lineHeight: '150%',
-        letterSpacing: '0.1em',
-        width: '139px',
-        height: '62px',
-        borderRadius: '999px',
-        backgroundColor: '#F18888',
-        color: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'grab',
-        userSelect: 'none',
-        pointerEvents: 'auto',
-      }
-    },
-    {
-      id: 'Drum',
-      content: 'Drum',
-      width: 139,
-      height: 62,
-      x: 450,
-      y: -170,
-      style: {
-        fontSize: '1.75rem',
-        lineHeight: '150%',
-        letterSpacing: '0.1em',
-        width: '139px',
-        height: '62px',
-        borderRadius: '999px',
-        backgroundColor: '#F18888',
-        color: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'grab',
-        userSelect: 'none',
-        pointerEvents: 'auto',
-      }
-    },
-    {
-      id: 'Vocal',
-      content: 'Vocal',
-      width: 158,
-      height: 62,
-      x: 1170,
-      y: -130,
-      style: {
-        fontSize: '1.75rem',
-        lineHeight: '150%',
-        letterSpacing: '0.1em',
-        width: '158px',
-        height: '62px',
-        borderRadius: '999px',
-        backgroundColor: '#F18888',
-        color: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'grab',
-        userSelect: 'none',
-        pointerEvents: 'auto',
-      }
-    },
+    { id: 'Improvisation', content: 'Improvisation', width: 315, height: 62, x: 230,  y: -150, filled: true },
+    { id: 'BE CREATIVE',  content: 'BE CREATIVE',  width: 285, height: 62, x: 720,  y: -200, filled: false },
+    { id: 'Guitar',        content: 'Guitar',       width: 178, height: 62, x: 320,  y: -120, filled: true },
+    { id: 'Keyboard',      content: 'Keyboard',     width: 217, height: 62, x: 1200, y: -250, filled: true },
+    { id: 'Composition',   content: 'Composition',  width: 276, height: 62, x: 1050, y:  -80, filled: true },
+    { id: 'Harmony',       content: 'Harmony',      width: 198, height: 62, x: 500,  y: -100, filled: true },
+    { id: 'Bass',          content: 'Bass',         width: 139, height: 62, x: 900,  y: -220, filled: true },
+    { id: 'Drum',          content: 'Drum',         width: 139, height: 62, x: 450,  y: -170, filled: true },
+    { id: 'Vocal',         content: 'Vocal',        width: 158, height: 62, x: 1170, y: -130, filled: true },
   ];
 
-  // 獲取容器尺寸
+  // 統一產生 pill 的 style（實心/線框）
+  const pillStyle = (el) => ({
+    fontSize: '1.75rem',
+    lineHeight: '150%',
+    letterSpacing: '0.1em',
+    width: `${el.width}px`,
+    height: `${el.height}px`,
+    borderRadius: '999px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'grab',
+    userSelect: 'none',
+    pointerEvents: 'auto',
+    backgroundColor: el.filled ? '#F18888' : 'transparent',
+    color: el.filled ? 'white' : '#F18888',
+    border: el.filled ? 'none' : '5px solid #F18888',
+  });
+
+  // 取得容器尺寸
   const updateContainerSize = useCallback(() => {
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      setContainerSize({
-        width: rect.width,
-        height: rect.height
-      });
-    }
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setContainerSize({ width: rect.width, height: rect.height });
   }, []);
 
-  // 更新物理邊界
-  const updatePhysicalBoundaries = useCallback(() => {
-    if (!engineRef.current || !groundRef.current || !leftWallRef.useRef || !rightWallRef.current) {
-      return;
-    }
-
-    const { Body } = Matter;
+  // 用「移除舊牆 + 建新牆」來 resize，避免 Body.scale 疊加誤差
+  const rebuildWalls = useCallback(() => {
+    if (!engineRef.current) return;
+    const { World, Bodies } = Matter;
+    const world = engineRef.current.world;
     const { width, height } = containerSize;
 
-    // 更新地面位置和尺寸
-    Body.setPosition(groundRef.current, {
-      x: width / 2,
-      y: height + WALL_THICKNESS / 2
-    });
-    Body.scale(groundRef.current, 
-      (width + WALL_THICKNESS * 2) / groundRef.current.bounds.max.x - groundRef.current.bounds.min.x,
-      1
+    // 先移除舊牆
+    const toRemove = [groundRef.current, leftWallRef.current, rightWallRef.current].filter(Boolean);
+    if (toRemove.length) World.remove(world, toRemove);
+
+    // 大牆（稍微超過畫面，避免穿出）
+    const ground = Bodies.rectangle(
+      width / 2,
+      height + WALL_THICKNESS / 2,
+      width + WALL_THICKNESS * 2,
+      WALL_THICKNESS,
+      { isStatic: true, label: 'ground' }
+    );
+    const leftWall = Bodies.rectangle(
+      -WALL_THICKNESS / 2,
+      height / 2,
+      WALL_THICKNESS,
+      height + WALL_THICKNESS * 2 + 300,
+      { isStatic: true, label: 'leftWall' }
+    );
+    const rightWall = Bodies.rectangle(
+      width + WALL_THICKNESS / 2, // 移除 -110 魔數
+      height / 2,
+      WALL_THICKNESS,
+      height + WALL_THICKNESS * 2 + 300,
+      { isStatic: true, label: 'rightWall' }
     );
 
-    // 更新左牆位置和尺寸
-    Body.setPosition(leftWallRef.current, {
-      x: -WALL_THICKNESS / 2,
-      y: height / 2
-    });
-    Body.scale(leftWallRef.current, 
-      1,
-      (height + WALL_THICKNESS * 2 + 300) / (leftWallRef.current.bounds.max.y - leftWallRef.current.bounds.min.y)
-    );
+    groundRef.current = ground;
+    leftWallRef.current = leftWall;
+    rightWallRef.current = rightWall;
+    World.add(world, [ground, leftWall, rightWall]);
+  }, [containerSize]);
 
-    // 更新右牆位置和尺寸
-    Body.setPosition(rightWallRef.current, {
-      x: width + WALL_THICKNESS / 2 - 110,
-      y: height / 2
-    });
-    Body.scale(rightWallRef.current, 
-      1,
-      (height + WALL_THICKNESS * 2 + 300) / (rightWallRef.current.bounds.max.y - rightWallRef.current.bounds.min.y)
-    );
-
-    // 更新渲染器尺寸
-    if (renderRef.current) {
-      renderRef.current.options.width = width;
-      renderRef.current.options.height = height;
-      if (renderRef.current.canvas) {
-        renderRef.current.canvas.width = width;
-        renderRef.current.canvas.height = height;
-      }
+  // 同步（隱形）渲染器尺寸（若未來要開啟 debug，不會糊）
+  const resizeRenderer = useCallback(() => {
+    const render = renderRef.current;
+    if (!render) return;
+    const { width, height } = containerSize;
+    render.options.width = width;
+    render.options.height = height;
+    if (render.canvas) {
+      const ratio = window.devicePixelRatio || 1;
+      render.canvas.width = Math.round(width * ratio);
+      render.canvas.height = Math.round(height * ratio);
+      Matter.Render.setPixelRatio(render, ratio);
     }
-  }, [containerSize, WALL_THICKNESS]);
+  }, [containerSize]);
 
-  // 監聽視窗大小變化
+  // 視窗 resize
   useEffect(() => {
     updateContainerSize();
-    
-    const handleResize = () => {
-      updateContainerSize();
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const onResize = () => updateContainerSize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, [updateContainerSize]);
 
-  // 當容器尺寸變化時更新物理邊界
+  // 容器尺寸變更 → 重建牆 & 渲染器同步
   useEffect(() => {
-    if (physicsStarted) {
-      updatePhysicalBoundaries();
-    }
-  }, [containerSize, physicsStarted, updatePhysicalBoundaries]);
+    if (!physicsStarted) return;
+    rebuildWalls();
+    resizeRenderer();
+  }, [physicsStarted, rebuildWalls, resizeRenderer]);
 
-  // Intersection Observer 監聽可見性
+  // 進入視口才啟動物理
   useEffect(() => {
     if (!containerRef.current) return;
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -333,210 +146,156 @@ const FallingTags = () => {
           }
         });
       },
-      {
-        threshold: 0.3,
-        rootMargin: '0px 0px -100px 0px'
-      }
+      { threshold: 0.3, rootMargin: '0px 0px -100px 0px' }
     );
-
     observer.observe(containerRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [physicsStarted]);
 
   // 初始化物理引擎
   useEffect(() => {
     if (!isVisible || !containerRef.current) return;
 
-    const Engine = Matter.Engine;
-    const Render = Matter.Render;
-    const Runner = Matter.Runner;
-    const World = Matter.World;
-    const Bodies = Matter.Bodies;
-    const Mouse = Matter.Mouse;
-    const MouseConstraint = Matter.MouseConstraint;
+    const { Engine, Render, Runner, World, Bodies, Mouse, MouseConstraint } = Matter;
 
-    // 創建引擎
+    // 引擎＋sleeping
     const engine = Engine.create();
-    engineRef.current = engine;
-
-    // 設置重力
+    engine.enableSleeping = true;            // ✅ 讓靜止剛體休眠
     engine.world.gravity.y = 1;
+    engineRef.current = engine;
 
     const { width, height } = containerSize;
 
-    // 創建隱形渲染器
+    // 隱形渲染器（只為了跑更新；canvas 隱藏）
     const render = Render.create({
       element: containerRef.current,
-      engine: engine,
+      engine,
       options: {
-        width: width,
-        height: height,
+        width, height,
         wireframes: false,
         background: 'transparent',
-        showVelocity: false,
-        showAngleIndicator: false,
-        showDebug: false,
       },
     });
     renderRef.current = render;
-
-    // 隱藏 canvas
     render.canvas.style.display = 'none';
+    Matter.Render.setPixelRatio(render, window.devicePixelRatio || 1);
 
-    // 創建邊界並保存引用
-    const ground = Bodies.rectangle(
-      width / 2, 
-      height + WALL_THICKNESS / 2, 
-      width + WALL_THICKNESS * 2, 
-      WALL_THICKNESS, 
-      { isStatic: true, label: 'ground' }
-    );
-    groundRef.current = ground;
+    // 先建牆
+    rebuildWalls();
 
-    const leftWall = Bodies.rectangle(
-      -WALL_THICKNESS / 2, 
-      height / 2, 
-      WALL_THICKNESS, 
-      height + WALL_THICKNESS * 2 + 300,
-      { isStatic: true, label: 'leftWall' }
-    );
-    leftWallRef.current = leftWall;
+    // 依容器寬度換算初始 x（沿用你的做法）
+    const scaleX = width / 1440;
 
-    const rightWall = Bodies.rectangle(
-      width + WALL_THICKNESS / 2, 
-      height / 2, 
-      WALL_THICKNESS, 
-      height + WALL_THICKNESS * 2 + 300,
-      { isStatic: true, label: 'rightWall' }
-    );
-    rightWallRef.current = rightWall;
-
-    // 創建物理元素
-    const htmlElements = initialElements.map(element => ({
-      ...element,
-      type: 'p',
-      body: Bodies.rectangle(
-        element.x * (width / 1440), // 根據新尺寸調整初始位置
-        element.y, 
-        element.width, 
-        element.height, 
+    // 產生「膠囊感」的剛體（chamfer 令碰撞更貼視覺）
+    const htmlElements = initialElements.map((el) => {
+      const body = Bodies.rectangle(
+        el.x * scaleX,
+        el.y,
+        el.width,
+        el.height,
         {
           restitution: 0.6,
           friction: 0.3,
-          frictionAir: 0.01,
+          frictionAir: 0.02,
           density: 0.001,
-          label: 'htmlText'
+          label: 'htmlText',
+          chamfer: { radius: el.height / 2 }, // ✅ 圓角矩形
         }
-      )
-    }));
-
-    // 設定元素狀態
-    setElements(htmlElements);
-    
-    setTimeout(() => {
-      setShouldRenderElements(true);
-    }, 100);
-
-    // 將所有物體加入世界
-    const allBodies = [
-      ground,
-      leftWall,
-      rightWall,
-      ...htmlElements.map(el => el.body)
-    ];
-    World.add(engine.world, allBodies);
-
-    // 添加滑鼠控制
-    const mouse = Mouse.create(containerRef.current);
-    mouse.element.removeEventListener("mousewheel", mouse.mousewheel);
-    mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
-    
-    const mouseConstraint = MouseConstraint.create(engine, {
-      mouse: mouse,
-      constraint: {
-        stiffness: 0.2,
-        render: { visible: false }
-      }
+      );
+      return { ...el, type: 'p', style: pillStyle(el), body };
     });
-    
+
+    setElements(htmlElements);
+    setTimeout(() => setShouldRenderElements(true), 100);
+
+    World.add(engine.world, [
+      groundRef.current, leftWallRef.current, rightWallRef.current,
+      ...htmlElements.map((el) => el.body),
+    ]);
+
+    // 滑鼠拖曳（必要時，把 DOM pill 設 pointer-events:none，避免搶事件）
+    const mouse = Mouse.create(containerRef.current);
+    // 移除 mousewheel 綁定（避免影響頁面滾動）
+    mouse.element.removeEventListener('mousewheel', mouse.mousewheel);
+    mouse.element.removeEventListener('DOMMouseScroll', mouse.mousewheel);
+
+    const mouseConstraint = MouseConstraint.create(engine, {
+      mouse,
+      constraint: { stiffness: 0.2, render: { visible: false } },
+    });
+    mouseConstraintRef.current = mouseConstraint;
     World.add(engine.world, mouseConstraint);
 
-    // 創建 runner
+    // 跑起來
     const runner = Runner.create();
     runnerRef.current = runner;
-
-    // 啟動物理引擎
     Runner.run(runner, engine);
     Render.run(render);
 
-    // 動畫迴圈
+    // 把剛體位姿套到 DOM
     const animate = () => {
-      htmlElements.forEach(element => {
-        const { x, y } = element.body.position;
-        const angle = element.body.angle;
-
-        const domElement = document.getElementById(element.id);
-        if (domElement) {
-          domElement.style.position = 'absolute';
-          domElement.style.left = `${x - element.width / 2}px`;
-          domElement.style.top = `${y - element.height / 2}px`;
-          domElement.style.transform = `rotate(${angle}rad)`;
+      for (const el of htmlElements) {
+        const { x, y } = el.body.position;
+        const angle = el.body.angle;
+        const dom = document.getElementById(el.id);
+        if (dom) {
+          dom.style.position = 'absolute';
+          dom.style.left = `${x - el.width / 2}px`;
+          dom.style.top = `${y - el.height / 2}px`;
+          dom.style.transform = `rotate(${angle}rad)`;
         }
-      });
-
+      }
       animationRef.current = requestAnimationFrame(animate);
     };
     animate();
 
-    // 清理函數
+    // 清理
     return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+
       if (renderRef.current) {
-        Render.stop(renderRef.current);
-        if (renderRef.current.canvas) {
-          renderRef.current.canvas.remove();
-        }
+        Matter.Render.stop(renderRef.current);
+        if (renderRef.current.canvas) renderRef.current.canvas.remove();
         renderRef.current.canvas = null;
         renderRef.current.context = null;
         renderRef.current.textures = {};
       }
-      
+
       if (runnerRef.current && engineRef.current) {
-        Runner.stop(runnerRef.current);
-        World.clear(engineRef.current.world);
-        Engine.clear(engineRef.current);
+        Matter.Runner.stop(runnerRef.current);
+        if (mouseConstraintRef.current) {
+          Matter.World.remove(engineRef.current.world, mouseConstraintRef.current); // ✅ 移除滑鼠約束
+        }
+        Matter.World.clear(engineRef.current.world, false);
+        Matter.Engine.clear(engineRef.current);
       }
     };
-  }, [isVisible, containerSize]);
+  }, [isVisible, containerSize, rebuildWalls]);
 
   return (
-    <div 
+    <div
       className="fallingTags"
       ref={containerRef}
       id="fallingTags"
-      style={{ width: '100%', height: '100%' }}
+      style={{ width: '100%', height: '100%', position: 'relative' }} // ✅ 讓絕對定位以此為基準
     >
-      {shouldRenderElements && elements.map((element) => {
-        const Tag = element.type;
+      {shouldRenderElements && elements.map((el) => {
+        const Tag = el.type;
         return (
           <Tag
-            key={element.id}
-            id={element.id}
+            key={el.id}
+            id={el.id}
             style={{
               position: 'absolute',
-              ...element.style,
+              ...el.style,
               zIndex: 5,
               opacity: physicsStarted ? 1 : 0,
-              transition: 'opacity 0.3s ease-in-out'
+              transition: 'opacity 0.3s ease-in-out',
+              // 若要把拖曳完全交給 Matter，取消下一行以避免事件競爭：
+              pointerEvents: 'none', 
             }}
           >
-            {element.content}
+            {el.content}
           </Tag>
         );
       })}

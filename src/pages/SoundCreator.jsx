@@ -494,18 +494,6 @@ const SoundCreator = () => {
                             })}
                             <p>Volume: {globalVolume}%</p>
                         </div>
-
-                        {/* 載入狀態和錯誤提示 */}
-                        {isLoading && (
-                            <div style={{ marginTop: '10px', fontSize: '0.8rem', color: '#F18888' }}>
-                                🔄 正在預載音頻文件...
-                            </div>
-                        )}
-                        {errorSounds.size > 0 && (
-                            <div style={{ marginTop: '10px', fontSize: '0.8rem', color: '#ff6b6b' }}>
-                                ⚠️ {errorSounds.size} 個音頻載入失敗
-                            </div>
-                        )}
                     </div>
 
                     <div className='creation_status'>
