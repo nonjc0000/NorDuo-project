@@ -6,25 +6,187 @@
     justify-content: space-between;
     align-items: center;
     padding: $spacing-xl 0 $spacing-xxxl;
+
+    // 平板適配
+    @media ($mediaMd) {
+        padding: $spacing-lg 0 $spacing-xxl;
+    }
+
+    // 手機適配
+    @media ($mediaSm) {
+        padding: $spacing-md 0 $spacing-xl;
+    }
 }
 
 .logo {
     font-family: $family-display;
     font-size: $f-s-xxxl;
     color: $accent;
+
+    // 更小的中等螢幕
+    @media (max-width: 970px) and (min-width: 821px) {
+        font-size: $f-s-xl;
+    }
+
+    // 平板上稍小一點
+    @media ($mediaMd) {
+        font-size: $f-s-xl;
+    }
+
+    // 手機上更小
+    @media ($mediaSm) {
+        font-size: $f-s-xl;
+    }
 }
 
 .nav_list {
     display: flex;
+    align-items: center;
+
+    // 更小的中等螢幕
+    @media (max-width: 970px) and (min-width: 821px) {
+        gap: 0;
+    }
+
+    // 手機適配
+    @media ($mediaMd) {
+        // 固定定位，從右側滑入
+        position: fixed;
+        top: 0;
+        right: -100%; // 初始位置：螢幕外右側
+        width: 280px; // 選單寬度
+        height: 100vh; // 佔滿整個螢幕高度
+
+        // 背景和視覺效果
+        background: rgba($background, 0.7); // 半透明背景
+        backdrop-filter: blur(10px); // 背景模糊效果
+
+        // 佈局改為垂直
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: $spacing-xxl; // 項目間距離
+
+        // 動畫和層級
+        transition: right 0.3s ease; // 滑入動畫
+        z-index: $z-ex; // 確保在最上層
+
+        // 調整內容佈局，為頂部按鈕留空間
+        padding-top: 65px; // 為關閉按鈕留出空間
+        justify-content: flex-start; // 改為從上開始排列
+        gap: $spacing-xl; // 稍微調整間距
+    }
+
+    // 當選單打開時
+    &.mobile_open {
+        right: 0; // 滑動到螢幕內
+    }
+
+    // 關閉按鈕的特殊樣式
+    .close_btn_item {
+        // 桌面版隱藏
+        display: none;
+
+        @media ($mediaMd) {
+            display: block;
+            position: absolute; // 絕對定位到選單頂部
+            top: $spacing-xl;
+            right: $spacing-xl;
+        }
+
+        .nav_close_btn {
+            background: transparent;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            .close_icon {
+                color: $text;
+                font-size: $f-s-xxxl;
+                line-height: 1;
+                font-weight: 500; // 細一點的字重
+                transition: all 0.3s ease;
+            }
+
+            &:hover {
+                border-color: $accent;
+                transform: scale(1.05);
+
+                .close_icon {
+                    color: $accent;
+                }
+            }
+
+            // 按下時的效果
+            &:active {
+                transform: scale(0.95);
+            }
+        }
+    }
 }
 
-.nav_item a{
-    margin-left: $spacing-lg;
-    font-size: $f-s-lg;
-    @extend %line_height_letter_spacing;
+.nav_item {
+    a {
+        margin-left: $spacing-lg;
+        font-size: $f-s-lg;
+        @extend %line_height_letter_spacing;
+        transition: all 0.3s ease;
 
-    &:hover {
-        color: $accent;
-        transition: all .3s;
+        // 更小的中等螢幕
+        @media (max-width: 970px) and (min-width: 821px) {
+            margin-left: $spacing-sm;
+        }
+
+        // 平板適配
+        @media ($mediaMd) {
+            margin-left: 0; // 取消左邊距
+            font-size: $f-s-xl; // 放大字體
+            padding: $spacing-sm $spacing-md; // 增加觸控區域
+            border-radius: $rad-basic-sm; // 圓角
+            text-align: center;
+            min-width: 120px; // 最小寬度，保持整齊
+        }
+
+        &:hover {
+            color: $accent;
+            transition: all 0.3s ease;
+        }
+    }
+}
+
+// 漢堡選單按鈕 - 只在手機版顯示
+.mobile_menu_btn {
+    display: none; // 預設隱藏
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    // 平版時顯示
+    @media ($mediaMd) {
+        display: flex;
+    }
+
+    // hover 效果
+    &:hover .hamburger_line {
+        background-color: $accent;
+    }
+
+    .hamburger_line {
+        display: block;
+        width: 40px;
+        height: 2px;
+        background-color: $text;
+        margin: 4px 0;
+        transition: all 0.3s ease;
+        transform-origin: center; // 設定旋轉中心
     }
 }

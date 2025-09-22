@@ -30,11 +30,6 @@
 
         // 平板適配：縮小裝飾元素
         @media ($mediaMd) {
-            width: 2%;
-        }
-
-        // 手機適配：隱藏左側裝飾
-        @media ($mediaSm) {
             display: none;
         }
 
@@ -56,17 +51,12 @@
 
         // 平板適配：縮小裝飾元素
         @media ($mediaMd) {
-            width: 2%;
-        }
-
-        // 手機適配：隱藏右側裝飾
-        @media ($mediaSm) {
             display: none;
         }
 
         img {
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
         }
     }
 }
@@ -139,6 +129,7 @@
     }
 
     .datetime_info {
+
         // 手機適配：調整時間信息佈局
         @media ($mediaSm) {
             order: 2;
@@ -233,6 +224,8 @@
         }
 
         .creating_title {
+            flex-shrink: 0;
+            white-space: nowrap;
             font-size: $f-s-xxl;
             @extend %line_height_letter_spacing;
             color: $accent;
@@ -280,9 +273,24 @@
     justify-content: space-between;
     align-items: flex-end;
 
+    // 中等螢幕溢出防護 (1024px前後)
+    @media (max-width: 1200px) and (min-width: 971px) {
+        gap: $spacing-sm;
+        // 確保不溢出，允許適當的彈性
+        flex-wrap: nowrap;
+        min-width: 0; // 允許flex項目縮小
+    }
+
+    // 更小的中等螢幕
+    @media (max-width: 970px) and (min-width: 821px) {
+        gap: $spacing-xs;
+    }
+
     // 平板適配：調整間距
     @media ($mediaMd) {
         gap: $spacing-md;
+        flex-wrap: wrap; // 允許換行如果空間不足
+        justify-content: flex-start;
     }
 
     // 手機適配：改為縱向佈局
@@ -297,6 +305,16 @@
         justify-content: center;
         align-items: flex-end;
         gap: $spacing-md;
+        flex-shrink: 1; // 允許在空間不足時縮小
+
+        // 中等螢幕優化
+        @media (max-width: 1200px) and (min-width: 971px) {
+            gap: $spacing-sm;
+        }
+
+        @media (max-width: 970px) and (min-width: 821px) {
+            gap: $spacing-xs;
+        }
 
         // 手機適配：調整為縱向佈局
         @media ($mediaSm) {
@@ -306,6 +324,7 @@
         }
 
         .selection_panel {
+
             // 手機適配：調整面板佈局
             @media ($mediaSm) {
                 display: flex;
@@ -337,6 +356,10 @@
             display: flex;
             gap: $spacing-sm;
 
+            @media (max-width: 970px) and (min-width: 821px) {
+                gap: $spacing-xxs;
+            }
+
             // 手機適配：確保按鈕適合觸控
             @media ($mediaSm) {
                 justify-content: center;
@@ -348,9 +371,16 @@
                 @extend %btn-style-basic;
                 @include bordered;
 
+                // 處理1024溢出問題
+                @media (max-width: 1200px) {
+                    max-width: 50px;
+                    padding: $spacing-xxs $spacing-sm;
+                }
+
                 // 平板適配：稍微縮小按鈕
                 @media ($mediaMd) {
                     min-height: 32px;
+                    max-width: 50px;
                     padding: $spacing-xxs $spacing-sm;
                     font-size: $f-s-md;
                 }
@@ -374,7 +404,20 @@
     }
 
     .sound_visualizer {
-        flex: 1;
+        flex-shrink: 0; // 保持尺寸不被壓縮
+
+
+
+        // 中等螢幕適配：輕微縮小
+        @media (max-width: 1200px) and (min-width: 971px) {
+            transform: scale(0.9);
+            max-width: 120px;
+        }
+
+        @media (max-width: 970px) and (min-width: 821px) {
+            display: none;
+        }
+
         // 平板適配：縮小可視化器
         @media ($mediaMd) {
             transform: scale(0.8);
@@ -392,11 +435,28 @@
         display: flex;
         justify-content: space-between;
         gap: $spacing-xl;
+        flex-shrink: 0; // 防止被壓縮
 
-        // 平板適配：縮小面板
-        @media ($mediaMd) {
-            width: 300px;
+        // 中等螢幕適配 (970px - 1200px) - 解決1024px溢出問題
+        @media (max-width: 1200px) and (min-width: 971px) {
+            width: 320px;
             gap: $spacing-lg;
+        }
+
+        // 更小的中等螢幕 (820px - 970px)
+        @media (max-width: 970px) and (min-width: 821px) {
+            width: 280px;
+            gap: $spacing-md;
+        }
+
+        // 平板適配：使用彈性寬度
+        @media ($mediaMd) {
+            width: auto;
+            max-width: 300px;
+            min-width: 250px;
+            flex: 0 0 auto;
+            gap: $spacing-sm;
+            margin-left: auto;
         }
 
         // 手機適配：改為縱向排列
@@ -406,9 +466,11 @@
             flex-direction: row;
             justify-content: space-around;
             gap: $spacing-md;
+            margin-left: 0;
         }
 
         .control_group {
+            @extend %flex-column;
             text-align: center;
 
             .control_label {
@@ -431,10 +493,29 @@
             .random_btn {
                 background-color: transparent;
                 cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-width: 80px; // 與其他按鈕保持一致的寬度
+
+                // 中等螢幕優化
+                @media (max-width: 1200px) and (min-width: 971px) {
+                    min-width: 70px;
+                }
+
+                @media (max-width: 970px) and (min-width: 821px) {
+                    min-width: 65px;
+                }
+
+                // 平板適配
+                @media ($mediaMd) {
+                    min-width: 60px;
+                }
 
                 // 手機適配：增大觸控區域
                 @media ($mediaSm) {
                     padding: $spacing-xs;
+                    min-width: 64px;
                 }
 
                 rect {
@@ -448,18 +529,6 @@
 
                 svg {
                     transition: all .3s ease;
-
-                    // 平板適配：縮小圖標
-                    @media ($mediaMd) {
-                        width: 48px;
-                        height: 49px;
-                    }
-
-                    // 手機適配：適中尺寸
-                    @media ($mediaSm) {
-                        width: 44px;
-                        height: 45px;
-                    }
                 }
 
                 &:hover {
@@ -479,9 +548,28 @@
                 @extend %btn-style-basic;
                 @include bordered;
 
+                // 關鍵：設定固定寬度防止文字變化時位置跳動
+                min-width: 80px;
+                text-align: center;
+
+                // 中等螢幕優化 (970px - 1200px)
+                @media (max-width: 1200px) and (min-width: 971px) {
+                    min-width: 70px;
+                    padding: $spacing-xxs $spacing-xs;
+                    font-size: $f-s-md;
+                }
+
+                // 更小的中等螢幕 (820px - 970px)
+                @media (max-width: 970px) and (min-width: 821px) {
+                    min-width: 65px;
+                    padding: $spacing-xxs $spacing-xs;
+                    font-size: $f-s-sm;
+                }
+
                 // 平板適配：調整按鈕尺寸
                 @media ($mediaMd) {
                     min-height: 32px;
+                    min-width: 60px;
                     padding: $spacing-xxs $spacing-sm;
                     font-size: $f-s-md;
                 }
@@ -489,9 +577,9 @@
                 // 手機適配：增大觸控區域
                 @media ($mediaSm) {
                     min-height: 44px;
+                    min-width: 64px;
                     padding: $spacing-sm $spacing-md;
                     font-size: $f-s-sm;
-                    min-width: 64px;
                 }
             }
 
@@ -541,5 +629,29 @@
                 font-size: $f-s-sm;
             }
         }
+    }
+}
+
+// ✨ CustomAudioVisualizer 組件樣式（從組件中移出）
+.custom-audio-visualizer {
+    width: 100%;
+    max-width: 200px;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+
+    // 當沒有音頻時隱藏
+    &.inactive {
+        opacity: 0;
+    }
+
+    .visualizer-canvas {
+        width: 100%;
+        height: 100%;
+        border-radius: 4px;
+        max-width: 200px;
     }
 }

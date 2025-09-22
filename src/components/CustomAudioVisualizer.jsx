@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const CustomAudioVisualizer = ({ 
-  audioContext, 
-  masterGainNode, 
-  width = 200, 
-  height = 75, 
-  barWidth = 6, 
-  gap = 10, 
+const CustomAudioVisualizer = ({
+  audioContext,
+  masterGainNode,
+  width = 200,
+  height = 75,
+  barWidth = 6,
+  gap = 10,
   barColor = "#F18888",
-  isActive = false 
+  isActive = false
 }) => {
   const canvasRef = useRef(null);
   const analyserRef = useRef(null);
@@ -22,14 +22,14 @@ const CustomAudioVisualizer = ({
         cancelAnimationFrame(animationIdRef.current);
         animationIdRef.current = null;
       }
-      
+
       // 清除canvas
       const canvas = canvasRef.current;
       if (canvas) {
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
-      
+
       return;
     }
 
@@ -38,7 +38,7 @@ const CustomAudioVisualizer = ({
       analyserRef.current = audioContext.createAnalyser();
       analyserRef.current.fftSize = 128; // 較小的FFT size，產生更少的頻率條
       analyserRef.current.smoothingTimeConstant = 0.8;
-      
+
       // 連接分析器到master gain
       masterGainNode.connect(analyserRef.current);
     }
@@ -48,10 +48,10 @@ const CustomAudioVisualizer = ({
 
     const updateAudioData = () => {
       if (!analyserRef.current) return;
-      
+
       analyserRef.current.getByteFrequencyData(dataArray);
       setAudioData([...dataArray]);
-      
+
       animationIdRef.current = requestAnimationFrame(updateAudioData);
     };
 
@@ -85,7 +85,7 @@ const CustomAudioVisualizer = ({
     for (let i = 0; i < totalBars; i++) {
       const audioIndex = i * step;
       const barHeight = (audioData[audioIndex] / 255) * canvasHeight * 0.8; // 最大高度為canvas的80%
-      
+
       const x = i * (barWidth + gap);
       const y = canvasHeight - barHeight;
 
@@ -93,7 +93,7 @@ const CustomAudioVisualizer = ({
       // 使用兼容性更好的方法繪製圓角矩形
       const radius = barWidth / 2;
       ctx.beginPath();
-      
+
       if (typeof ctx.roundRect === 'function') {
         // 如果瀏覽器支持 roundRect，使用它
         ctx.roundRect(x, y, barWidth, barHeight, radius);
@@ -110,30 +110,18 @@ const CustomAudioVisualizer = ({
         ctx.quadraticCurveTo(x, y, x + radius, y);
         ctx.closePath();
       }
-      
+
       ctx.fill();
     }
   }, [audioData, barWidth, gap, barColor, width, height]);
 
   return (
-    <div 
-      className="custom-audio-visualizer" 
-      style={{ 
-        width, 
-        height,
-        opacity: isActive ? 1 : 0,
-        transition: 'all 0.3s ease-in-out',
-      }}
-    >
+    <div className="custom-audio-visualizer">
       <canvas
         ref={canvasRef}
         width={width}
         height={height}
-        style={{ 
-          width: '100%', 
-          height: '100%',
-          borderRadius: '4px'
-        }}
+        className="visualizer-canvas"
       />
     </div>
   );
