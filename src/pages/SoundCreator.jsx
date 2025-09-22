@@ -77,16 +77,9 @@ const SoundCreator = () => {
     // 載入音頻文件但不播放
     const loadAudioFile = useCallback(async (soundConfig) => {
         try {
-            console.log(`🔄 正在載入音頻: ${soundConfig.name} (${soundConfig.audioUrl})`);
-
             const response = await fetch(soundConfig.audioUrl);
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-
-            const contentType = response.headers.get('content-type');
-            if (!contentType || !contentType.includes('audio')) {
-                console.warn(`⚠️ 警告: ${soundConfig.audioUrl} 可能不是音頻文件 (Content-Type: ${contentType})`);
             }
 
             const arrayBuffer = await response.arrayBuffer();
@@ -95,7 +88,6 @@ const SoundCreator = () => {
             }
 
             const audioBuffer = await audioContextRef.current.decodeAudioData(arrayBuffer);
-            console.log(`✅ 音頻載入成功: ${soundConfig.name} (時長: ${audioBuffer.duration.toFixed(1)}秒)`);
             
             // 存儲音頻緩衝區，但不播放
             audioBuffersRef.current.set(soundConfig.id, audioBuffer);
@@ -124,8 +116,6 @@ const SoundCreator = () => {
         setErrorSounds(new Set());
 
         try {
-            console.log('🎵 開始預載音頻系統...');
-
             // 創建 AudioContext
             audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
             
@@ -133,8 +123,6 @@ const SoundCreator = () => {
             masterGainRef.current = audioContextRef.current.createGain();
             masterGainRef.current.connect(audioContextRef.current.destination);
             masterGainRef.current.gain.value = globalVolume / 100;
-
-            console.log(`🎛️ AudioContext 創建成功 (狀態: ${audioContextRef.current.state})`);
 
             // 並行載入所有音頻文件
             const loadPromises = AUDIO_CONFIG.map(sound => loadAudioFile(sound));
@@ -160,7 +148,6 @@ const SoundCreator = () => {
                 });
 
                 setIsPreloaded(true);
-                console.log(`✅ 音頻預載完成! 成功: ${successful}, 失敗: ${failed}`);
             } else {
                 throw new Error('沒有任何音頻文件載入成功');
             }
@@ -198,7 +185,6 @@ const SoundCreator = () => {
             source.connect(gainNode);
             gainNode.connect(masterGainRef.current);
 
-            console.log(`🎵 創建播放節點: ${soundId}, 音量: ${finalVolume}`);
             return { source, gainNode, audioBuffer };
 
         } catch (error) {
@@ -217,8 +203,6 @@ const SoundCreator = () => {
                 await audioContextRef.current.resume();
             }
 
-            console.log('🎵 開始同步播放所有音頻...');
-
             // 停止並清除現有的播放節點
             soundNodesRef.current.forEach((soundNode) => {
                 try {
@@ -226,7 +210,7 @@ const SoundCreator = () => {
                     soundNode.source.disconnect();
                     soundNode.gainNode.disconnect();
                 } catch (error) {
-                    console.warn('清理舊節點時出錯:', error);
+                    // 靜默處理清理錯誤
                 }
             });
             soundNodesRef.current.clear();
@@ -249,7 +233,6 @@ const SoundCreator = () => {
             });
 
             setIsPlaying(true);
-            console.log('✅ 所有音頻已同步開始播放');
 
         } catch (error) {
             console.error('❌ 啟動播放失敗:', error);
@@ -261,21 +244,18 @@ const SoundCreator = () => {
     const stopAllAudio = useCallback(() => {
         if (!isPlaying) return;
 
-        console.log('🛑 停止所有音頻播放...');
-
         soundNodesRef.current.forEach((soundNode) => {
             try {
                 soundNode.source.stop();
                 soundNode.source.disconnect();
                 soundNode.gainNode.disconnect();
             } catch (error) {
-                console.warn('停止音頻時出錯:', error);
+                // 靜默處理停止錯誤
             }
         });
 
         soundNodesRef.current.clear();
         setIsPlaying(false);
-        console.log('✅ 所有音頻已停止');
     }, [isPlaying]);
 
     // 切換播放/停止
@@ -323,8 +303,6 @@ const SoundCreator = () => {
                 isMuted: newMutedState
             }
         }));
-
-        console.log(`🔇 ${soundId} ${newMutedState ? '靜音' : '取消靜音'}`);
     }, [isPlaying, soundStates, isGlobalMuted, globalVolume]);
 
     // 切換全域靜音
@@ -353,7 +331,6 @@ const SoundCreator = () => {
         });
 
         setIsGlobalMuted(newGlobalMutedState);
-        console.log(`🔇 全域${newGlobalMutedState ? '靜音' : '取消靜音'}`);
     }, [isPlaying, isGlobalMuted, soundStates, globalVolume]);
 
     // 調整全域音量
@@ -402,7 +379,7 @@ const SoundCreator = () => {
                     soundNode.source.disconnect();
                     soundNode.gainNode.disconnect();
                 } catch (error) {
-                    console.warn('清理音頻資源時出現錯誤:', error);
+                    // 靜默處理清理錯誤
                 }
             });
 
@@ -427,7 +404,7 @@ const SoundCreator = () => {
             setIsCopied(true);
             setTimeout(() => setIsCopied(false), 2000);
         } catch (error) {
-            console.error('複製失敗:', error);
+            // Fallback 方法
             const textArea = document.createElement('textarea');
             textArea.value = window.location.href;
             document.body.appendChild(textArea);

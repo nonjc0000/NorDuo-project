@@ -8,11 +8,35 @@
     justify-content: center;
     gap: $spacing-xs;
 
+    // 平板適配 (640px - 970px)
+    @media ($mediaMd) {
+        height: 90vh;
+        gap: $spacing-xxs;
+    }
+
+    // 手機適配 (< 640px)
+    @media ($mediaSm) {
+        height: 100vh;
+        margin-bottom: 0;
+        flex-direction: column;
+        gap: 0;
+    }
+
     .sound_deco_left {
         @extend %flex-column;
         justify-content: space-between;
         width: 3.5%;
         height: 100%;
+
+        // 平板適配：縮小裝飾元素
+        @media ($mediaMd) {
+            width: 2%;
+        }
+
+        // 手機適配：隱藏左側裝飾
+        @media ($mediaSm) {
+            display: none;
+        }
 
         .left1,
         .left3 {
@@ -30,14 +54,22 @@
         width: 3.5%;
         height: 100%;
 
+        // 平板適配：縮小裝飾元素
+        @media ($mediaMd) {
+            width: 2%;
+        }
+
+        // 手機適配：隱藏右側裝飾
+        @media ($mediaSm) {
+            display: none;
+        }
+
         img {
             height: 100%;
             object-fit: contain;
         }
     }
-
 }
-
 
 .sound_creator_wrap {
     width: 90%;
@@ -53,6 +85,19 @@
     justify-content: space-between;
     position: relative;
     overflow: hidden;
+
+    // 平板適配
+    @media ($mediaMd) {
+        width: 96%;
+        padding: $spacing-xs $spacing-xl $spacing-xl;
+    }
+
+    // 手機適配
+    @media ($mediaSm) {
+        width: 100%;
+        padding: $spacing-sm $spacing-md $spacing-md;
+        min-height: 100vh;
+    }
 }
 
 .sound_creator_vid {
@@ -64,6 +109,12 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+
+    // 手機適配：調整視頻適配
+    @media ($mediaSm) {
+        object-fit: cover;
+        object-position: center;
+    }
 }
 
 .creator_header {
@@ -73,12 +124,43 @@
     align-items: flex-start;
     margin-bottom: $spacing-xxxl;
 
+    // 平板適配
+    @media ($mediaMd) {
+        margin-bottom: $spacing-xl;
+    }
+
+    // 手機適配
+    @media ($mediaSm) {
+        flex-direction: column;
+        gap: $spacing-md;
+        margin-bottom: $spacing-lg;
+        align-items: center;
+        text-align: center;
+    }
+
     .datetime_info {
+        // 手機適配：調整時間信息佈局
+        @media ($mediaSm) {
+            order: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .datetime {
             font-size: $f-s-lg;
             color: $accent;
             margin-bottom: $spacing-xs;
             @extend %line_height_letter_spacing;
+
+            // 平板和手機適配：調整字體
+            @media ($mediaMd) {
+                font-size: $f-s-md;
+            }
+
+            @media ($mediaSm) {
+                font-size: $f-s-sm;
+            }
         }
 
         .earth_date {
@@ -86,6 +168,16 @@
             color: $accent;
             margin-bottom: $spacing-md;
             @extend %line_height_letter_spacing;
+
+            // 平板和手機適配：調整字體
+            @media ($mediaMd) {
+                font-size: $f-s-md;
+            }
+
+            @media ($mediaSm) {
+                font-size: $f-s-sm;
+                margin-bottom: $spacing-sm;
+            }
         }
 
         .signal_bars {
@@ -93,24 +185,52 @@
             align-items: center;
             gap: 8px;
 
+            // 手機適配：調整音量條佈局
+            @media ($mediaSm) {
+                justify-content: center;
+                gap: 6px;
+            }
+
             .bar {
                 width: 6px;
                 height: 20px;
                 border-radius: $rad-sm;
                 background: $accent;
                 display: block;
+
+                // 手機適配：稍微縮小音量條
+                @media ($mediaSm) {
+                    width: 4px;
+                    height: 16px;
+                }
             }
 
             p {
                 margin-left: $spacing-xxs;
                 font-size: $f-s-md;
                 color: $accent;
+
+                // 平板和手機適配：調整字體
+                @media ($mediaMd) {
+                    font-size: $f-s-sm;
+                }
+
+                @media ($mediaSm) {
+                    font-size: $f-s-xs;
+                    margin-left: $spacing-xxs;
+                }
             }
         }
     }
 
     .creation_status {
         text-align: right;
+
+        // 手機適配：置中對齊
+        @media ($mediaSm) {
+            text-align: center;
+            order: 1;
+        }
 
         .creating_title {
             font-size: $f-s-xxl;
@@ -120,17 +240,39 @@
             border: 6px double $accent;
             padding: $spacing-xs $spacing-md;
             border-radius: $rad-basic-sm;
+
+            // 平板適配：調整尺寸
+            @media ($mediaMd) {
+                font-size: $f-s-xl;
+                border-width: 4px;
+                padding: $spacing-xxs $spacing-sm;
+            }
+
+            // 手機適配：進一步縮小
+            @media ($mediaSm) {
+                font-size: $f-s-lg;
+                border-width: 3px;
+                padding: $spacing-xxs $spacing-xs;
+                margin-bottom: $spacing-xxs;
+            }
         }
 
         .file_info {
             font-size: $f-s-lg;
             color: $accent;
             @extend %line_height_letter_spacing;
-            // margin-top: $spacing-sm;
+
+            // 平板和手機適配：調整字體
+            @media ($mediaMd) {
+                font-size: $f-s-md;
+            }
+
+            @media ($mediaSm) {
+                font-size: $f-s-sm;
+            }
         }
     }
 }
-
 
 .creator_controls {
     position: relative;
@@ -138,27 +280,89 @@
     justify-content: space-between;
     align-items: flex-end;
 
+    // 平板適配：調整間距
+    @media ($mediaMd) {
+        gap: $spacing-md;
+    }
+
+    // 手機適配：改為縱向佈局
+    @media ($mediaSm) {
+        flex-direction: column;
+        gap: $spacing-xl;
+        align-items: center;
+    }
+
     .sound_selection {
         display: flex;
         justify-content: center;
         align-items: flex-end;
         gap: $spacing-md;
 
+        // 手機適配：調整為縱向佈局
+        @media ($mediaSm) {
+            flex-direction: column;
+            align-items: center;
+            gap: $spacing-sm;
+        }
+
+        .selection_panel {
+            // 手機適配：調整面板佈局
+            @media ($mediaSm) {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: $spacing-sm;
+            }
+        }
 
         .selection_title {
             font-size: $f-s-lg;
             @extend %line_height_letter_spacing;
             color: $accent;
             margin-bottom: $spacing-sm;
+
+            // 平板和手機適配：調整字體
+            @media ($mediaMd) {
+                font-size: $f-s-md;
+            }
+
+            @media ($mediaSm) {
+                font-size: $f-s-sm;
+                margin-bottom: $spacing-xs;
+                text-align: center;
+            }
         }
 
         .sound_numbers {
             display: flex;
             gap: $spacing-sm;
 
+            // 手機適配：確保按鈕適合觸控
+            @media ($mediaSm) {
+                justify-content: center;
+                gap: $spacing-xs;
+                flex-wrap: wrap;
+            }
+
             .sound_btn {
                 @extend %btn-style-basic;
                 @include bordered;
+
+                // 平板適配：稍微縮小按鈕
+                @media ($mediaMd) {
+                    min-height: 32px;
+                    padding: $spacing-xxs $spacing-sm;
+                    font-size: $f-s-md;
+                }
+
+                // 手機適配：增大觸控區域
+                @media ($mediaSm) {
+                    min-height: 44px;
+                    min-width: 44px;
+                    padding: $spacing-sm;
+                    font-size: $f-s-md;
+                    border-radius: $rad-basic;
+                }
 
                 &.active {
                     background: $accent;
@@ -167,48 +371,19 @@
                 }
             }
         }
-
     }
 
     .sound_visualizer {
-        .visualizer_bars {
-            display: flex;
-            gap: 3px;
-            align-items: flex-end;
-            gap: $spacing-xs;
+        flex: 1;
+        // 平板適配：縮小可視化器
+        @media ($mediaMd) {
+            transform: scale(0.8);
+        }
 
-            .vis_bar {
-                width: 6px;
-                background: $accent;
-                display: block;
-                border-radius: $rad-ex;
-                animation: pulse 1.5s ease-in-out infinite;
-
-                &:nth-child(1) {
-                    height: 37px;
-                    animation-delay: 0s;
-                }
-
-                &:nth-child(2) {
-                    height: 13px;
-                    animation-delay: 0.2s;
-                }
-
-                &:nth-child(3) {
-                    height: 32px;
-                    animation-delay: 0.4s;
-                }
-
-                &:nth-child(4) {
-                    height: 42px;
-                    animation-delay: 0.6s;
-                }
-
-                &:nth-child(5) {
-                    height: 9px;
-                    animation-delay: 0.8s;
-                }
-            }
+        // 手機適配：居中顯示
+        @media ($mediaSm) {
+            transform: scale(0.7);
+            align-self: center;
         }
     }
 
@@ -218,6 +393,21 @@
         justify-content: space-between;
         gap: $spacing-xl;
 
+        // 平板適配：縮小面板
+        @media ($mediaMd) {
+            width: 300px;
+            gap: $spacing-lg;
+        }
+
+        // 手機適配：改為縱向排列
+        @media ($mediaSm) {
+            width: 100%;
+            max-width: 300px;
+            flex-direction: row;
+            justify-content: space-around;
+            gap: $spacing-md;
+        }
+
         .control_group {
             text-align: center;
 
@@ -226,12 +416,26 @@
                 @extend %line_height_letter_spacing;
                 color: $text;
                 margin-bottom: $spacing-xs;
+
+                // 平板和手機適配：調整字體
+                @media ($mediaMd) {
+                    font-size: $f-s-md;
+                }
+
+                @media ($mediaSm) {
+                    font-size: $f-s-sm;
+                    margin-bottom: $spacing-xxs;
+                }
             }
 
             .random_btn {
                 background-color: transparent;
                 cursor: pointer;
-                // transition: all .3s ease;
+
+                // 手機適配：增大觸控區域
+                @media ($mediaSm) {
+                    padding: $spacing-xs;
+                }
 
                 rect {
                     stroke: $accent;
@@ -239,41 +443,102 @@
 
                 circle {
                     fill: $accent;
-                    transition: all .2s ease
+                    transition: all .2s ease;
                 }
 
                 svg {
                     transition: all .3s ease;
+
+                    // 平板適配：縮小圖標
+                    @media ($mediaMd) {
+                        width: 48px;
+                        height: 49px;
+                    }
+
+                    // 手機適配：適中尺寸
+                    @media ($mediaSm) {
+                        width: 44px;
+                        height: 45px;
+                    }
                 }
 
                 &:hover {
-
                     svg {
-
                         fill: $accent;
 
                         circle {
                             fill: $white;
                         }
                     }
-
                 }
-
-
             }
 
-            .sound_toggle {
-                @extend %line_height_letter_spacing;
-                @extend %btn-style-basic;
-                @include bordered;
-                background: $accent;
-                color: $white;
-            }
-
+            .sound_toggle,
             .share_btn {
                 @extend %line_height_letter_spacing;
                 @extend %btn-style-basic;
                 @include bordered;
+
+                // 平板適配：調整按鈕尺寸
+                @media ($mediaMd) {
+                    min-height: 32px;
+                    padding: $spacing-xxs $spacing-sm;
+                    font-size: $f-s-md;
+                }
+
+                // 手機適配：增大觸控區域
+                @media ($mediaSm) {
+                    min-height: 44px;
+                    padding: $spacing-sm $spacing-md;
+                    font-size: $f-s-sm;
+                    min-width: 64px;
+                }
+            }
+
+            .sound_toggle {
+                background: $accent;
+                color: $white;
+            }
+        }
+    }
+}
+
+// 針對極小螢幕的額外優化 (< 480px)
+@media (max-width: 480px) {
+    .sound_creator_content_wrap {
+        padding: 0;
+    }
+
+    .sound_creator_wrap {
+        padding: $spacing-xs $spacing-sm $spacing-sm;
+    }
+
+    .creator_controls .control_panel {
+        flex-direction: column;
+        gap: $spacing-md;
+        align-items: center;
+
+        .control_group {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+
+            .control_label {
+                margin-bottom: 0;
+                margin-right: $spacing-xs;
+            }
+        }
+    }
+
+    .creator_controls .sound_selection {
+        gap: $spacing-md;
+
+        .sound_numbers {
+            .sound_btn {
+                min-width: 40px;
+                min-height: 40px;
+                padding: $spacing-xs;
+                font-size: $f-s-sm;
             }
         }
     }
