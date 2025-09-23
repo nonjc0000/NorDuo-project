@@ -28,17 +28,18 @@
 
         // 平板適配：調整三角形位置
         @media ($mediaMd) {
-            right: -2rem;
+            right: -3rem;
             height: 100%;
             min-height: 80vh;
         }
 
         // 手機適配：隱藏或簡化背景
         @media ($mediaSm) {
-            right: -1rem;
-            height: 100%;
-            min-height: 70vh;
-            opacity: 0.3; // 降低透明度避免干擾閱讀
+            display: none;
+            // right: -3rem;
+            // height: 100%;
+            // min-height: 70vh;
+            // opacity: 0.3; // 降低透明度避免干擾閱讀
         }
 
         polygon {

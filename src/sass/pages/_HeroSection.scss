@@ -45,6 +45,10 @@
                 transform: translateX(-5px);
                 filter: brightness(1.2);
             }
+
+            @media ($mediaSm) {
+                max-width: 100px;
+            }
         }
 
         .deco_rec {
@@ -54,9 +58,9 @@
             .rec_dot {
                 max-width: 45px;
 
-                 @media ($mediaSm) {
-                        max-width: 35px;
-                    }
+                @media ($mediaSm) {
+                    max-width: 35px;
+                }
             }
 
             .rec_text {
@@ -64,9 +68,9 @@
                 color: $accent;
                 @extend %line_height_letter_spacing;
 
-                 @media ($mediaSm) {
-                        font-size: $f-s-xxxxl;
-                    }
+                @media ($mediaSm) {
+                    font-size: $f-s-xxxxl;
+                }
             }
         }
     }
@@ -101,8 +105,8 @@
                 }
 
                 @media ($mediaSm) {
-                        font-size: $f-s-xxxxxl;
-                    }
+                    font-size: $f-s-xxxxxl;
+                }
 
 
                 &:first-child {
