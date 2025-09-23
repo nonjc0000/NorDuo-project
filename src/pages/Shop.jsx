@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Shop = () => {
+
     return (
         <div className='shop_wrap'>
             <figure className='deco_cube'> {/* 用bg-img寫 */}
@@ -10,10 +11,10 @@ const Shop = () => {
                 <h1>New Arrival</h1>
                 <p>Find Your Sound.<br />Play Your Style.</p>
                 <div className='product_container'>
-                <figure className='product_box'>
-                    <img src="./images/shop/guitar.png" alt="" />
-                </figure>
-                <p>Foundwave Player II Terecaster </p>
+                    <figure className='product_box'>
+                        <img src="./images/shop/guitar.png" alt="" />
+                    </figure>
+                    <p>Foundwave Player II Terecaster </p>
                 </div>
             </div>
 
