@@ -1,5 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import CustomAudioVisualizer from '../components/CustomAudioVisualizer'
+import { FaGuitar } from "react-icons/fa6";
+import { PiPianoKeysFill } from "react-icons/pi";
+import { GiGuitar } from "react-icons/gi";
+import { FaDrum } from "react-icons/fa";
+import { GiSaxophone } from "react-icons/gi";
 
 // 音樂檔案陣列
 const AUDIO_CONFIG = [
@@ -7,31 +12,31 @@ const AUDIO_CONFIG = [
         id: 'guitar',
         name: 'guitar',
         audioUrl: './audios/guitar.mp3',
-        displayNumber: 1
+        display: <FaGuitar />
     },
     {
         id: 'kb',
         name: 'kb',
         audioUrl: './audios/kb.mp3',
-        displayNumber: 2
+        display: <PiPianoKeysFill />
     },
     {
         id: 'bass',
         name: 'bass',
         audioUrl: './audios/bass.mp3',
-        displayNumber: 3
+        display: <GiGuitar />
     },
     {
         id: 'drum',
         name: 'drum',
         audioUrl: './audios/drum.mp3',
-        displayNumber: 4
+        display: <FaDrum />
     },
     {
         id: 'sax',
         name: 'sax',
         audioUrl: './audios/sax.mp3',
-        displayNumber: 5
+        display: <GiSaxophone />
     }
 ];
 
@@ -88,10 +93,10 @@ const SoundCreator = () => {
             }
 
             const audioBuffer = await audioContextRef.current.decodeAudioData(arrayBuffer);
-            
+
             // 存儲音頻緩衝區，但不播放
             audioBuffersRef.current.set(soundConfig.id, audioBuffer);
-            
+
             return audioBuffer;
 
         } catch (error) {
@@ -118,7 +123,7 @@ const SoundCreator = () => {
         try {
             // 創建 AudioContext
             audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
-            
+
             // 創建主音量節點
             masterGainRef.current = audioContextRef.current.createGain();
             masterGainRef.current.connect(audioContextRef.current.destination);
@@ -223,7 +228,7 @@ const SoundCreator = () => {
                     try {
                         const playbackNode = createPlaybackNode(soundId, audioBuffer);
                         soundNodesRef.current.set(soundId, playbackNode);
-                        
+
                         // 在統一的時間點開始播放
                         playbackNode.source.start(startTime);
                     } catch (error) {
@@ -429,7 +434,7 @@ const SoundCreator = () => {
     };
 
     // 檢查是否有任何音頻在播放（用於視覺化）
-    const hasActiveAudio = isPlaying && !isGlobalMuted && 
+    const hasActiveAudio = isPlaying && !isGlobalMuted &&
         Object.values(soundStates).some(state => !state.isMuted && !state.hasError);
 
     return (
@@ -475,9 +480,9 @@ const SoundCreator = () => {
 
                     <div className='creation_status'>
                         <h2 className='creating_title'>
-                            {isLoading ? 'Loading...' : 
-                             !isPreloaded ? 'Ready to Load' :
-                             isPlaying ? 'Creating...' : 'Ready to Play'}
+                            {isLoading ? 'Loading...' :
+                                !isPreloaded ? 'Ready to Load' :
+                                    isPlaying ? 'Creating...' : 'Ready to Play'}
                         </h2>
                         <p className='file_info'>File type: sound</p>
                     </div>
@@ -486,7 +491,7 @@ const SoundCreator = () => {
                 <div className='creator_controls'>
                     <div className='sound_selection'>
                         <div className='selection_panel'>
-                            <h3 className='selection_title'>Click to create your sound!</h3>
+                            <h3 className='selection_title'>Choose your instruments!</h3>
                             <div className='sound_numbers'>
                                 {AUDIO_CONFIG.map((sound) => {
                                     const isActive = isPreloaded && isPlaying && !soundStates[sound.id].isMuted && !isGlobalMuted;
@@ -510,7 +515,7 @@ const SoundCreator = () => {
                                                 backgroundColor: hasError ? '#ff6b6b' : undefined
                                             }}
                                         >
-                                            {sound.displayNumber}
+                                            {sound.display}
                                         </button>
                                     );
                                 })}
@@ -558,9 +563,9 @@ const SoundCreator = () => {
                                 disabled={isLoading}
                             >
                                 {isLoading ? 'Loading...' :
-                                 !isPreloaded ? 'Load' :
-                                 !isPlaying ? 'Start' :
-                                 isGlobalMuted ? 'Unmute' : 'Mute'}
+                                    !isPreloaded ? 'Load' :
+                                        !isPlaying ? 'Start' :
+                                            isGlobalMuted ? 'Unmute' : 'Mute'}
                             </button>
                         </div>
 

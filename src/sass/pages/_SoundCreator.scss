@@ -373,6 +373,7 @@
             .sound_btn {
                 @extend %btn-style-basic;
                 @include bordered;
+                @extend %flex-center;
 
                 // 處理1024溢出問題
                 @media (max-width: 1200px) {

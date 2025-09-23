@@ -11,7 +11,7 @@ body, .Listen_on_Spotify, .more, .creator_controls .sound_selection .sound_numbe
   letter-spacing: 0.1em;
 }
 
-.latest_release_content, .album_cover, .btn_box, .hero_content .deco_top .deco_rec {
+.latest_release_content, .album_cover, .btn_box, .hero_content .deco_top .deco_rec, .creator_controls .sound_selection .sound_numbers .sound_btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -272,7 +272,6 @@ button {
   color: #FFFFFF;
   font-size: 2rem;
   line-height: 1;
-  font-weight: 500;
   transition: all 0.3s ease;
 }
 .nav_list .close_btn_item .nav_close_btn:hover {
@@ -2385,8 +2384,9 @@ button {
   fill: #F18888;
   transition: all 0.3s ease;
 }
-.Listen_on_Spotify:hover svg path {
-  fill: #FFFFFF;
+.Listen_on_Spotify:hover {
+  box-shadow: 0 0 20px rgba(241, 136, 136, 0.4);
+  transform: translateY(-2px);
 }
 
 .more {
@@ -2411,13 +2411,7 @@ button {
   }
 }
 .more:hover {
-  color: #FFFFFF;
   transform: translateY(-2px);
-}
-@media (max-width:640px) {
-  .more:hover {
-    transform: translateY(-1px);
-  }
 }
 
 @media (max-width: 480px) {

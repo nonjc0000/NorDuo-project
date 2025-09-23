@@ -20,11 +20,11 @@ const Footer = () => {
         </div>
         <div className='footer_down_left'>
           <ul className='socials'>
-            <li><a className='icon-fb' href="#"></a></li>
-            <li><a className='icon-ig' href="#"></a></li>
-            <li><a className='icon-spotify' href="#"></a></li>
-            <li><a className='icon-soundcloud' href="#"></a></li>
-            <li><a className='icon-yt' href="#"></a></li>
+            <li><a className='icon-fb' href="https://www.facebook.com/" target='_blank'></a></li>
+            <li><a className='icon-ig' href="https://www.instagram.com/" target='_blank'></a></li>
+            <li><a className='icon-spotify' href="https://open.spotify.com/" target='_blank'></a></li>
+            <li><a className='icon-soundcloud' href="https://soundcloud.com/" target='_blank'></a></li>
+            <li><a className='icon-yt' href="https://www.youtube.com/" target='_blank'></a></li>
           </ul>
           <small>© 2025 NørDuo.studio. All rights reserved.</small>
         </div>

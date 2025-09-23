@@ -55,7 +55,7 @@
         top: 0;
         right: -100%; // 初始位置：螢幕外右側
         width: 280px; // 選單寬度
-        height: 100vh; // 佔滿整個螢幕高度
+        height: 100vh; 
 
         // 背景和視覺效果
         background: rgba($background, 0.7); // 半透明背景
@@ -65,11 +65,11 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: $spacing-xxl; // 項目間距離
+        gap: $spacing-xxl; 
 
         // 動畫和層級
         transition: right 0.3s ease; // 滑入動畫
-        z-index: $z-ex; // 確保在最上層
+        z-index: $z-ex; 
 
         // 調整內容佈局，為頂部按鈕留空間
         padding-top: 65px; // 為關閉按鈕留出空間
@@ -108,7 +108,6 @@
                 color: $text;
                 font-size: $f-s-xxxl;
                 line-height: 1;
-                font-weight: 500; // 細一點的字重
                 transition: all 0.3s ease;
             }
 

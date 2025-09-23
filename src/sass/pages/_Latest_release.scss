@@ -424,9 +424,9 @@
     }
 
     &:hover {
-        svg path {
-            fill: $text;
-        }
+
+        box-shadow: 0 0 20px rgba($accent, 0.4);
+        transform: translateY(-2px);
     }
 }
 
@@ -453,13 +453,7 @@
     }
 
     &:hover {
-        color: $text;
         transform: translateY(-2px);
-
-        // 手機適配：減少變形效果
-        @media ($mediaSm) {
-            transform: translateY(-1px);
-        }
     }
 }
 
