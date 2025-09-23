@@ -2,11 +2,25 @@
 @use '../functions/' as *;
 
 .latest_release_wrap {
-    // @include bordered;
     width: $w-100;
     height: 100vh;
     padding: $spacing-xxxl 0;
     margin-top: $spacing-xxxl;
+
+    // 平板適配
+    @media ($mediaMd) {
+        padding: $spacing-xl 0;
+        margin-top: $spacing-xl;
+        min-height: 100vh;
+        height: auto;
+    }
+
+    // 手機適配
+    @media ($mediaSm) {
+        padding: $spacing-lg 0;
+        margin-top: $spacing-lg;
+        height: auto;
+    }
 }
 
 .latest_release_content {
@@ -14,18 +28,45 @@
     height: 100%;
     @extend %flex-center;
     gap: 10%;
+
+    // 平板適配：調整間距和佈局
+    @media ($mediaMd) {
+        flex-direction: column;
+        gap: $spacing-xl;
+        align-items: center;
+        padding: 0 $spacing-xl;
+    }
+
+    // 手機適配：縱向佈局
+    @media ($mediaSm) {
+        flex-direction: column;
+        gap: $spacing-lg;
+        padding: 0 $spacing-md;
+    }
 }
 
 .album_cover {
     width: 35%;
     height: 100%;
     @extend %flex-center;
-    // padding-right: 1%;
+
+    // 平板適配
+    @media ($mediaMd) {
+        width: 100%;
+        height: auto;
+        max-width: 300px;
+    }
+
+    // 手機適配
+    @media ($mediaSm) {
+        width: 100%;
+        height: auto;
+        max-width: 320px;
+    }
 }
 
 .album_box {
     position: relative;
-    // z-index: 1;
     width: 100%;
     max-width: 305px;
     height: 100%;
@@ -35,6 +76,19 @@
     padding: $spacing-sm;
     box-shadow: 0 10px 50px rgba($accent, 0.4);
 
+    // 平板適配：調整偽元素
+    @media ($mediaMd) {
+        max-width: 350px;
+        max-height: 350px;
+    }
+
+    // 手機適配：縮小專輯盒
+    @media ($mediaSm) {
+        max-width: 280px;
+        max-height: 280px;
+        padding: $spacing-xs;
+    }
+
     &::before {
         content: '#Latest';
         font-size: $f-s-display;
@@ -43,6 +97,18 @@
         top: 150px;
         left: -190px;
         transform: rotate(-90deg);
+
+        // 平板適配：調整位置
+        @media ($mediaMd) {
+            font-size: $f-s-xxxxxl;
+            top: 120px;
+            left: -140px;
+        }
+
+        // 手機適配：隱藏或重新定位
+        @media ($mediaSm) {
+            display: none; // 空間不足時隱藏
+        }
     }
 
     &::after {
@@ -52,6 +118,22 @@
         position: absolute;
         top: -55px;
         left: 10px;
+
+        // 平板適配：調整大小
+        @media ($mediaMd) {
+            font-size: $f-s-xxxxxl;
+            top: -45px;
+        }
+
+        // 手機適配：縮小或移至內部
+        @media ($mediaSm) {
+            content: '#Latest release';
+            width: 100%;
+            font-size: $f-s-xl;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     }
 
     .album_img {
@@ -61,6 +143,13 @@
         position: relative;
         z-index: 1;
         overflow: hidden;
+
+        // 保持響應式比例
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     }
 
     .album_deco {
@@ -70,7 +159,23 @@
         width: 290px;
         aspect-ratio: 1;
         z-index: -1;
-        img{
+
+        // 平板適配：調整裝飾位置
+        @media ($mediaMd) {
+            width: 250px;
+            bottom: -60px;
+            right: -45px;
+        }
+
+        // 手機適配：縮小或隱藏裝飾
+        @media ($mediaSm) {
+            width: 200px;
+            bottom: -40px;
+            right: -30px;
+            opacity: 0.7;
+        }
+
+        img {
             object-fit: contain;
         }
     }
@@ -83,12 +188,23 @@
     flex-direction: column;
     justify-content: center;
     gap: $spacing-xxxl;
-    // padding: $spacing-md 0;
+
+    // 平板適配
+    @media ($mediaMd) {
+        width: 100%;
+        height: auto;
+        max-width: 500px;
+        gap: $spacing-xl;
+    }
+
+    // 手機適配
+    @media ($mediaSm) {
+        width: 100%;
+        gap: $spacing-lg;
+    }
 }
 
 .songlist_title {
-    // margin-bottom: $spacing-xxxl;
-
     h2 {
         font-size: $f-s-xxxl;
         font-weight: $f-w-b;
@@ -96,14 +212,29 @@
         color: $text;
         margin-bottom: $spacing-xs;
         text-align: center;
+
+        // 平板適配
+        @media ($mediaMd) {
+            margin-top: $spacing-xxxxl;
+            font-size: $f-s-xxl;
+        }
+
+        // 手機適配
+        @media ($mediaSm) {
+            font-size: $f-s-xl;
+        }
     }
 
     p {
         font-size: $f-s-sm;
         color: $gray-400;
         @extend %line_height_letter_spacing;
-        // font-style: italic;
         text-align: center;
+
+        // 手機適配：稍微縮小
+        @media ($mediaSm) {
+            font-size: $f-s-xs;
+        }
     }
 }
 
@@ -111,7 +242,15 @@
     display: flex;
     flex-direction: column;
     gap: $spacing-md;
-    // margin-bottom: $spacing-xxl;
+
+    // 平板和手機適配：調整間距
+    @media ($mediaMd) {
+        gap: $spacing-sm;
+    }
+
+    @media ($mediaSm) {
+        gap: $spacing-sm;
+    }
 }
 
 .SongCard_wrap {
@@ -122,6 +261,13 @@
     border-radius: $rad-basic-sm;
     transition: all 0.3s ease;
     cursor: pointer;
+
+    // 手機適配：增大觸控區域
+    @media ($mediaSm) {
+        padding: $spacing-sm;
+        gap: $spacing-sm;
+        min-height: 44px; // 觸控友好的最小高度
+    }
 
     &:hover {
         background: rgba($accent, 0.08);
@@ -138,14 +284,20 @@
         transition: all 0.3s ease;
         flex-shrink: 0;
 
-       &.play{
+        // 手機適配：稍微放大按鈕
+        @media ($mediaSm) {
+            width: 28px;
+            height: 28px;
+            min-width: 28px; // 確保不被壓縮
+        }
+
+        &.play {
             background-image: url('/images/Latest_release/play_icon.svg');
 
             &:hover {
                 background-image: url('/images/Latest_release/play_icon_hover.svg');
             }
         }
-
 
         &.pause {
             background-image: url('/images/Latest_release/pause_icon.svg');
@@ -154,6 +306,7 @@
 
     .text_box {
         flex: 1;
+        min-width: 0; // 允許縮小
 
         h3 {
             font-size: $f-s-lg;
@@ -162,6 +315,20 @@
             margin-bottom: $spacing-xxs;
             white-space: nowrap;
             letter-spacing: $letter-spacing-basic;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            // 平板適配
+            @media ($mediaMd) {
+                font-size: $f-s-md;
+            }
+
+            // 手機適配：允許換行
+            @media ($mediaSm) {
+                font-size: $f-s-sm;
+                white-space: normal;
+                line-height: 1.3;
+            }
         }
 
         p {
@@ -169,6 +336,14 @@
             color: $gray-500;
             white-space: nowrap;
             letter-spacing: $letter-spacing-basic;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            // 手機適配：允許換行
+            @media ($mediaSm) {
+                font-size: $f-s-xs;
+                white-space: normal;
+            }
         }
     }
 
@@ -179,6 +354,12 @@
         min-width: 40px;
         text-align: right;
         letter-spacing: $letter-spacing-basic;
+
+        // 手機適配：確保時間顯示清晰
+        @media ($mediaSm) {
+            font-size: $f-s-xs;
+            min-width: 35px;
+        }
     }
 }
 
@@ -186,6 +367,17 @@
     @extend %flex-center;
     gap: $spacing-md;
 
+    // 平板適配
+    @media ($mediaMd) {
+        gap: $spacing-sm;
+    }
+
+    // 手機適配：可能需要縱向排列
+    @media ($mediaSm) {
+        flex-direction: column;
+        gap: $spacing-sm;
+        width: 100%;
+    }
 }
 
 .Listen_on_Spotify {
@@ -199,11 +391,31 @@
     font-size: $f-s-lg;
     letter-spacing: $letter-spacing-basic;
 
+    // 平板適配
+    @media ($mediaMd) {
+        font-size: $f-s-md;
+        padding: $spacing-xs $spacing-sm;
+    }
+
+    // 手機適配：全寬按鈕
+    @media ($mediaSm) {
+        width: 100%;
+        justify-content: center;
+        font-size: $f-s-sm;
+        min-height: 44px;
+        padding: $spacing-sm;
+    }
 
     svg {
         width: 20px;
         height: 20px;
         transition: all 0.3s ease;
+
+        // 手機適配：稍微放大圖標
+        @media ($mediaSm) {
+            width: 18px;
+            height: 18px;
+        }
 
         path {
             fill: $accent;
@@ -227,9 +439,58 @@
     font-size: $f-s-lg;
     letter-spacing: $letter-spacing-basic;
 
+    // 平板適配
+    @media ($mediaMd) {
+        font-size: $f-s-md;
+    }
+
+    // 手機適配：全寬按鈕
+    @media ($mediaSm) {
+        width: 100%;
+        font-size: $f-s-sm;
+        min-height: 44px;
+        padding: $spacing-sm $spacing-md;
+    }
+
     &:hover {
         color: $text;
         transform: translateY(-2px);
-        // box-shadow: 0 5px 15px rgba($accent, 0.3);
+
+        // 手機適配：減少變形效果
+        @media ($mediaSm) {
+            transform: translateY(-1px);
+        }
+    }
+}
+
+// 極小螢幕優化 (< 480px)
+@media (max-width: 480px) {
+    .latest_release_content {
+        padding: 0 $spacing-sm;
+    }
+
+    .album_box {
+        max-width: 260px;
+        max-height: 260px;
+
+        &::after {
+            font-size: $f-s-lg;
+            top: -25px;
+        }
+    }
+
+    .SongCard_wrap {
+        .text_box h3 {
+            font-size: $f-s-xs;
+        }
+
+        .text_box p {
+            font-size: 0.7rem;
+        }
+
+        >p {
+            font-size: 0.7rem;
+            min-width: 30px;
+        }
     }
 }

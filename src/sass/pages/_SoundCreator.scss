@@ -16,7 +16,7 @@
 
     // 手機適配 (< 640px)
     @media ($mediaSm) {
-        height: 100vh;
+        height: auto;
         margin-bottom: 0;
         flex-direction: column;
         gap: 0;

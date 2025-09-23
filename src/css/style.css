@@ -444,7 +444,7 @@ button {
 }
 @media (max-width:640px) {
   .sound_creator_content_wrap {
-    height: 100vh;
+    height: auto;
     margin-bottom: 0;
     flex-direction: column;
     gap: 0;
@@ -1610,16 +1610,60 @@ button {
   padding: 50px 0;
   margin-top: 50px;
 }
+@media (max-width:820px) {
+  .latest_release_wrap {
+    padding: 30px 0;
+    margin-top: 30px;
+    min-height: 100vh;
+    height: auto;
+  }
+}
+@media (max-width:640px) {
+  .latest_release_wrap {
+    padding: 25px 0;
+    margin-top: 25px;
+    height: auto;
+  }
+}
 
 .latest_release_content {
   width: 100%;
   height: 100%;
   gap: 10%;
 }
+@media (max-width:820px) {
+  .latest_release_content {
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    padding: 0 30px;
+  }
+}
+@media (max-width:640px) {
+  .latest_release_content {
+    flex-direction: column;
+    gap: 25px;
+    padding: 0 20px;
+  }
+}
 
 .album_cover {
   width: 35%;
   height: 100%;
+}
+@media (max-width:820px) {
+  .album_cover {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+  }
+}
+@media (max-width:640px) {
+  .album_cover {
+    width: 100%;
+    height: auto;
+    max-width: 320px;
+  }
 }
 
 .album_box {
@@ -1633,6 +1677,19 @@ button {
   padding: 15px;
   box-shadow: 0 10px 50px rgba(241, 136, 136, 0.4);
 }
+@media (max-width:820px) {
+  .album_box {
+    max-width: 350px;
+    max-height: 350px;
+  }
+}
+@media (max-width:640px) {
+  .album_box {
+    max-width: 280px;
+    max-height: 280px;
+    padding: 10px;
+  }
+}
 .album_box::before {
   content: "#Latest";
   font-size: 3.75rem;
@@ -1642,6 +1699,18 @@ button {
   left: -190px;
   transform: rotate(-90deg);
 }
+@media (max-width:820px) {
+  .album_box::before {
+    font-size: 2.5rem;
+    top: 120px;
+    left: -140px;
+  }
+}
+@media (max-width:640px) {
+  .album_box::before {
+    display: none;
+  }
+}
 .album_box::after {
   content: "release";
   font-size: 3.75rem;
@@ -1649,6 +1718,22 @@ button {
   position: absolute;
   top: -55px;
   left: 10px;
+}
+@media (max-width:820px) {
+  .album_box::after {
+    font-size: 2.5rem;
+    top: -45px;
+  }
+}
+@media (max-width:640px) {
+  .album_box::after {
+    content: "#Latest release";
+    width: 100%;
+    font-size: 1.5rem;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 .album_box .album_img {
   width: 100%;
@@ -1658,6 +1743,11 @@ button {
   z-index: 1;
   overflow: hidden;
 }
+.album_box .album_img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .album_box .album_deco {
   position: absolute;
   bottom: -70px;
@@ -1665,6 +1755,21 @@ button {
   width: 290px;
   aspect-ratio: 1;
   z-index: -1;
+}
+@media (max-width:820px) {
+  .album_box .album_deco {
+    width: 250px;
+    bottom: -60px;
+    right: -45px;
+  }
+}
+@media (max-width:640px) {
+  .album_box .album_deco {
+    width: 200px;
+    bottom: -40px;
+    right: -30px;
+    opacity: 0.7;
+  }
 }
 .album_box .album_deco img {
   object-fit: contain;
@@ -1678,6 +1783,20 @@ button {
   justify-content: center;
   gap: 50px;
 }
+@media (max-width:820px) {
+  .songlist {
+    width: 100%;
+    height: auto;
+    max-width: 500px;
+    gap: 30px;
+  }
+}
+@media (max-width:640px) {
+  .songlist {
+    width: 100%;
+    gap: 25px;
+  }
+}
 
 .songlist_title h2 {
   font-size: 2rem;
@@ -1687,16 +1806,42 @@ button {
   margin-bottom: 10px;
   text-align: center;
 }
+@media (max-width:820px) {
+  .songlist_title h2 {
+    margin-top: 60px;
+    font-size: 1.75rem;
+  }
+}
+@media (max-width:640px) {
+  .songlist_title h2 {
+    font-size: 1.5rem;
+  }
+}
 .songlist_title p {
   font-size: 0.875rem;
   color: #ced4da;
   text-align: center;
+}
+@media (max-width:640px) {
+  .songlist_title p {
+    font-size: 0.75rem;
+  }
 }
 
 .songlist_items {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+@media (max-width:820px) {
+  .songlist_items {
+    gap: 15px;
+  }
+}
+@media (max-width:640px) {
+  .songlist_items {
+    gap: 15px;
+  }
 }
 
 .SongCard_wrap {
@@ -1707,6 +1852,13 @@ button {
   border-radius: 5px;
   transition: all 0.3s ease;
   cursor: pointer;
+}
+@media (max-width:640px) {
+  .SongCard_wrap {
+    padding: 15px;
+    gap: 15px;
+    min-height: 44px;
+  }
 }
 .SongCard_wrap:hover {
   background: rgba(241, 136, 136, 0.08);
@@ -1722,6 +1874,13 @@ button {
   transition: all 0.3s ease;
   flex-shrink: 0;
 }
+@media (max-width:640px) {
+  .SongCard_wrap .play_btn {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+  }
+}
 .SongCard_wrap .play_btn.play {
   background-image: url("/images/Latest_release/play_icon.svg");
 }
@@ -1733,6 +1892,7 @@ button {
 }
 .SongCard_wrap .text_box {
   flex: 1;
+  min-width: 0;
 }
 .SongCard_wrap .text_box h3 {
   font-size: 1.25rem;
@@ -1741,12 +1901,34 @@ button {
   margin-bottom: 5px;
   white-space: nowrap;
   letter-spacing: 0.1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width:820px) {
+  .SongCard_wrap .text_box h3 {
+    font-size: 1rem;
+  }
+}
+@media (max-width:640px) {
+  .SongCard_wrap .text_box h3 {
+    font-size: 0.875rem;
+    white-space: normal;
+    line-height: 1.3;
+  }
 }
 .SongCard_wrap .text_box p {
   font-size: 0.875rem;
   color: #adb5bd;
   white-space: nowrap;
   letter-spacing: 0.1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width:640px) {
+  .SongCard_wrap .text_box p {
+    font-size: 0.75rem;
+    white-space: normal;
+  }
 }
 .SongCard_wrap > p {
   font-size: 0.875rem;
@@ -1756,9 +1938,27 @@ button {
   text-align: right;
   letter-spacing: 0.1em;
 }
+@media (max-width:640px) {
+  .SongCard_wrap > p {
+    font-size: 0.75rem;
+    min-width: 35px;
+  }
+}
 
 .btn_box {
   gap: 20px;
+}
+@media (max-width:820px) {
+  .btn_box {
+    gap: 15px;
+  }
+}
+@media (max-width:640px) {
+  .btn_box {
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+  }
 }
 
 .Listen_on_Spotify {
@@ -1771,10 +1971,31 @@ button {
   font-size: 1.25rem;
   letter-spacing: 0.1em;
 }
+@media (max-width:820px) {
+  .Listen_on_Spotify {
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+}
+@media (max-width:640px) {
+  .Listen_on_Spotify {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.875rem;
+    min-height: 44px;
+    padding: 15px;
+  }
+}
 .Listen_on_Spotify svg {
   width: 20px;
   height: 20px;
   transition: all 0.3s ease;
+}
+@media (max-width:640px) {
+  .Listen_on_Spotify svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 .Listen_on_Spotify svg path {
   fill: #F18888;
@@ -1792,11 +2013,52 @@ button {
   font-size: 1.25rem;
   letter-spacing: 0.1em;
 }
+@media (max-width:820px) {
+  .more {
+    font-size: 1rem;
+  }
+}
+@media (max-width:640px) {
+  .more {
+    width: 100%;
+    font-size: 0.875rem;
+    min-height: 44px;
+    padding: 15px 20px;
+  }
+}
 .more:hover {
   color: #FFFFFF;
   transform: translateY(-2px);
 }
+@media (max-width:640px) {
+  .more:hover {
+    transform: translateY(-1px);
+  }
+}
 
+@media (max-width: 480px) {
+  .latest_release_content {
+    padding: 0 15px;
+  }
+  .album_box {
+    max-width: 260px;
+    max-height: 260px;
+  }
+  .album_box::after {
+    font-size: 1.25rem;
+    top: -25px;
+  }
+  .SongCard_wrap .text_box h3 {
+    font-size: 0.75rem;
+  }
+  .SongCard_wrap .text_box p {
+    font-size: 0.7rem;
+  }
+  .SongCard_wrap > p {
+    font-size: 0.7rem;
+    min-width: 30px;
+  }
+}
 .learning_wrap {
   width: 100%;
   height: 100vh;
