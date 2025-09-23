@@ -1,5 +1,29 @@
 import React, { useState } from 'react'
 
+// 產品資料結構
+const PRODUCTS_DATA = [
+        {
+            id: 'guitar',
+            name: 'Foundwave Player II Telecaster',
+            image: './images/shop/guitar.png'
+        },
+        {
+            id: 'bass',
+            name: 'Foundwave Jazz Bass',
+            image: './images/shop/bass.png'
+        },
+        {
+            id: 'kb',
+            name: 'RKB-88',
+            image: './images/shop/kb.jpg'
+        },
+        {
+            id: 'drum',
+            name: 'ZAD-506',
+            image: './images/shop/drum.png'
+        }
+];
+
 const Shop = () => {
 
     return (
