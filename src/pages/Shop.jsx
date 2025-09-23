@@ -70,19 +70,19 @@ const Shop = () => {
                 <p>Go Shopping ⟶</p>
 
                 <div className="categories_list">
-                    <div className="catagories_item">
+                    <div className="catagories_item" onMouseEnter={() => setCurrentImgIndex(0)}>
                         <h3 className='guitar'>Guitar</h3>
                         <h3>[01]</h3>
                     </div>
-                    <div className="catagories_item">
+                    <div className="catagories_item" onMouseEnter={() => setCurrentImgIndex(1)}>
                         <h3 className='bass'>Bass</h3>
                         <h3>[02]</h3>
                     </div>
-                    <div className="catagories_item">
+                    <div className="catagories_item" onMouseEnter={() => setCurrentImgIndex(2)}>
                         <h3 className='kb'>Keyboard</h3>
                         <h3>[03]</h3>
                     </div>
-                    <div className="catagories_item">
+                    <div className="catagories_item" onMouseEnter={() => setCurrentImgIndex(3)}>
                         <h3 className='others'>Others</h3>
                         <h3>[04]</h3>
                     </div>
