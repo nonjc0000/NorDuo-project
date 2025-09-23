@@ -883,7 +883,7 @@ button {
 }
 @media (max-width:640px) {
   .sound_creator_wrap {
-    background-image: url("./images/SoundCreator/hud-bg-mediaSm.png");
+    background-image: url("/images/SoundCreator/hud-bg-mediaSm.png");
     background-size: cover;
     width: 100%;
     padding: 15px 20px 20px;

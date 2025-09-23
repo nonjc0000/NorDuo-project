@@ -84,7 +84,7 @@
 
     // 手機適配
     @media ($mediaSm) {
-        background-image: url('./images/SoundCreator/hud-bg-mediaSm.png');
+        background-image: url('/images/SoundCreator/hud-bg-mediaSm.png');
         background-size: cover;
         width: 100%;
         padding: $spacing-sm $spacing-md $spacing-md;
