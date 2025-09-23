@@ -106,7 +106,7 @@
 
             @media ($mediaMd) {
                 margin-top: $spacing-md;
-                filter: drop-shadow(0 0 5px $black);
+                text-shadow: 2px 2px 4px rgba($background, 0.8)
             }
 
             // 手機適配
@@ -192,7 +192,7 @@
         }
 
         p {
-            margin-top: $spacing-xs;
+            margin-top: 1%;
             font-size: $f-s-md;
             color: $text;
             word-wrap: break-word;

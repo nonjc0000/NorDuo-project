@@ -3,7 +3,6 @@
 
 .contact_wrap {
     position: relative;
-    // @include bordered;
     height: 800px;
     width: 100%;
     display: flex;
@@ -11,6 +10,18 @@
     justify-content: flex-start;
     align-items: center;
 
+    // 平板適配：調整整體高度
+    @media ($mediaMd) {
+        height: auto;
+        min-height: 80vh;
+        padding: $spacing-xl 0;
+    }
+
+    // 手機適配：進一步調整高度和內邊距
+    @media ($mediaSm) {
+        min-height: 70vh;
+        padding: $spacing-lg 0;
+    }
 
     .falling {
         position: relative;
@@ -22,6 +33,16 @@
         align-items: center;
         gap: $spacing-xl;
 
+        // 平板適配
+        @media ($mediaMd) {
+            gap: $spacing-lg;
+        }
+
+        // 手機適配
+        @media ($mediaSm) {
+            gap: $spacing-md;
+        }
+
         .title {
             position: absolute;
             top: 50%;
@@ -31,8 +52,28 @@
             color: $text;
             margin-bottom: $spacing-xl;
             z-index: 10;
-            pointer-events: none; // 讓標題不干擾滑鼠事件
+            pointer-events: none;
             @extend %line_height_letter_spacing;
+
+            // 平板適配：縮小標題字體
+            @media ($mediaMd) {
+                font-size: $f-s-xxxxxl; // 2.5rem
+                margin-bottom: $spacing-lg;
+            }
+
+            // 手機適配：進一步縮小標題
+            @media ($mediaSm) {
+                font-size: $f-s-xxxl; // 2rem
+                margin-bottom: $spacing-md;
+                // 添加文字陰影增強可讀性
+                text-shadow: 2px 2px 4px rgba($background, 0.8);
+            }
+
+            // 極小螢幕：最小字體
+            @media (max-width: 480px) {
+                font-size: $f-s-xxl; // 1.75rem
+                line-height: 1.2;
+            }
         }
     }
 
@@ -42,17 +83,41 @@
         overflow: hidden;
         border-top: 1px solid $white;
         border-bottom: 1px solid $white;
+
+        // 平板適配：調整輪播容器高度
+        @media ($mediaMd) {
+            height: 80px;
+            margin: 0 $spacing-md;
+        }
+
+        // 手機適配：進一步縮小高度
+        @media ($mediaSm) {
+            height: 70px;
+            margin: 0 $spacing-sm;
+        }
+
+        // 極小螢幕：最小高度但保持觸控友好
+        @media (max-width: 480px) {
+            height: 60px;
+            margin: 0 $spacing-xs;
+        }
     }
 
     .carousel {
-        // @include bordered($color: green);
         height: 100%;
-        // width: 100%;
         display: flex;
         justify-content: flex-start;
         align-items: center;
         animation: marquee 40s linear alternate infinite;
 
+        // 平板和手機適配：調整動畫速度
+        @media ($mediaMd) {
+            animation: marquee 35s linear alternate infinite;
+        }
+
+        @media ($mediaSm) {
+            animation: marquee 30s linear alternate infinite;
+        }
 
         &:hover {
             animation-play-state: paused;
@@ -66,13 +131,40 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            // gap: $spacing-md;
-
             width: 333px;
             height: 100%;
             margin-right: $spacing-xl;
             cursor: pointer;
             transition: all 0.3s ease;
+
+            // 平板適配：調整輪播項目尺寸
+            @media ($mediaMd) {
+                width: 280px;
+                margin-right: $spacing-lg;
+                // 增加觸控區域的 padding
+                padding: $spacing-xs;
+            }
+
+            // 手機適配：進一步調整尺寸和觸控體驗
+            @media ($mediaSm) {
+                width: 240px;
+                margin-right: $spacing-md;
+                padding: $spacing-xs;
+                min-height: 44px; // 觸控友好的最小高度
+            }
+
+            // 極小螢幕：最小尺寸
+            @media (max-width: 480px) {
+                width: 200px;
+                margin-right: $spacing-sm;
+            }
+
+            // 觸控設備的 active 狀態
+            &:active {
+                transform: scale(0.98);
+                background: rgba($accent, 0.1);
+                border-radius: $rad-basic-sm;
+            }
 
             p {
                 flex-shrink: 0;
@@ -82,6 +174,24 @@
                 @extend %line_height_letter_spacing;
                 margin-right: $spacing-md;
                 white-space: nowrap;
+
+                // 平板適配：縮小文字
+                @media ($mediaMd) {
+                    font-size: $f-s-xxxl; // 2rem
+                    margin-right: $spacing-sm;
+                }
+
+                // 手機適配：進一步縮小
+                @media ($mediaSm) {
+                    font-size: $f-s-xxl; // 1.75rem
+                    margin-right: $spacing-xs;
+                }
+
+                // 極小螢幕：最小字體但保持可讀性
+                @media (max-width: 480px) {
+                    font-size: $f-s-xl; // 1.5rem
+                    margin-right: $spacing-xs;
+                }
             }
 
             img {
@@ -90,15 +200,30 @@
                 width: 32px;
                 object-fit: contain;
                 padding-top: 3px;
-                // height: 24px;
                 transition: all 0.3s ease;
+
+                // 平板適配：稍微縮小圖標
+                @media ($mediaMd) {
+                    width: 28px;
+                }
+
+                // 手機適配：調整圖標大小
+                @media ($mediaSm) {
+                    width: 24px;
+                    padding-top: 2px;
+                }
+
+                // 極小螢幕：最小但仍可見的圖標
+                @media (max-width: 480px) {
+                    width: 20px;
+                    padding-top: 1px;
+                }
             }
-
-
         }
     }
 }
 
+// 輪播動畫保持不變
 @keyframes marquee {
     0% {
         transform: translateX(0);
@@ -109,42 +234,59 @@
     }
 }
 
-
+// FallingTags 響應式優化
 #fallingTags {
     width: 100%;
     height: 100%;
-    // border: 2px solid $white;
     position: relative;
-    // bottom: 0;
     background: transparent;
     margin: 0 auto;
     transform: translateZ(0);
     contain: layout style paint;
-
-    // 關鍵設置：容器不攔截指針事件，讓滾動穿透
     pointer-events: none;
+    touch-action: pan-y;
 
-    // 優化滾動體驗
-    touch-action: pan-y; // 允許垂直滾動
+    // 平板適配：調整物理引擎容器
+    @media ($mediaMd) {
+        // 可能需要調整 Matter.js 的世界邊界
+        min-height: 400px;
+    }
 
-    // 物理元素可以接收事件
+    // 手機適配：確保在小螢幕上仍然可用
+    @media ($mediaSm) {
+        min-height: 300px;
+        // 在非常小的螢幕上可以考慮簡化物理效果
+        // 或者調整 Matter.js 引擎的重力和碰撞設定
+    }
+
+    // 極小螢幕：最小化物理區域但保持互動性
+    @media (max-width: 480px) {
+        min-height: 250px;
+    }
+
     p {
         position: relative;
         z-index: 5;
-
-        // 關鍵：重新啟用指針事件
         pointer-events: auto !important;
 
-        // 改善拖拽體驗
         &:active {
             cursor: grabbing !important;
         }
 
-        // 確保元素可以被選中拖拽
         &:hover {
             cursor: grab;
             transform: scale(1.02);
             transition: transform 0.2s ease;
+
+            // 手機適配：減少 hover 效果，因為觸控設備沒有真正的 hover
+            @media ($mediaSm) {
+                transform: scale(1.01);
+            }
+        }
+
+        // 觸控設備的 active 狀態加強
+        &:active {
+            transform: scale(0.98);
         }
     }
 }
