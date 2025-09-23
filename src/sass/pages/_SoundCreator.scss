@@ -346,6 +346,7 @@
             }
 
             @media ($mediaSm) {
+                order: 1;
                 font-size: $f-s-sm;
                 margin-bottom: $spacing-xs;
                 text-align: center;
@@ -577,8 +578,8 @@
                 // 手機適配：增大觸控區域
                 @media ($mediaSm) {
                     min-height: 44px;
-                    min-width: 64px;
-                    padding: $spacing-sm $spacing-md;
+                    min-width: 50px;
+                    padding: $spacing-xs $spacing-sm;
                     font-size: $f-s-sm;
                 }
             }
@@ -602,8 +603,8 @@
     }
 
     .creator_controls .control_panel {
-        flex-direction: column;
-        gap: $spacing-md;
+        // flex-direction: column;
+        gap: $spacing-sm;
         align-items: center;
 
         .control_group {
@@ -613,7 +614,7 @@
 
             .control_label {
                 margin-bottom: 0;
-                margin-right: $spacing-xs;
+                // margin-right: $spacing-xs;
             }
         }
     }
