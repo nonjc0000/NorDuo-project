@@ -1,30 +1,54 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // 產品資料結構
 const PRODUCTS_DATA = [
-        {
-            id: 'guitar',
-            name: 'Foundwave Player II Telecaster',
-            image: './images/shop/guitar.png'
-        },
-        {
-            id: 'bass',
-            name: 'Foundwave Jazz Bass',
-            image: './images/shop/bass.png'
-        },
-        {
-            id: 'kb',
-            name: 'RKB-88',
-            image: './images/shop/kb.jpg'
-        },
-        {
-            id: 'drum',
-            name: 'ZAD-506',
-            image: './images/shop/drum.png'
-        }
+    {
+        id: 'guitar',
+        name: 'Foundwave Player II Telecaster',
+        url: './images/shop/guitar.png'
+    },
+    {
+        id: 'bass',
+        name: 'Foundwave American Ultra Jazz Bass',
+        url: './images/shop/bass.png'
+    },
+    {
+        id: 'kb',
+        name: 'Rolane RKB-88',
+        url: './images/shop/kb.png'
+    },
+    {
+        id: 'drum',
+        name: 'Rolane ZAD-506',
+        url: './images/shop/drum.png'
+    }
 ];
 
 const Shop = () => {
+
+    const [currentImgIndex, setCurrentImgIndex] = useState(0);
+
+    // 當currentImgIndex改變時，會觸發useEffect
+    useEffect(() => {
+        // 每3秒呼叫nextSlide()換下一張圖
+        const autoplay = setInterval(() => {
+            nextSlide();
+        }, 3000);
+
+
+        // 每3秒後，移除autoplay，這樣才能取得最新的索引編號
+        return () => clearInterval(autoplay);
+    }, [currentImgIndex]);
+
+    // 下一張
+    const nextSlide = () => {
+        // 取得前一張的索引編號，檢查是否為最後一個編號
+        // 是=>回到第一張
+        // 否=>跳到下一張
+        setCurrentImgIndex((prevIndex) => (prevIndex === PRODUCTS_DATA.length - 1 ? 0 : prevIndex + 1))
+    }
+
+
 
     return (
         <div className='shop_wrap'>
@@ -36,9 +60,9 @@ const Shop = () => {
                 <p>Find Your Sound.<br />Play Your Style.</p>
                 <div className='product_container'>
                     <figure className='product_box'>
-                        <img src="./images/shop/guitar.png" alt="" />
+                        <img src={`${PRODUCTS_DATA[currentImgIndex].url}`} alt="" />
                     </figure>
-                    <p>Foundwave Player II Terecaster </p>
+                    <p>{PRODUCTS_DATA[currentImgIndex].name}</p>
                 </div>
             </div>
 

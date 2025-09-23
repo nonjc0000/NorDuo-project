@@ -2972,7 +2972,7 @@ button {
   }
 }
 .shop_wrap .product_container .product_box img {
-  object-position: left;
+  object-position: center;
   object-fit: contain;
   filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
   transition: all 0.3s ease;
