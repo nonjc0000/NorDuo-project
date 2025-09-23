@@ -49,14 +49,14 @@
 
         // 平板適配：調整背景位置
         @media ($mediaMd) {
-            left: -2rem;
+            // left: -3rem;
             height: 20%;
             opacity: 0.6;
         }
 
         // 手機適配：進一步調整或隱藏
         @media ($mediaSm) {
-            left: -1rem;
+            // left: -3rem;
             height: 15%;
             opacity: 0.4;
         }

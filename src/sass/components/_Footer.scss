@@ -2,12 +2,34 @@
 @use '../functions/' as *;
 
 .footer_wrap {
+    position: relative;
     width: $w-100;
     height: $h-80vh;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     padding: $spacing-footer 0;
+
+    // 平板適配：調整高度和內邊距
+    @media ($mediaMd) {
+        height: 70vh;
+        padding: $spacing-xxxxl 0;
+        min-height: 500px; // 確保最小高度
+    }
+
+    // 手機適配：進一步調整高度
+    @media ($mediaSm) {
+        height: auto;
+        min-height: 400px;
+        padding: $spacing-xxxl 0;
+        align-items: stretch; // 改為拉伸對齊，讓內容可以更好地分佈
+    }
+
+    // 極小螢幕優化
+    @media (max-width: 480px) {
+        min-height: 350px;
+        padding: $spacing-xl 0;
+    }
 }
 
 .footer_left {
@@ -17,18 +39,83 @@
     justify-content: space-between;
     align-items: flex-start;
 
+    // 手機適配：調整對齊方式
+    @media ($mediaSm) {
+        justify-content: flex-start;
+        gap: $spacing-xxl;
+    }
+
     .slogan {
         font-size: $f-s-display;
         letter-spacing: $letter-spacing-basic;
 
+        // 平板適配：縮小標語字體
+        @media ($mediaMd) {
+            font-size: $f-s-xxxxxl; // 從 3.75rem 調整到 2.5rem
+        }
+
+        // 手機適配：進一步縮小字體
+        @media ($mediaSm) {
+            font-size: $f-s-xxxxl; // 2.25rem
+            text-align: left;
+        }
+
+        // 極小螢幕：最小字體但保持視覺衝擊
+        @media (max-width: 480px) {
+            font-size: $f-s-xxxl; // 2rem
+            line-height: 1.2;
+        }
+
         p {
             margin-bottom: $spacing-xxxl;
+
+            // 平板適配：調整間距
+            @media ($mediaMd) {
+                margin-bottom: $spacing-xxl;
+            }
+
+            // 手機適配：縮小間距
+            @media ($mediaSm) {
+                margin-bottom: $spacing-xl;
+            }
+
+            // 極小螢幕：最小間距
+            @media (max-width: 480px) {
+                margin-bottom: $spacing-lg;
+            }
+        }
+    }
+
+    .footer_down_left {
+
+        // 手機適配：確保底部內容不會被擠壓
+        @media ($mediaSm) {
+            width: 100%;
         }
     }
 
     .socials {
         display: flex;
         margin-bottom: $spacing-sm;
+
+        // 平板適配：調整社交媒體圖標間距
+        @media ($mediaMd) {
+            margin-bottom: $spacing-xs;
+            flex-wrap: wrap; // 允許換行以防空間不足
+            gap: $spacing-xs; // 使用gap而非margin-right
+        }
+
+        // 手機適配：調整佈局和間距
+        @media ($mediaSm) {
+            justify-content: flex-start;
+            gap: $spacing-sm;
+            margin-bottom: $spacing-sm;
+        }
+
+        // 極小螢幕：確保圖標仍然可見和可觸控
+        @media (max-width: 480px) {
+            gap: $spacing-xs;
+        }
 
         $icons: fb, ig, spotify, soundcloud, yt;
 
@@ -39,30 +126,161 @@
                 margin-right: $spacing-xl;
                 background: url('/images/Footer/#{$icon}.svg') no-repeat center;
                 background-size: contain;
+                transition: all 0.3s ease;
+
+                // 平板適配：稍微縮小圖標，使用gap代替margin
+                @media ($mediaMd) {
+                    width: 44px;
+                    height: 44px;
+                    margin-right: 0; // 移除margin，使用父元素的gap
+                }
+
+                // 手機適配：保持觸控友好的尺寸
+                @media ($mediaSm) {
+                    width: 44px;
+                    height: 44px;
+                    margin-right: 0;
+                    // 增加觸控區域（視覺大小不變，觸控區域增大）
+                    padding: $spacing-xxs;
+                    background-size: 36px 36px; // 縮小背景圖片，騰出padding空間
+                }
+
+                // 極小螢幕：最小但仍保持觸控友好
+                @media (max-width: 480px) {
+                    width: 40px;
+                    height: 40px;
+                    background-size: 32px 32px;
+                }
 
                 &:hover {
                     filter: brightness(0.8);
+                    transform: scale(1.05); // 增加hover效果
+
+                    // 手機適配：減少hover效果（觸控設備hover意義不大）
+                    @media ($mediaSm) {
+                        transform: scale(1.02);
+                    }
+                }
+
+                // 觸控設備的active狀態
+                &:active {
+                    transform: scale(0.95);
+                    filter: brightness(0.6);
+                }
+
+                // 移除最後一個圖標的右邊距（使用gap時不需要）
+                &:last-child {
+                    @media ($mediaMd) {
+                        margin-right: 0;
+                    }
+
+                    @media ($mediaSm) {
+                        margin-right: 0;
+                    }
                 }
             }
         }
-
-        ;
     }
-
 
     small {
         font-size: $f-s-xs;
         @extend %line_height_letter_spacing;
+
+        // 手機適配：確保版權信息可讀
+        @media ($mediaSm) {
+            font-size: $f-s-xs;
+            max-width: 280px; // 限制寬度避免文字過長
+            line-height: 1.4; // 稍微增加行高提升可讀性
+        }
+
+        // 極小螢幕：最小字體
+        @media (max-width: 480px) {
+            font-size: 0.7rem;
+            max-width: 250px;
+        }
     }
 }
 
 .footer_right {
+    width: auto;
+
+    // 手機適配：確保箭頭按鈕仍然可見和可觸控
+    @media ($mediaSm) {
+        position: absolute;
+        right: 0;
+        bottom: $spacing-ex;
+        display: flex;
+        align-items: flex-end;
+        padding-bottom: $spacing-xs; // 稍微調整位置
+
+        @media (max-width: 480px) {
+            bottom: $spacing-xxl;
+        }
+    }
+
     .arrow {
         transition: transform 0.3s ease;
+        cursor: pointer;
+
+        // 手機適配：增大觸控區域
+        @media ($mediaSm) {
+            // padding: $spacing-xs;
+            max-width: 100px; // 確保觸控區域足夠
+            max-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        // 極小螢幕：稍微縮小但保持觸控友好
+        @media (max-width: 480px) {
+            max-width: 40px;
+            max-height: 40px;
+        }
+
+        // img {
+        //     // 確保圖片響應式
+        //     max-width: 100%;
+        //     height: auto;
+        // }
 
         &:hover {
-            cursor: pointer;
             transform: translateY(-10px);
+
+            // 手機適配：減少hover效果
+            @media ($mediaSm) {
+                transform: translateY(-5px);
+            }
+        }
+
+        // 觸控設備的active狀態
+        &:active {
+            transform: translateY(-2px) scale(0.95);
+            transition: transform 0.1s ease;
+        }
+    }
+}
+
+// 針對超寬螢幕的優化
+@media (min-width: 1440px) {
+    .footer_wrap {
+        padding: $spacing-footer $spacing-xxxxl; // 增加左右padding
+    }
+}
+
+// 橫屏手機特別優化
+@media (max-height: 500px) and (orientation: landscape) {
+    .footer_wrap {
+        height: auto;
+        min-height: 300px;
+        padding: $spacing-xl 0;
+    }
+
+    .footer_left .slogan {
+        font-size: $f-s-xxxl;
+
+        p {
+            margin-bottom: $spacing-md;
         }
     }
 }
