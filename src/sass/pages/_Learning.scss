@@ -15,7 +15,7 @@
     // 手機適配
     @media ($mediaSm) {
         height: auto;
-        min-height: 120vh; // 給更多空間容納重排的內容
+        min-height: 70vh; 
     }
 
     .bg_triangle {
@@ -37,7 +37,7 @@
         @media ($mediaSm) {
             right: -1rem;
             height: 100%;
-            min-height: 120vh;
+            min-height: 70vh;
             opacity: 0.3; // 降低透明度避免干擾閱讀
         }
 
@@ -69,7 +69,7 @@
     @media ($mediaSm) {
         padding: $spacing-xl $spacing-md;
         height: auto;
-        min-height: 120vh;
+        min-height: 60vh;
         gap: $spacing-xxl;
     }
 
