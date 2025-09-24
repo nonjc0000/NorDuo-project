@@ -74,27 +74,7 @@ const App_NorDuo = () => {
         lenis.on('error', handleLenisError);
 
         // 清理函數
-        // 提供 loading 狀態的處理
-    if (!isLenisReady) {
-        return (
-            <div className='wrap'>
-                <NavBar onNavigate={() => {}} />
-                <div style={{ 
-                    height: '100vh', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center',
-                    fontSize: '1.2rem',
-                    color: '#F18888'
-                }}>
-                    Loading smooth scroll...
-                </div>
-                <Footer onNavigate={() => {}} />
-            </div>
-        );
-    }
-
-    return () => {
+        return () => {
             if (animationFrameId) {
                 cancelAnimationFrame(animationFrameId);
             }

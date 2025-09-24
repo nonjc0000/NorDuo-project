@@ -1,24 +1,60 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import { motion, useTransform, useSpring, useMotionValue } from 'framer-motion'
 
 const Learning = () => {
     const ref = useRef(null)
     const [isClient, setIsClient] = useState(false)
+    const scrollY = useMotionValue(0)
     
     // 確保只在客戶端運行
     useEffect(() => {
         setIsClient(true)
     }, [])
 
-    // 修正後的 useScroll 配置 - 移除 container 屬性
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start end", "end end"]
-        // 不要設置 container 屬性，讓 Lenis 處理滾動
-    })
+    // 使用 Lenis 滾動事件來更新 Framer Motion 的 scrollY 值
+    useEffect(() => {
+        if (!isClient || !window.lenis) return
+
+        const updateScrollY = () => {
+            if (window.lenis && ref.current) {
+                const rect = ref.current.getBoundingClientRect()
+                const elementTop = rect.top + window.scrollY
+                const elementHeight = rect.height
+                const windowHeight = window.innerHeight
+                
+                // 計算當前元素在視窗中的進度 (0-1)
+                const scrollTop = window.scrollY
+                const startOffset = elementTop - windowHeight // 元素開始進入視窗時
+                const endOffset = elementTop + elementHeight // 元素完全離開視窗時
+                
+                let progress = 0
+                if (scrollTop > startOffset) {
+                    progress = Math.min((scrollTop - startOffset) / (endOffset - startOffset), 1)
+                }
+                
+                scrollY.set(progress)
+            }
+        }
+
+        // 初始更新
+        updateScrollY()
+
+        // 監聽 Lenis 滾動事件
+        const handleScroll = () => {
+            updateScrollY()
+        }
+        
+        window.lenis.on('scroll', handleScroll)
+        
+        return () => {
+            if (window.lenis) {
+                window.lenis.off('scroll', handleScroll)
+            }
+        }
+    }, [isClient, scrollY])
 
     // 使用 useSpring 讓動畫更平滑
-    const springScrollY = useSpring(scrollYProgress, {
+    const springScrollY = useSpring(scrollY, {
         stiffness: 100,
         damping: 30,
         restDelta: 0.001
@@ -43,23 +79,6 @@ const Learning = () => {
 
     const cardsY = useTransform(springScrollY, [0.3, 0.8], [150, 0])
     const cardsOpacity = useTransform(springScrollY, [0.4, 0.8], [0, 1])
-
-    // Lenis 滾動事件監聽
-    useEffect(() => {
-        if (!isClient || !window.lenis) return
-
-        const handleScroll = (e) => {
-            // 如果需要自定義滾動處理，可以在這裡添加
-        }
-        
-        window.lenis.on('scroll', handleScroll)
-        
-        return () => {
-            if (window.lenis) {
-                window.lenis.off('scroll', handleScroll)
-            }
-        }
-    }, [isClient])
 
     // 在客戶端 hydration 完成前不渲染動畫元素
     if (!isClient) {

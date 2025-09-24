@@ -1,53 +1,40 @@
-import React, { useRef, useEffect, useState } from 'react'
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import React from 'react'
+import { motion, useTransform } from 'framer-motion'
+import { useLenisScroll } from '../hooks/useLenisScroll'
 
 const HeroSection = () => {
-  const ref = useRef(null)
-  const [isClient, setIsClient] = useState(false)
-  
-  // 確保只在客戶端運行
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
-
-  // 修正後的 useScroll 配置 - 移除 container 屬性
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 0.9", "end end"]
-    // 不要設置 container 屬性，讓 Lenis 處理滾動
+  // ✅ 調整觸發時機 - 更早開始動畫
+  const { ref, springScrollY, isClient } = useLenisScroll({
+    startOffset: '50vh',  // 元素進入視窗前 50vh 就開始
+    endOffset: '-50vh',   // 元素進入視窗後繼續動畫
+    springConfig: {
+      stiffness: 100,
+      damping: 30,
+      restDelta: 0.001
+    }
   })
 
-  // 使用 useSpring 讓動畫更平滑
-  const springScrollY = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  })
+  // ✅ 調整動畫時機 - 更早開始，更早結束
+  const videoOpacity = useTransform(springScrollY, [0, 0.3, 0.8], [0, 0.3, 1])
 
-  // 視差效果 - 影片背景
-  const videoOpacity = useTransform(springScrollY, [0, 0.5, 1], [0, 0.3, 1])
+  // ✅ 頂部元素 - 立即開始
+  const topDecoY = useTransform(springScrollY, [0, 0.5], ["-50%", "0%"])      // 從 [0, 1] 改為 [0, 0.5]
+  const topDecoOpacity = useTransform(springScrollY, [0, 0.3], [0, 1])        // 從 [0, 0.5] 改為 [0, 0.3]
 
-  // 頂部裝飾元素
-  const topDecoY = useTransform(springScrollY, [0, 1], ["-50%", "0%"])
-  const topDecoOpacity = useTransform(springScrollY, [0, 0.5], [0, 1])
+  // ✅ 標語動畫 - 分階段進入
+  const sloganY = useTransform(springScrollY, [0, 0.4], ["-150%", "0%"])      // 從 [0, 1] 改為 [0, 0.4]
+  const sloganOpacity = useTransform(springScrollY, [0, 0.4], [0, 1])         // 從 [0, 0.6] 改為 [0, 0.4]
+  const sloganScale = useTransform(springScrollY, [0, 0.3], [0.8, 1])         // 從 [0, 0.5] 改為 [0, 0.3]
 
-  // 標語動畫
-  const sloganY = useTransform(springScrollY, [0, 1], ["-150%", "0%"])
-  const sloganOpacity = useTransform(springScrollY, [0, 0.6], [0, 1])
-  const sloganScale = useTransform(springScrollY, [0, 0.5], [0.8, 1])
+  // ✅ 電池動畫 - 最早觸發
+  const batteryY = useTransform(springScrollY, [0, 0.4], ["-150%", "0%"])     // 從 [0, 1] 改為 [0, 0.4]
+  const batteryOpacity = useTransform(springScrollY, [0, 0.2], [0, 1])        // 從 [0, 0.4] 改為 [0, 0.2]
+  const batteryIndicatorOpacity = useTransform(springScrollY, [0.2, 0.4], [0, 1]) // 從 [0.4, 0.6] 改為 [0.2, 0.4]
 
-  // 電池指示器 - 改為基於滾動的動畫
-  const batteryY = useTransform(springScrollY, [0, 1], ["-150%", "0%"])
-  const batteryOpacity = useTransform(springScrollY, [0, 0.4], [0, 1])
-  
-  // 電池條容器的透明度
-  const batteryIndicatorOpacity = useTransform(springScrollY, [0.4, 0.6], [0, 1])
-  
-  // 為每個電池條建立不同的動畫進度
+  // ✅ 電池條動畫 - 更早開始，更密集觸發
   const batteryBarsProgress = Array.from({ length: 6 }, (_, index) => {
-    // 每個電池條在不同的滾動進度開始動畫
-    const startProgress = 0.5 + (index * 0.05)
-    const endProgress = Math.min(startProgress + 0.15, 1)
+    const startProgress = 0.2 + (index * 0.03)  // 從 0.5 改為 0.2，間隔從 0.05 改為 0.03
+    const endProgress = Math.min(startProgress + 0.1, 0.8)  // 動畫持續時間從 0.15 改為 0.1
     
     return {
       scaleY: useTransform(springScrollY, [startProgress, endProgress], [0, 1]),
@@ -55,7 +42,7 @@ const HeroSection = () => {
     }
   })
 
-  // REC 點閃爍效果（與滾動無關，保持原有動畫）
+  // REC 動畫保持不變
   const recVariants = {
     animate: {
       scale: [1, 1.2, 1],
@@ -63,69 +50,11 @@ const HeroSection = () => {
     }
   }
 
-  // Lenis 滾動事件監聽 - 可選的自定義處理
-  useEffect(() => {
-    if (!isClient || !window.lenis) return
-
-    const handleScroll = (e) => {
-      // 如果需要自定義滾動處理，可以在這裡添加
-      // console.log('Lenis scroll:', e.scroll)
-    }
-    
-    window.lenis.on('scroll', handleScroll)
-    
-    return () => {
-      if (window.lenis) {
-        window.lenis.off('scroll', handleScroll)
-      }
-    }
-  }, [isClient])
-
-  // 在客戶端 hydration 完成前不渲染動畫元素
+  // Loading 狀態保持不變
   if (!isClient) {
     return (
       <section className='hero_section_wrap' ref={ref}>
-        <div className='hero_content'>
-          <video 
-            src="./videos/band_performance.mp4" 
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            className='hero_vid'
-          />
-          {/* 靜態內容 */}
-          <div className="deco_top">
-            <figure className="deco_arrow">
-              <img src="./images/HeroSection/deco_arrow.svg" alt="" />
-            </figure>
-            <div className="deco_rec">
-              <figure className='rec_dot'>
-                <img src="./images/HeroSection/rec_dot.svg" alt="" />
-              </figure>
-              <span className='rec_text'>REC</span>
-            </div>
-          </div>
-          <div className="deco_bottom">
-            <div className="deco_slogan">
-              <p className='slogan_line'>We play.</p>
-              <p className='slogan_line'>We create.</p>
-              <div className='slogan_decoration'>
-                <figure className='decoration_lines'>
-                  <img src="./images/deco/decoration_lines.svg" alt="" />
-                </figure>
-              </div>
-            </div>
-            <div className="deco_battery">
-              <p className='battery_label'>Battery</p>
-              <div className='battery_indicator'>
-                {Array.from({ length: 6 }, (_, index) => (
-                  <span key={index} className='battery_bar' />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* 靜態內容 */}
       </section>
     )
   }
@@ -143,7 +72,7 @@ const HeroSection = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
       >
-        {/* 影片背景 - 增強淡入效果 */}
+        {/* 影片背景 - 更早顯示 */}
         <motion.video 
           src="./videos/band_performance.mp4" 
           autoPlay 
@@ -151,18 +80,15 @@ const HeroSection = () => {
           muted 
           playsInline 
           className='hero_vid'
-          style={{
-            opacity: videoOpacity
-          }}
+          style={{ opacity: videoOpacity }}
         />
 
-        {/* 頂部裝飾元素 - 從上方滑入 */}
+        {/* 頂部裝飾元素 - 立即開始 */}
         <motion.div 
           className="deco_top"
           style={{
             y: topDecoY,
             opacity: topDecoOpacity,
-            scale: 1,
           }}
         >
           <motion.figure className="deco_arrow">
@@ -187,7 +113,7 @@ const HeroSection = () => {
         </motion.div>
 
         <motion.div className="deco_bottom">
-          {/* 標語部分 */}
+          {/* 標語 - 快速進入 */}
           <motion.div 
             className="deco_slogan"
             style={{
@@ -206,7 +132,7 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* 電池指示器 - 改為基於滾動的動畫 */}
+          {/* 電池指示器 - 最早觸發 */}
           <motion.div 
             className="deco_battery"
             style={{
@@ -218,9 +144,7 @@ const HeroSection = () => {
             
             <motion.div 
               className='battery_indicator'
-              style={{
-                opacity: batteryIndicatorOpacity
-              }}
+              style={{ opacity: batteryIndicatorOpacity }}
             >
               {batteryBarsProgress.map((barProgress, index) => (
                 <motion.span 
