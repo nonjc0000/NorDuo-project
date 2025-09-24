@@ -2639,7 +2639,6 @@ body {
   position: relative;
   width: 30%;
   height: 100%;
-  border-radius: 15px;
   padding: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
