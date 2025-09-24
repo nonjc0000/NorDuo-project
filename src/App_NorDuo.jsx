@@ -1,8 +1,9 @@
 import { Routes, Route } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
+import Lenis from '@studio-freight/lenis'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
-import { useRef } from 'react'
 
 const App_NorDuo = () => {
     // 在這裡定義所有的 refs
@@ -13,20 +14,56 @@ const App_NorDuo = () => {
     const learningRef = useRef(null);
     const shopRef = useRef(null);
     const contactUsRef = useRef(null);
+    
+    // Lenis 實例 ref
+    const lenisRef = useRef(null);
 
-    // 捲動到指定section的函數
+    // 初始化 Lenis
+    useEffect(() => {
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false, // 手機上可能會影響體驗，建議設為 false
+            touchMultiplier: 2,
+            infinite: false,
+        });
+
+        lenisRef.current = lenis;
+        
+        // 將 lenis 掛載到 window 上，供其他組件使用
+        window.lenis = lenis;
+
+        // RAF 循環
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // 清理函數
+        return () => {
+            lenis.destroy();
+            window.lenis = null;
+        };
+    }, []);
+
+    // 捲動到指定section的函數 - 現在使用 Lenis
     const scrollToSection = (sectionName) => {
         let targetRef;
 
         switch (sectionName) {
             case 'home':
-                targetRef = heroRef; // 首頁捲動到 Hero Section
+                targetRef = heroRef;
                 break;
             case 'about':
                 targetRef = aboutUsRef;
                 break;
             case 'works':
-                targetRef = latestReleaseRef; // Works 對應到 Latest Release
+                targetRef = latestReleaseRef;
                 break;
             case 'learning':
                 targetRef = learningRef;
@@ -41,11 +78,11 @@ const App_NorDuo = () => {
                 targetRef = heroRef;
         }
 
-        if (targetRef && targetRef.current) { // 1. targetRef - 檢查 ref 對象本身是否存在 2. targetRef.current - 檢查 ref 是否已經綁定到 DOM 元素
-
-            window.scrollTo({
-                top: targetRef.current.offsetTop,
-                behavior: 'smooth'
+        if (targetRef && targetRef.current && lenisRef.current) {
+            // 使用 Lenis 的平滑滾動
+            lenisRef.current.scrollTo(targetRef.current, {
+                duration: 1.5,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             });
         }
     };

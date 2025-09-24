@@ -11,6 +11,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@studio-freight/lenis": "^1.0.42",
     "axios": "^1.11.0",
     "gh-pages": "^6.3.0",
     "jquery": "^3.7.1",

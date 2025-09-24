@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 
 const Learning = () => {
@@ -8,7 +8,9 @@ const Learning = () => {
     // 步驟2：使用useScroll追蹤滾動進度
     const { scrollYProgress } = useScroll({
         target: ref,
-        offset: ["start end", "end end"]
+        offset: ["start end", "end end"],
+        // 添加 container 屬性以確保與 Lenis 相容
+        container: typeof window !== 'undefined' ? document.documentElement : undefined
     })
 
     // 步驟3：使用useSpring讓動畫更平滑
@@ -44,6 +46,23 @@ const Learning = () => {
 
     const cardsY = useTransform(springScrollY, [0.3, 0.8], [150, 0])
     const cardsOpacity = useTransform(springScrollY, [0.4, 0.8], [0, 1])
+
+    // 監聽 Lenis 滾動事件以確保同步（可選）
+    useEffect(() => {
+        if (window.lenis) {
+            const handleScroll = () => {
+                // 如果需要自定義滾動處理，可以在這裡添加
+            }
+            
+            window.lenis.on('scroll', handleScroll)
+            
+            return () => {
+                if (window.lenis) {
+                    window.lenis.off('scroll', handleScroll)
+                }
+            }
+        }
+    }, [])
 
     return (
         <motion.div

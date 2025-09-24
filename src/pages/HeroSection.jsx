@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 
 const HeroSection = () => {
@@ -7,7 +7,9 @@ const HeroSection = () => {
   // 追蹤滾動進度 - 元素進入視窗15%時開始動畫
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 0.9", "end end"] // 元素頂部到達視窗85%位置時開始（即進入15%）
+    offset: ["start 0.9", "end end"], // 元素頂部到達視窗85%位置時開始（即進入15%）
+    // 添加 container 屬性以確保與 Lenis 相容
+    container: typeof window !== 'undefined' ? document.documentElement : undefined
   })
 
   // 使用 useSpring 讓動畫更平滑
@@ -56,6 +58,23 @@ const HeroSection = () => {
       opacity: [1, 0.7, 1]
     }
   }
+
+  // 監聽 Lenis 滾動事件以確保同步（可選）
+  useEffect(() => {
+    if (window.lenis) {
+      const handleScroll = () => {
+        // 如果需要自定義滾動處理，可以在這裡添加
+      }
+      
+      window.lenis.on('scroll', handleScroll)
+      
+      return () => {
+        if (window.lenis) {
+          window.lenis.off('scroll', handleScroll)
+        }
+      }
+    }
+  }, [])
 
   return (
     <motion.section 
