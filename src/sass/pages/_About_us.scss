@@ -46,6 +46,7 @@
     width: 40%;
     margin-bottom: $spacing-xxxl;
 
+
     // 平板適配
     @media ($mediaMd) {
         width: 100%;
@@ -68,7 +69,7 @@
 
         // 平板適配
         @media ($mediaMd) {
-            font-size: $f-s-xxxxxl; 
+            font-size: $f-s-xxxxxl;
         }
 
         // 手機適配
@@ -85,6 +86,13 @@
         height: 45px;
         filter: drop-shadow(0 0 4px rgba($accent, 0.3));
         opacity: 0.8;
+
+        // 新增：中等螢幕適配（解決1024px問題）
+        @media (max-width: 1200px) and (min-width: 821px) {
+            left: 3rem; // 減少左邊距
+            max-width: 280px; // 縮小寬度
+            height: 40px; // 稍微縮小高度
+        }
 
         // 平板適配：居中裝飾線
         @media ($mediaMd) {
@@ -258,7 +266,7 @@
         }
     }
 
-    > p {
+    >p {
         align-self: center;
         font-size: $f-s-lg;
         color: $text;
@@ -440,7 +448,7 @@
         }
     }
 
-    > p {
+    >p {
         align-self: center;
         font-size: $f-s-lg;
         color: $text;

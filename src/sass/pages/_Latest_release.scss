@@ -441,13 +441,13 @@
 
     // 平板適配
     @media ($mediaMd) {
+        min-height: 46px;
         font-size: $f-s-md;
     }
 
     // 手機適配：全寬按鈕
     @media ($mediaSm) {
         width: 100%;
-        font-size: $f-s-sm;
         min-height: 44px;
         padding: $spacing-sm $spacing-md;
     }
