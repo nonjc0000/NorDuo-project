@@ -15,7 +15,7 @@ const HeroSection = () => {
   })
 
   // ✅ 調整動畫時機 - 更早開始，更早結束
-  const videoOpacity = useTransform(springScrollY, [0, 0.3, 0.8], [0, 0.3, 1])
+  const videoOpacity = useTransform(springScrollY, [0, 0.3, 0.5], [0, 0.3, 1])
 
   // ✅ 頂部元素 - 立即開始
   const topDecoY = useTransform(springScrollY, [0, 0.5], ["-50%", "0%"])      // 從 [0, 1] 改為 [0, 0.5]

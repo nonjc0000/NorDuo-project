@@ -1,90 +1,53 @@
-import React, { useRef, useEffect, useState } from 'react'
-import { motion, useTransform, useSpring, useMotionValue } from 'framer-motion'
+import React from 'react'
+import { motion, useTransform } from 'framer-motion'
+import { useLenisScroll } from '../hooks/useLenisScroll'
 
 const Learning = () => {
-    const ref = useRef(null)
-    const [isClient, setIsClient] = useState(false)
-    const scrollY = useMotionValue(0)
-    
-    // 確保只在客戶端運行
-    useEffect(() => {
-        setIsClient(true)
-    }, [])
-
-    // 使用 Lenis 滾動事件來更新 Framer Motion 的 scrollY 值
-    useEffect(() => {
-        if (!isClient || !window.lenis) return
-
-        const updateScrollY = () => {
-            if (window.lenis && ref.current) {
-                const rect = ref.current.getBoundingClientRect()
-                const elementTop = rect.top + window.scrollY
-                const elementHeight = rect.height
-                const windowHeight = window.innerHeight
-                
-                // 計算當前元素在視窗中的進度 (0-1)
-                const scrollTop = window.scrollY
-                const startOffset = elementTop - windowHeight // 元素開始進入視窗時
-                const endOffset = elementTop + elementHeight // 元素完全離開視窗時
-                
-                let progress = 0
-                if (scrollTop > startOffset) {
-                    progress = Math.min((scrollTop - startOffset) / (endOffset - startOffset), 1)
-                }
-                
-                scrollY.set(progress)
-            }
+    // 使用 useLenisScroll hook，調整觸發時機
+    const { ref, springScrollY, isClient } = useLenisScroll({
+        startOffset: '50vh',  // 元素進入視窗前 60vh 就開始動畫
+        endOffset: '-68vh',   // 元素離開視窗後 20vh 還在動畫
+        springConfig: {
+            stiffness: 100,
+            damping: 30,
+            restDelta: 0.001
         }
-
-        // 初始更新
-        updateScrollY()
-
-        // 監聽 Lenis 滾動事件
-        const handleScroll = () => {
-            updateScrollY()
-        }
-        
-        window.lenis.on('scroll', handleScroll)
-        
-        return () => {
-            if (window.lenis) {
-                window.lenis.off('scroll', handleScroll)
-            }
-        }
-    }, [isClient, scrollY])
-
-    // 使用 useSpring 讓動畫更平滑
-    const springScrollY = useSpring(scrollY, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001
     })
 
-    // 定義三角形展開的動畫
-    const secondPointY = useTransform(springScrollY, [0, 0.5], [0, 100])
-    const thirdPointX = useTransform(springScrollY, [0.5, 1], [100, 0])
+    // ✅ 調整三角形動畫 - 更早開始
+    const secondPointY = useTransform(springScrollY, [0, 0.3], [0, 100])      // 從 [0, 0.5] 改為 [0, 0.3]
+    const thirdPointX = useTransform(springScrollY, [0.3, 0.6], [100, 0])     // 從 [0.5, 1] 改為 [0.3, 0.6]
 
-    // 組合成完整的 points 字符串
+    // 組合三角形 points
     const trianglePoints = useTransform(
         [secondPointY, thirdPointX],
         ([y, x]) => `100,0 100,${y} ${x},100`
     )
 
-    // 三角形的透明度動畫
-    const triangleOpacity = useTransform(springScrollY, [0, 0.2], [0, 1])
+    // ✅ 三角形透明度 - 立即顯示
+    const triangleOpacity = useTransform(springScrollY, [0, 0.1], [0, 1])     // 從 [0, 0.2] 改為 [0, 0.1]
 
-    // 內容動畫
-    const contentY = useTransform(springScrollY, [0, 0.6], [100, 0])
-    const contentOpacity = useTransform(springScrollY, [0.1, 0.6], [0, 1])
+    // ✅ 內容動畫 - 更早觸發
+    const contentY = useTransform(springScrollY, [0, 0.4], [100, 0])          // 從 [0, 0.6] 改為 [0, 0.4]
+    const contentOpacity = useTransform(springScrollY, [0, 0.3], [0, 1])      // 從 [0.1, 0.6] 改為 [0, 0.3]
 
-    const cardsY = useTransform(springScrollY, [0.3, 0.8], [150, 0])
-    const cardsOpacity = useTransform(springScrollY, [0.4, 0.8], [0, 1])
+    // ✅ 卡片動畫 - 早期觸發但稍有延遲
+    const cardsY = useTransform(springScrollY, [0.2, 0.5], [150, 0])          // 從 [0.3, 0.8] 改為 [0.2, 0.5]
+    const cardsOpacity = useTransform(springScrollY, [0.2, 0.5], [0, 1])      // 從 [0.4, 0.8] 改為 [0.2, 0.5]
 
-    // 在客戶端 hydration 完成前不渲染動畫元素
+    // 標題動畫 - 新增
+    const titleY = useTransform(springScrollY, [0, 0.25], [50, 0])
+    const titleOpacity = useTransform(springScrollY, [0, 0.25], [0, 1])
+    const titleScale = useTransform(springScrollY, [0, 0.2], [0.9, 1])
+
+    // 描述文字動畫 - 新增
+    const descY = useTransform(springScrollY, [0.1, 0.35], [30, 0])
+    const descOpacity = useTransform(springScrollY, [0.1, 0.35], [0, 1])
+
+    // 在客戶端 hydration 完成前顯示靜態內容
     if (!isClient) {
         return (
             <div className="learning_wrap" ref={ref}>
-                {/* 靜態背景 */}
                 <svg className="bg_triangle" viewBox="0 0 100 100" preserveAspectRatio="none">
                     <polygon points="100,0 100,100 0,100" fill="#d9d9d9" />
                 </svg>
@@ -117,8 +80,10 @@ const Learning = () => {
         <motion.div
             ref={ref}
             className="learning_wrap"
+            initial="hidden"
+            animate="visible"
         >
-            {/* 背景三角形 - 使用 motion.svg */}
+            {/* 背景三角形 - 更早觸發 */}
             <motion.svg
                 className="bg_triangle"
                 viewBox="0 0 100 100"
@@ -131,21 +96,34 @@ const Learning = () => {
                 />
             </motion.svg>
 
-            <motion.div
-                className="learning_content_box"
-                style={{
-                    y: contentY,
-                    opacity: contentOpacity
-                }}
-            >
+            <motion.div className="learning_content_box">
                 <div className="text_box">
-                    <h1><span>Learn</span> with us!</h1>
-                    <div className="desc_box">
+                    {/* 標題動畫 - 分離出來獨立控制 */}
+                    <motion.h1
+                        style={{
+                            y: titleY,
+                            opacity: titleOpacity,
+                            scale: titleScale
+                        }}
+                    >
+                        <span>Learn</span> with us!
+                    </motion.h1>
+
+                    {/* 描述區塊 - 獨立動畫 */}
+                    <motion.div
+                        className="desc_box"
+                        style={{
+                            y: descY,
+                            opacity: descOpacity
+                        }}
+                    >
                         <p>Find Your Sound. <br />
                             Play Your Style.</p>
                         <p>We help you master riffs, rhythm, and improvisation—anytime, anywhere.</p>
                         <p>Go check our online <br />courses ⟶</p>
-                    </div>
+                    </motion.div>
+
+                    {/* 卡片區塊 - 更早觸發 */}
                     <motion.div
                         className="card_box"
                         style={{
@@ -155,27 +133,49 @@ const Learning = () => {
                     >
                         <motion.div
                             className='card1'
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            whileInView={{ 
+                                scale: 1, 
+                                opacity: 1,
+                                transition: { 
+                                    delay: 0.1,
+                                    duration: 0.5,
+                                    ease: "easeOut"
+                                }
+                            }}
                             whileHover={{
                                 y: -10,
-                                boxShadow: "0 15px 40px rgba(241, 136, 136, 0.2)"
+                                scale: 1.02,
+                                boxShadow: "0 15px 40px rgba(241, 136, 136, 0.2)",
+                                transition: { type: "spring", stiffness: 300, damping: 20 }
                             }}
-                            transition={{ type: "spring", stiffness: 300 }}
+                            viewport={{ once: true, margin: "-10%" }}
                         >
-                            <p>Learn<br />
-                                Guitar</p>
+                            <p>Learn<br />Guitar</p>
                             <figure className='card1_img'></figure>
                         </motion.div>
+
                         <motion.div
                             className='card2'
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            whileInView={{ 
+                                scale: 1, 
+                                opacity: 1,
+                                transition: { 
+                                    delay: 0.3,  // 稍微延遲，創造序列感
+                                    duration: 0.5,
+                                    ease: "easeOut"
+                                }
+                            }}
                             whileHover={{
                                 y: -10,
-                                boxShadow: "0 15px 40px rgba(241, 136, 136, 0.2)"
+                                scale: 1.02,
+                                boxShadow: "0 15px 40px rgba(241, 136, 136, 0.2)",
+                                transition: { type: "spring", stiffness: 300, damping: 20 }
                             }}
-                            transition={{ type: "spring", stiffness: 300 }}
+                            viewport={{ once: true, margin: "-10%" }}
                         >
-                            <p>Learn<br />
-                                Music<br />
-                                Theory</p>
+                            <p>Learn<br />Music<br />Theory</p>
                             <figure className='card2_img'></figure>
                         </motion.div>
                     </motion.div>
