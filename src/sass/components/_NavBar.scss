@@ -108,14 +108,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
 
-            &:hover {
-                transform: scale(1.05);
-                background-image: url(/images/Navbar/icon/close-hover.svg);
-            }
-
-            // 按下時的效果
             &:active {
-                transform: scale(0.95);
+                transform: scale(1.05);
             }
         }
     }

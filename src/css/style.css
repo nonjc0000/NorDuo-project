@@ -272,12 +272,8 @@ button {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.nav_list .close_btn_item .nav_close_btn:hover {
-  transform: scale(1.05);
-  background-image: url(/images/Navbar/icon/close-hover.svg);
-}
 .nav_list .close_btn_item .nav_close_btn:active {
-  transform: scale(0.95);
+  transform: scale(1.05);
 }
 
 .nav_item a {
