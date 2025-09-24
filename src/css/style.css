@@ -260,6 +260,10 @@ button {
 }
 .nav_list .close_btn_item .nav_close_btn {
   background: transparent;
+  background-image: url(/images/Navbar/icon/close.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 40px;
   height: 40px;
   display: flex;
@@ -268,18 +272,9 @@ button {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.nav_list .close_btn_item .nav_close_btn .close_icon {
-  color: #FFFFFF;
-  font-size: 2rem;
-  line-height: 1;
-  transition: all 0.3s ease;
-}
 .nav_list .close_btn_item .nav_close_btn:hover {
-  border-color: #F18888;
   transform: scale(1.05);
-}
-.nav_list .close_btn_item .nav_close_btn:hover .close_icon {
-  color: #F18888;
+  background-image: url(/images/Navbar/icon/close-hover.svg);
 }
 .nav_list .close_btn_item .nav_close_btn:active {
   transform: scale(0.95);
@@ -2948,10 +2943,8 @@ button {
 }
 .shop_wrap .product_container .product_box {
   position: relative;
-  width: 100%;
-  max-width: 500px;
-  height: 100%;
-  max-height: 190px;
+  width: 75%;
+  height: 90%;
 }
 @media (max-width:820px) {
   .shop_wrap .product_container .product_box {

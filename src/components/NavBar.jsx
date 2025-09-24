@@ -42,7 +42,6 @@ const NavBar = ({ onNavigate }) => {
             onClick={() => setIsMobileMenuOpen(false)}
             aria-label="Close menu"
           >
-            <span className='close_icon'>✕</span>
           </button>
         </li>
         <li className='nav_item'>

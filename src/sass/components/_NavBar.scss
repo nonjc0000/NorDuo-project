@@ -96,6 +96,10 @@
 
         .nav_close_btn {
             background: transparent;
+            background-image: url(/images/Navbar/icon/close.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
             width: 40px;
             height: 40px;
             display: flex;
@@ -104,20 +108,9 @@
             cursor: pointer;
             transition: all 0.3s ease;
 
-            .close_icon {
-                color: $text;
-                font-size: $f-s-xxxl;
-                line-height: 1;
-                transition: all 0.3s ease;
-            }
-
             &:hover {
-                border-color: $accent;
                 transform: scale(1.05);
-
-                .close_icon {
-                    color: $accent;
-                }
+                background-image: url(/images/Navbar/icon/close-hover.svg);
             }
 
             // 按下時的效果

@@ -151,10 +151,10 @@
 
         .product_box {
             position: relative;
-            width: 100%;
-            max-width: 500px;
-            height: 100%;
-            max-height: 190px;
+            width: 75%;
+            // max-width: 500px;
+            height: 90%;
+            // max-height: 190px;
 
             // 平板適配：調整產品圖片容器
             @media ($mediaMd) {
