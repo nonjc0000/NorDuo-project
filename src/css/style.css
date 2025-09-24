@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Rubik+Glitch&display=swap");
 body, .Listen_on_Spotify, .more, .creator_controls .sound_selection .sound_numbers .sound_btn, .creator_controls .control_panel .control_group .sound_toggle,
 .creator_controls .control_panel .control_group .share_btn {
@@ -175,6 +176,16 @@ a {
 
 button {
   border: none;
+}
+
+html {
+  scroll-behavior: auto;
+  /* 不要設置為 smooth，讓 Lenis 處理 */
+}
+
+body {
+  overflow-x: hidden;
+  /* 可以保留 */
 }
 
 .nav_wrap {

@@ -1,15 +1,23 @@
 import React from 'react'
 
-const Footer = () => {
+const Footer = ({ onNavigate }) => {
 
-  // 捲動到頂
+  // 使用 Lenis 進行滾動到頂部
   function gotoTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
+    if (window.lenis) {
+      // 使用 Lenis 滾動到頂部
+      window.lenis.scrollTo(0, {
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+      })
+    } else {
+      // Fallback 到原生滾動
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+    }
   }
-
 
   return (
     <div className='footer_wrap'>

@@ -1,75 +1,105 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 
 const Learning = () => {
-    // 步驟1：創建ref來追蹤這個組件
     const ref = useRef(null)
+    const [isClient, setIsClient] = useState(false)
+    
+    // 確保只在客戶端運行
+    useEffect(() => {
+        setIsClient(true)
+    }, [])
 
-    // 步驟2：使用useScroll追蹤滾動進度
+    // 修正後的 useScroll 配置 - 移除 container 屬性
     const { scrollYProgress } = useScroll({
         target: ref,
-        offset: ["start end", "end end"],
-        // 添加 container 屬性以確保與 Lenis 相容
-        container: typeof window !== 'undefined' ? document.documentElement : undefined
+        offset: ["start end", "end end"]
+        // 不要設置 container 屬性，讓 Lenis 處理滾動
     })
 
-    // 步驟3：使用useSpring讓動畫更平滑
+    // 使用 useSpring 讓動畫更平滑
     const springScrollY = useSpring(scrollYProgress, {
         stiffness: 100,
         damping: 30,
         restDelta: 0.001
     })
 
-    // 步驟4：定義三角形展開的動畫
-    // 初始：三角形只是右上角的一個點 "100,0 100,0 100,0"
-    // 最終：完整的三角形 "100,0 100,100 0,100"
-
-    // 第一個點始終在右上角 (100,0)
-    // 第二個點從 (100,0) 移動到 (100,100) - 垂直展開
+    // 定義三角形展開的動畫
     const secondPointY = useTransform(springScrollY, [0, 0.5], [0, 100])
-
-    // 第三個點從 (100,100) 移動到 (0,100) - 水平展開  
     const thirdPointX = useTransform(springScrollY, [0.5, 1], [100, 0])
 
-    // 步驟5：組合成完整的points字符串
+    // 組合成完整的 points 字符串
     const trianglePoints = useTransform(
         [secondPointY, thirdPointX],
         ([y, x]) => `100,0 100,${y} ${x},100`
     )
 
-    // 步驟6：三角形的透明度動畫
+    // 三角形的透明度動畫
     const triangleOpacity = useTransform(springScrollY, [0, 0.2], [0, 1])
 
-    // 步驟7：內容動畫（可選）
+    // 內容動畫
     const contentY = useTransform(springScrollY, [0, 0.6], [100, 0])
     const contentOpacity = useTransform(springScrollY, [0.1, 0.6], [0, 1])
 
     const cardsY = useTransform(springScrollY, [0.3, 0.8], [150, 0])
     const cardsOpacity = useTransform(springScrollY, [0.4, 0.8], [0, 1])
 
-    // 監聽 Lenis 滾動事件以確保同步（可選）
+    // Lenis 滾動事件監聽
     useEffect(() => {
-        if (window.lenis) {
-            const handleScroll = () => {
-                // 如果需要自定義滾動處理，可以在這裡添加
-            }
-            
-            window.lenis.on('scroll', handleScroll)
-            
-            return () => {
-                if (window.lenis) {
-                    window.lenis.off('scroll', handleScroll)
-                }
+        if (!isClient || !window.lenis) return
+
+        const handleScroll = (e) => {
+            // 如果需要自定義滾動處理，可以在這裡添加
+        }
+        
+        window.lenis.on('scroll', handleScroll)
+        
+        return () => {
+            if (window.lenis) {
+                window.lenis.off('scroll', handleScroll)
             }
         }
-    }, [])
+    }, [isClient])
+
+    // 在客戶端 hydration 完成前不渲染動畫元素
+    if (!isClient) {
+        return (
+            <div className="learning_wrap" ref={ref}>
+                {/* 靜態背景 */}
+                <svg className="bg_triangle" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <polygon points="100,0 100,100 0,100" fill="#d9d9d9" />
+                </svg>
+                
+                <div className="learning_content_box">
+                    <div className="text_box">
+                        <h1><span>Learn</span> with us!</h1>
+                        <div className="desc_box">
+                            <p>Find Your Sound. <br />Play Your Style.</p>
+                            <p>We help you master riffs, rhythm, and improvisation—anytime, anywhere.</p>
+                            <p>Go check our online <br />courses ⟶</p>
+                        </div>
+                        <div className="card_box">
+                            <div className='card1'>
+                                <p>Learn<br />Guitar</p>
+                                <figure className='card1_img'></figure>
+                            </div>
+                            <div className='card2'>
+                                <p>Learn<br />Music<br />Theory</p>
+                                <figure className='card2_img'></figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <motion.div
             ref={ref}
             className="learning_wrap"
         >
-            {/* 背景三角形 - 現在使用motion.svg */}
+            {/* 背景三角形 - 使用 motion.svg */}
             <motion.svg
                 className="bg_triangle"
                 viewBox="0 0 100 100"
@@ -78,7 +108,7 @@ const Learning = () => {
             >
                 <motion.polygon
                     points={trianglePoints}
-                    fill="#d9d9d9" // 對應$gray-bg
+                    fill="#d9d9d9"
                 />
             </motion.svg>
 

@@ -134,3 +134,14 @@ a {
 button {
     border: none;
 }
+
+// 解決Lenis與Framer motion衝突問題
+html {
+    scroll-behavior: auto;
+    /* 不要設置為 smooth，讓 Lenis 處理 */
+}
+
+body {
+    overflow-x: hidden;
+    /* 可以保留 */
+}
