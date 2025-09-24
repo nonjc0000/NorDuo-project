@@ -149,6 +149,11 @@
             gap: $spacing-md;
         }
 
+        @media ($mediaSm) {
+            min-height: 140px;
+            gap: $spacing-xs;
+        }
+
         .product_box {
             position: relative;
             width: 75%;
@@ -329,7 +334,7 @@
 
                     // 手機適配：調整underline寬度
                     @media ($mediaSm) {
-                        width: 80px;
+                        width: 61px;
                     }
                 }
             }
@@ -340,7 +345,7 @@
                     width: 73px;
 
                     @media ($mediaSm) {
-                        width: 55px;
+                        width: 40px;
                     }
                 }
             }
@@ -351,7 +356,7 @@
                     width: 151px;
 
                     @media ($mediaSm) {
-                        width: 110px;
+                        width: 84px;
                     }
                 }
             }
@@ -362,7 +367,7 @@
                     width: 110px;
 
                     @media ($mediaSm) {
-                        width: 85px;
+                        width: 62px;
                     }
                 }
             }
@@ -443,6 +448,9 @@
 @media (max-width: 480px) {
     .shop_wrap {
         .desc_box {
+
+            width: 100%;
+
             h1 {
                 font-size: $f-s-xxl; // 1.75rem
             }
@@ -453,10 +461,6 @@
         }
 
         .product_container {
-            .product_box {
-                max-width: 250px;
-                max-height: 100px;
-            }
 
             p {
                 font-size: 0.7rem;

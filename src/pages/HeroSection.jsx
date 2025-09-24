@@ -5,7 +5,7 @@ import { useLenisScroll } from '../hooks/useLenisScroll'
 const HeroSection = () => {
   // ✅ 調整觸發時機 - 更早開始動畫
   const { ref, springScrollY, isClient } = useLenisScroll({
-    startOffset: '50vh',  // 元素進入視窗前 50vh 就開始
+    startOffset: '30vh',  // 元素進入視窗前 50vh 就開始
     endOffset: '-50vh',   // 元素進入視窗後繼續動畫
     springConfig: {
       stiffness: 100,

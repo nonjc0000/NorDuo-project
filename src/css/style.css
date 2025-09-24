@@ -1706,6 +1706,7 @@ body {
   min-height: 350px;
   border: 0.5px solid #fff;
   padding: 15px;
+  z-index: 999;
 }
 @media (max-width:820px) {
   .upper_info_box .artist1_box {
@@ -2948,6 +2949,12 @@ body {
     gap: 20px;
   }
 }
+@media (max-width:640px) {
+  .shop_wrap .product_container {
+    min-height: 140px;
+    gap: 10px;
+  }
+}
 .shop_wrap .product_container .product_box {
   position: relative;
   width: 75%;
@@ -3112,7 +3119,7 @@ body {
 }
 @media (max-width:640px) {
   .shop_wrap .catagories_item:hover .guitar::before {
-    width: 80px;
+    width: 61px;
   }
 }
 .shop_wrap .catagories_item:hover .bass::before {
@@ -3120,7 +3127,7 @@ body {
 }
 @media (max-width:640px) {
   .shop_wrap .catagories_item:hover .bass::before {
-    width: 55px;
+    width: 40px;
   }
 }
 .shop_wrap .catagories_item:hover .kb::before {
@@ -3128,7 +3135,7 @@ body {
 }
 @media (max-width:640px) {
   .shop_wrap .catagories_item:hover .kb::before {
-    width: 110px;
+    width: 84px;
   }
 }
 .shop_wrap .catagories_item:hover .others::before {
@@ -3136,7 +3143,7 @@ body {
 }
 @media (max-width:640px) {
   .shop_wrap .catagories_item:hover .others::before {
-    width: 85px;
+    width: 62px;
   }
 }
 .shop_wrap .catagories_item:active {
@@ -3187,15 +3194,14 @@ body {
 }
 
 @media (max-width: 480px) {
+  .shop_wrap .desc_box {
+    width: 100%;
+  }
   .shop_wrap .desc_box h1 {
     font-size: 1.75rem;
   }
   .shop_wrap .desc_box > p {
     font-size: 0.75rem;
-  }
-  .shop_wrap .product_container .product_box {
-    max-width: 250px;
-    max-height: 100px;
   }
   .shop_wrap .product_container p {
     font-size: 0.7rem;

@@ -5,8 +5,8 @@ import { useLenisScroll } from '../hooks/useLenisScroll'
 const Learning = () => {
     // 使用 useLenisScroll hook，調整觸發時機
     const { ref, springScrollY, isClient } = useLenisScroll({
-        startOffset: '50vh',  // 元素進入視窗前 60vh 就開始動畫
-        endOffset: '-68vh',   // 元素離開視窗後 20vh 還在動畫
+        startOffset: '50vh',  // 元素進入視窗前 50vh 就開始動畫
+        endOffset: '-68vh',   // 元素離開視窗後 68vh 還在動畫
         springConfig: {
             stiffness: 100,
             damping: 30,

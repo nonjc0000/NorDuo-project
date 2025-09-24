@@ -151,6 +151,7 @@
         min-height: 350px;
         border: .5px solid $white;
         padding: $spacing-sm;
+        z-index: $z-ex;
 
         // 平板適配
         @media ($mediaMd) {
