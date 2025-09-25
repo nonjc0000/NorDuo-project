@@ -127,6 +127,10 @@
             }
         }
 
+        .carousel_item{
+            display: flex;
+        }
+
         .carousel_content {
             display: flex;
             justify-content: flex-start;

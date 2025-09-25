@@ -2603,7 +2603,7 @@ body {
   right: 0;
   width: 100%;
   height: min(80%, 48vh);
-  max-height: 390px;
+  max-height: 450px;
 }
 @media (max-width:820px) {
   .card_box {
@@ -2675,8 +2675,9 @@ body {
 .card2 p {
   position: relative;
   z-index: 2;
-  font-size: 1.75rem;
-  font-weight: 400;
+  font-size: 3.75rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 @media (max-width:820px) {
   .card1 p,
@@ -2707,6 +2708,32 @@ body {
   .card2:hover {
     transform: translateY(-5px);
   }
+}
+.card1 .text_marquee_learn,
+.card2 .text_marquee_learn {
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+}
+.card1 .text_marquee_learn:hover,
+.card2 .text_marquee_learn:hover {
+  position: absolute;
+  top: -185px;
+  left: -400px;
+  transform: rotate(-45deg);
+}
+.card1 .text_marquee_guitar,
+.card2 .text_marquee_guitar {
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+}
+.card1 .text_marquee_guitar:hover,
+.card2 .text_marquee_guitar:hover {
+  position: absolute;
+  top: -165px;
+  left: -400px;
+  transform: rotate(-45deg);
 }
 
 .card1 {
@@ -3124,6 +3151,11 @@ body {
 .shop_wrap .catagories_item:hover .guitar::before {
   width: 109px;
 }
+@media (max-width:820px) {
+  .shop_wrap .catagories_item:hover .guitar::before {
+    width: 93px;
+  }
+}
 @media (max-width:640px) {
   .shop_wrap .catagories_item:hover .guitar::before {
     width: 61px;
@@ -3131,6 +3163,11 @@ body {
 }
 .shop_wrap .catagories_item:hover .bass::before {
   width: 73px;
+}
+@media (max-width:820px) {
+  .shop_wrap .catagories_item:hover .bass::before {
+    width: 62px;
+  }
 }
 @media (max-width:640px) {
   .shop_wrap .catagories_item:hover .bass::before {
@@ -3140,6 +3177,11 @@ body {
 .shop_wrap .catagories_item:hover .kb::before {
   width: 151px;
 }
+@media (max-width:820px) {
+  .shop_wrap .catagories_item:hover .kb::before {
+    width: 128px;
+  }
+}
 @media (max-width:640px) {
   .shop_wrap .catagories_item:hover .kb::before {
     width: 84px;
@@ -3147,6 +3189,11 @@ body {
 }
 .shop_wrap .catagories_item:hover .others::before {
   width: 110px;
+}
+@media (max-width:820px) {
+  .shop_wrap .catagories_item:hover .others::before {
+    width: 95px;
+  }
 }
 @media (max-width:640px) {
   .shop_wrap .catagories_item:hover .others::before {
@@ -3339,6 +3386,9 @@ body {
 }
 .contact_wrap .carousel:hover img {
   transform: translateX(3px);
+}
+.contact_wrap .carousel .carousel_item {
+  display: flex;
 }
 .contact_wrap .carousel .carousel_content {
   display: flex;

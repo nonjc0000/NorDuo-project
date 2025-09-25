@@ -333,6 +333,10 @@
                     @extend %item_underline;
                     width: 109px;
 
+                    @media ($mediaMd) {
+                        width: 93px;
+                    }
+
                     // 手機適配：調整underline寬度
                     @media ($mediaSm) {
                         width: 61px;
@@ -345,6 +349,10 @@
                     @extend %item_underline;
                     width: 73px;
 
+                    @media ($mediaMd) {
+                        width: 62px;
+                    }
+
                     @media ($mediaSm) {
                         width: 40px;
                     }
@@ -356,6 +364,10 @@
                     @extend %item_underline;
                     width: 151px;
 
+                    @media ($mediaMd) {
+                        width: 128px;
+                    }
+
                     @media ($mediaSm) {
                         width: 84px;
                     }
@@ -366,6 +378,10 @@
                 &::before {
                     @extend %item_underline;
                     width: 110px;
+
+                    @media ($mediaMd) {
+                        width: 95px;
+                    }
 
                     @media ($mediaSm) {
                         width: 62px;

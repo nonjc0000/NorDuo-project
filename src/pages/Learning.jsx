@@ -51,7 +51,7 @@ const Learning = () => {
                 <svg className="bg_triangle" viewBox="0 0 100 100" preserveAspectRatio="none">
                     <polygon points="100,0 100,100 0,100" fill="#d9d9d9" />
                 </svg>
-                
+
                 <div className="learning_content_box">
                     <div className="text_box">
                         <h1><span>Learn</span> with us!</h1>
@@ -134,10 +134,10 @@ const Learning = () => {
                         <motion.div
                             className='card1'
                             initial={{ scale: 0.9, opacity: 0 }}
-                            whileInView={{ 
-                                scale: 1, 
+                            whileInView={{
+                                scale: 1,
                                 opacity: 1,
-                                transition: { 
+                                transition: {
                                     delay: 0.1,
                                     duration: 0.5,
                                     ease: "easeOut"
@@ -151,17 +151,24 @@ const Learning = () => {
                             }}
                             viewport={{ once: true, margin: "-10%" }}
                         >
-                            <p>Learn<br />Guitar</p>
-                            <figure className='card1_img'></figure>
+                            <div className='text_marquee_learn'>
+                            <p>Learn Learn Learn</p>
+                            <p>Learn Learn Learn</p>
+                            </div>
+                            <div className='text_marquee_guitar'>
+                            <p>Guitar Guitar Guitar</p>
+                            <p>Guitar Guitar Guitar</p>
+                            </div>
+                            {/* <figure className='card1_img'></figure> */}
                         </motion.div>
 
                         <motion.div
                             className='card2'
                             initial={{ scale: 0.9, opacity: 0 }}
-                            whileInView={{ 
-                                scale: 1, 
+                            whileInView={{
+                                scale: 1,
                                 opacity: 1,
-                                transition: { 
+                                transition: {
                                     delay: 0.3,  // 稍微延遲，創造序列感
                                     duration: 0.5,
                                     ease: "easeOut"

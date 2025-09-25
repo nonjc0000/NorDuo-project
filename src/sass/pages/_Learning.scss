@@ -15,7 +15,7 @@
     // 手機適配
     @media ($mediaSm) {
         height: auto;
-        min-height: 70vh; 
+        min-height: 70vh;
     }
 
     .bg_triangle {
@@ -151,7 +151,7 @@
                 @media ($mediaSm) {
                     font-size: $f-s-sm;
                     margin-bottom: $spacing-lg;
-                    
+
                     // 移除手動換行，讓文字自然流動
                     br {
                         display: none;
@@ -172,7 +172,7 @@
     right: 0;
     width: 100%;
     height: min(80%, 48vh);
-    max-height: 390px;
+    max-height: 450px;
 
     // 平板適配：調整位置和佈局
     @media ($mediaMd) {
@@ -228,7 +228,7 @@
         height: 250px;
         max-width: 400px;
         padding: $spacing-lg;
-        
+
         // 確保觸控友好
         min-height: 200px;
     }
@@ -243,8 +243,9 @@
     p {
         position: relative;
         z-index: 2;
-        font-size: $f-s-xxl;
-        font-weight: $f-w-r;
+        font-size: $f-s-display;
+        font-weight: $f-w-b;
+        white-space: nowrap;
         @extend %line_height_letter_spacing;
 
         // 平板適配
@@ -271,6 +272,32 @@
         // 手機適配：減少懸浮效果
         @media ($mediaSm) {
             transform: translateY(-5px);
+        }
+    }
+
+    .text_marquee_learn {
+        position: relative;
+        transition: all 0.3s ease;
+        display: flex;
+
+        &:hover {
+            position: absolute;
+            top: -185px;
+            left: -400px;
+            transform: rotate(-45deg);
+        }
+    }
+
+    .text_marquee_guitar {
+        position: relative;
+        transition: all 0.3s ease;
+        display: flex;
+
+        &:hover {
+            position: absolute;
+            top: -165px;
+            left: -400px;
+            transform: rotate(-45deg);
         }
     }
 }
