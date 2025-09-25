@@ -3271,7 +3271,6 @@ body {
 }
 .shop_wrap .catagories_item:active {
   transform: scale(0.98);
-  background: rgba(241, 136, 136, 0.05);
 }
 .shop_wrap .catagories_item h3 {
   font-size: 1.75rem;
