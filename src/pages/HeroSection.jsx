@@ -6,7 +6,7 @@ const HeroSection = () => {
   // ✅ 調整觸發時機 - 更早開始動畫
   const { ref, springScrollY, isClient } = useLenisScroll({
     startOffset: '30vh',  // 元素進入視窗前 50vh 就開始
-    endOffset: '-50vh',   // 元素進入視窗後繼續動畫
+    endOffset: '-20vh',   // 元素進入視窗後繼續動畫
     springConfig: {
       stiffness: 100,
       damping: 30,
@@ -15,7 +15,7 @@ const HeroSection = () => {
   })
 
   // ✅ 調整動畫時機 - 更早開始，更早結束
-  const videoOpacity = useTransform(springScrollY, [0, 0.3, 0.5], [0, 0.3, 1])
+  const videoOpacity = useTransform(springScrollY, [0, 0.3, 0.5], [0, 0.9, 1])
 
   // ✅ 頂部元素 - 立即開始
   const topDecoY = useTransform(springScrollY, [0, 0.5], ["-50%", "0%"])      // 從 [0, 1] 改為 [0, 0.5]

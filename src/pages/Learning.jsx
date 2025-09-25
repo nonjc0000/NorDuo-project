@@ -5,8 +5,8 @@ import { useLenisScroll } from '../hooks/useLenisScroll'
 const Learning = () => {
     // 使用 useLenisScroll hook，調整觸發時機
     const { ref, springScrollY, isClient } = useLenisScroll({
-        startOffset: '50vh',  // 元素進入視窗前 50vh 就開始動畫
-        endOffset: '-68vh',   // 元素離開視窗後 68vh 還在動畫
+        startOffset: '50vh',  
+        endOffset: '-68vh',   
         springConfig: {
             stiffness: 100,
             damping: 30,
@@ -15,8 +15,8 @@ const Learning = () => {
     })
 
     // ✅ 調整三角形動畫 - 更早開始
-    const secondPointY = useTransform(springScrollY, [0, 0.3], [0, 100])      // 從 [0, 0.5] 改為 [0, 0.3]
-    const thirdPointX = useTransform(springScrollY, [0.3, 0.6], [100, 0])     // 從 [0.5, 1] 改為 [0.3, 0.6]
+    const secondPointY = useTransform(springScrollY, [0, 0.3], [0, 100])      
+    const thirdPointX = useTransform(springScrollY, [0.3, 0.6], [100, 0])     
 
     // 組合三角形 points
     const trianglePoints = useTransform(
@@ -25,15 +25,15 @@ const Learning = () => {
     )
 
     // ✅ 三角形透明度 - 立即顯示
-    const triangleOpacity = useTransform(springScrollY, [0, 0.1], [0, 1])     // 從 [0, 0.2] 改為 [0, 0.1]
+    const triangleOpacity = useTransform(springScrollY, [0, 0.1], [0, 1])     
 
     // ✅ 內容動畫 - 更早觸發
-    const contentY = useTransform(springScrollY, [0, 0.4], [100, 0])          // 從 [0, 0.6] 改為 [0, 0.4]
-    const contentOpacity = useTransform(springScrollY, [0, 0.3], [0, 1])      // 從 [0.1, 0.6] 改為 [0, 0.3]
+    const contentY = useTransform(springScrollY, [0, 0.4], [100, 0])          
+    const contentOpacity = useTransform(springScrollY, [0, 0.3], [0, 1])      
 
     // ✅ 卡片動畫 - 早期觸發但稍有延遲
-    const cardsY = useTransform(springScrollY, [0.2, 0.5], [150, 0])          // 從 [0.3, 0.8] 改為 [0.2, 0.5]
-    const cardsOpacity = useTransform(springScrollY, [0.2, 0.5], [0, 1])      // 從 [0.4, 0.8] 改為 [0.2, 0.5]
+    const cardsY = useTransform(springScrollY, [0.2, 0.5], [150, 0])          
+    const cardsOpacity = useTransform(springScrollY, [0.2, 0.5], [0, 1])      
 
     // 標題動畫 - 新增
     const titleY = useTransform(springScrollY, [0, 0.25], [50, 0])
@@ -80,8 +80,9 @@ const Learning = () => {
         <motion.div
             ref={ref}
             className="learning_wrap"
-            initial="hidden"
-            animate="visible"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
         >
             {/* 背景三角形 - 更早觸發 */}
             <motion.svg
@@ -123,7 +124,7 @@ const Learning = () => {
                         <p>Go check our online <br />courses ⟶</p>
                     </motion.div>
 
-                    {/* 卡片區塊 - 更早觸發 */}
+                    {/* 卡片區塊 - 修復閃爍問題 */}
                     <motion.div
                         className="card_box"
                         style={{
@@ -131,63 +132,83 @@ const Learning = () => {
                             opacity: cardsOpacity
                         }}
                     >
+                        {/* Card 1 - 簡化動畫邏輯 */}
                         <motion.div
                             className='card1'
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            whileInView={{
-                                scale: 1,
+                            initial={{ 
+                                scale: 0.95, 
+                                opacity: 0,
+                                y: 20
+                            }}
+                            animate={{ 
+                                scale: 1, 
                                 opacity: 1,
-                                transition: {
-                                    delay: 0.1,
-                                    duration: 0.5,
-                                    ease: "easeOut"
-                                }
+                                y: 0
                             }}
-                            whileHover={{
-                                y: -10,
-                                scale: 1.02,
-                                boxShadow: "0 15px 40px rgba(241, 136, 136, 0.2)",
-                                transition: { type: "spring", stiffness: 300, damping: 20 }
+                            transition={{
+                                duration: 0.6,
+                                delay: 0.2,
+                                ease: "easeOut"
                             }}
-                            viewport={{ once: true, margin: "-10%" }}
+                            // whileHover={{
+                            //     y: -10,
+                            //     scale: 1.02,
+                            //     boxShadow: "0 15px 40px rgba(241, 136, 136, 0.2)",
+                            //     transition: { 
+                            //         type: "spring", 
+                            //         stiffness: 300, 
+                            //         damping: 20,
+                            //         duration: 0.2
+                            //     }
+                            // }}
                         >
                             <div className='text_learn'>
-                            <p>Learn</p>
+                                <p>Learn</p>
                             </div>
                             <div className='text_guitar'>
-                            <p>Guitar</p>
+                                <p>Guitar</p>
                             </div>
                             <figure className='card1_img'></figure>
                         </motion.div>
 
+                        {/* Card 2 - 簡化動畫邏輯 */}
                         <motion.div
                             className='card2'
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            whileInView={{
-                                scale: 1,
+                            initial={{ 
+                                scale: 0.95, 
+                                opacity: 0,
+                                y: 20
+                            }}
+                            animate={{ 
+                                scale: 1, 
                                 opacity: 1,
-                                transition: {
-                                    delay: 0.3,  // 稍微延遲，創造序列感
-                                    duration: 0.5,
-                                    ease: "easeOut"
-                                }
+                                y: 0
                             }}
-                            whileHover={{
-                                y: -10,
-                                scale: 1.02,
-                                boxShadow: "0 15px 40px rgba(241, 136, 136, 0.2)",
-                                transition: { type: "spring", stiffness: 300, damping: 20 }
+                            transition={{
+                                duration: 0.6,
+                                delay: 0.4,  // 稍微延遲，創造序列感
+                                ease: "easeOut"
                             }}
-                            viewport={{ once: true, margin: "-10%" }}
+                            // whileHover={{
+                            //     y: -10,
+                            //     scale: 1.02,
+                            //     boxShadow: "0 15px 40px rgba(241, 136, 136, 0.2)",
+                            //     transition: { 
+                            //         type: "spring", 
+                            //         stiffness: 300, 
+                            //         damping: 20,
+                            //         duration: 0.2
+                            //     }
+                            // }}
                         >
                             <div className='text_learn'>
-                                 <p>Learn</p>
+                                <p>Learn</p>
                             </div>
                             <div className='text_music'>
-                                 <p>Music</p>
+                                <p>Music</p>
                             </div>
                             <div className='text_theory'>
-                                 <p>Theory</p>
+                                <p>Theory</p>
                             </div>
                             <figure className='card2_img'></figure>
                         </motion.div>
