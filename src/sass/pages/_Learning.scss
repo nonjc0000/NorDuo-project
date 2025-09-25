@@ -461,7 +461,7 @@
 
         // 手機適配：減少變形效果
         @media ($mediaSm) {
-            transform: scale(1.05) rotate(3deg) translateY(calc(.9 * (-20px - 100%)));
+            transform: scale(1.05) rotate(3deg) translateY(calc(.9 * (-90px - 100%)));
         }
     }
 }
