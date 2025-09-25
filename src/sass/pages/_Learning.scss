@@ -273,32 +273,29 @@
         @media ($mediaSm) {
             transform: translateY(-5px);
         }
+
+        .text_marquee_learn {
+            animation: text_marquee_learn 30s linear infinite;
+        }
+
+        .text_marquee_guitar{
+            transform: translate(-30%, 40%) rotate(-45deg);
+            animation: marquee 40s linear infinite;
+        }
     }
 
     .text_marquee_learn {
         position: relative;
         transition: all 0.3s ease;
         display: flex;
-
-        &:hover {
-            position: absolute;
-            top: -185px;
-            left: -400px;
-            transform: rotate(-45deg);
-        }
+        transform-origin: center; // 設定變換原點
     }
 
     .text_marquee_guitar {
         position: relative;
         transition: all 0.3s ease;
         display: flex;
-
-        &:hover {
-            position: absolute;
-            top: -165px;
-            left: -400px;
-            transform: rotate(-45deg);
-        }
+        transform-origin: center; // 設定變換原點
     }
 }
 

@@ -12,3 +12,16 @@
 //     }
 // }
 
+@keyframes text_marquee_learn {
+    0% {
+        transform: translate(-100%, 10%) rotate(0deg);
+    }
+
+    1%{
+        transform: translate(-30%, 10%) rotate(-45deg);
+    }
+
+    100% {
+        transform: translate(70%, 90%) rotate(-45deg);
+    }
+}

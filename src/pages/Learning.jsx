@@ -159,7 +159,7 @@ const Learning = () => {
                             <p>Guitar Guitar Guitar</p>
                             <p>Guitar Guitar Guitar</p>
                             </div>
-                            {/* <figure className='card1_img'></figure> */}
+                            <figure className='card1_img'></figure>
                         </motion.div>
 
                         <motion.div
