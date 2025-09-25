@@ -10,7 +10,7 @@ const PRODUCTS_DATA = [
     {
         id: 'bass',
         name: 'Foundwave American Ultra Jazz Bass',
-        url: './images/shop/bass.png'
+        url: './images/shop/bass.jpg'
     },
     {
         id: 'kb',
