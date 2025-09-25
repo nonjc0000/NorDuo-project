@@ -2679,6 +2679,12 @@ body {
   font-weight: 700;
   white-space: nowrap;
 }
+@media (max-width: 1250px) and (min-width: 821px) {
+  .card1 p,
+  .card2 p {
+    font-size: 1.75rem;
+  }
+}
 @media (max-width:820px) {
   .card1 p,
   .card2 p {
@@ -2709,27 +2715,77 @@ body {
     transform: translateY(-5px);
   }
 }
-.card1:hover .text_marquee_learn,
-.card2:hover .text_marquee_learn {
-  animation: rotateFirst 1s ease-in forwards, slideAfter 5s linear 1s infinite;
+.card1:hover .text_learn,
+.card2:hover .text_learn {
+  transform: translateY(-35%) translateX(-13%) rotate(-30deg);
 }
-.card1:hover .text_marquee_guitar,
-.card2:hover .text_marquee_guitar {
-  animation: text_marquee_learn 40s linear infinite;
+@media (max-width:640px) {
+  .card1:hover .text_learn,
+  .card2:hover .text_learn {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
 }
-.card1 .text_marquee_learn,
-.card2 .text_marquee_learn {
+.card1:hover .text_guitar,
+.card2:hover .text_guitar {
+  transform: translateY(-10%) translateX(-7%) rotate(-15deg);
+}
+@media (max-width:820px) {
+  .card1:hover .text_guitar,
+  .card2:hover .text_guitar {
+    transform: translateY(30%) translateX(-5%) rotate(-15deg);
+  }
+}
+@media (max-width:640px) {
+  .card1:hover .text_guitar,
+  .card2:hover .text_guitar {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+}
+.card1:hover .text_music,
+.card2:hover .text_music {
+  transform: translateY(-10%) translateX(5%) rotate(-10deg);
+}
+@media (max-width:820px) {
+  .card1:hover .text_music,
+  .card2:hover .text_music {
+    transform: translateY(-10%) translateX(20%) rotate(-10deg);
+  }
+}
+@media (max-width:640px) {
+  .card1:hover .text_music,
+  .card2:hover .text_music {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+}
+.card1:hover .text_theory,
+.card2:hover .text_theory {
+  transform: translateY(30%) translateX(-5%) rotate(10deg);
+}
+@media (max-width:820px) {
+  .card1:hover .text_theory,
+  .card2:hover .text_theory {
+    transform: translateY(80%) translateX(-5%) rotate(10deg);
+  }
+}
+@media (max-width:640px) {
+  .card1:hover .text_theory,
+  .card2:hover .text_theory {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+}
+.card1 .text_learn,
+.card1 .text_guitar,
+.card1 .text_music,
+.card1 .text_theory,
+.card2 .text_learn,
+.card2 .text_guitar,
+.card2 .text_music,
+.card2 .text_theory {
   position: relative;
   transition: all 0.3s ease;
   display: flex;
   transform-origin: center;
-}
-.card1 .text_marquee_guitar,
-.card2 .text_marquee_guitar {
-  position: relative;
-  transition: all 0.3s ease;
-  display: flex;
-  transform-origin: center;
+  overflow: hidden;
 }
 
 .card1 {
@@ -2741,7 +2797,7 @@ body {
 }
 .card1 .card1_img {
   position: absolute;
-  bottom: -45px;
+  bottom: calc(-45px - 100%);
   right: -30px;
   width: 85%;
   min-width: 260px;
@@ -2750,13 +2806,13 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
   z-index: 1;
 }
 @media (max-width:820px) {
   .card1 .card1_img {
     min-width: 200px;
-    bottom: -35px;
+    bottom: calc(-35px - 100%);
     right: -20px;
     width: 80%;
   }
@@ -2764,7 +2820,7 @@ body {
 @media (max-width:640px) {
   .card1 .card1_img {
     min-width: 180px;
-    bottom: -25px;
+    bottom: calc(-25px - 100%);
     right: -15px;
     width: 75%;
     opacity: 0.8;
@@ -2773,17 +2829,26 @@ body {
 @media (max-width: 480px) {
   .card1 .card1_img {
     min-width: 160px;
-    bottom: -20px;
+    bottom: calc(-20px - 100%);
     right: -10px;
     width: 70%;
   }
 }
 .card1:hover .card1_img {
-  transform: scale(1.1) rotate(5deg);
+  transform: scale(1.1) rotate(5deg) translateY(calc(0.9 * (-25px - 100%)));
+}
+@media (max-width:820px) {
+  .card1:hover .card1_img {
+    min-width: 200px;
+    bottom: calc(-20px - 100%);
+    right: -20px;
+    width: 80%;
+    transform: scale(1.1) rotate(2deg) translateY(calc(0.9 * (-20px - 100%)));
+  }
 }
 @media (max-width:640px) {
   .card1:hover .card1_img {
-    transform: scale(1.05) rotate(3deg);
+    transform: scale(1.05) rotate(3deg) translateY(calc(0.9 * (-45px - 100%)));
   }
 }
 
@@ -2795,7 +2860,7 @@ body {
 }
 .card2 .card2_img {
   position: absolute;
-  bottom: -30px;
+  bottom: calc(-30px - 100%);
   right: -30px;
   width: 80%;
   min-width: 270px;
@@ -2804,13 +2869,13 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
   z-index: 1;
 }
 @media (max-width:820px) {
   .card2 .card2_img {
     min-width: 210px;
-    bottom: -25px;
+    bottom: calc(-25px - 100%);
     right: -20px;
     width: 75%;
   }
@@ -2818,7 +2883,7 @@ body {
 @media (max-width:640px) {
   .card2 .card2_img {
     min-width: 190px;
-    bottom: -20px;
+    bottom: calc(-20px - 100%);
     right: -15px;
     width: 70%;
     opacity: 0.8;
@@ -2827,17 +2892,25 @@ body {
 @media (max-width: 480px) {
   .card2 .card2_img {
     min-width: 170px;
-    bottom: -15px;
+    bottom: calc(-15px - 100%);
     right: -10px;
     width: 65%;
   }
 }
 .card2:hover .card2_img {
-  transform: scale(1.1) rotate(-5deg);
+  transform: scale(1.1) rotate(4deg) translateY(calc(0.9 * (-80px - 100%)));
+}
+@media (max-width:820px) {
+  .card2:hover .card2_img {
+    min-width: 200px;
+    bottom: calc(-40px - 100%);
+    right: -20px;
+    width: 80%;
+  }
 }
 @media (max-width:640px) {
   .card2:hover .card2_img {
-    transform: scale(1.05) rotate(-3deg);
+    transform: scale(1.05) rotate(3deg) translateY(calc(0.9 * (-20px - 100%)));
   }
 }
 
@@ -3528,21 +3601,4 @@ body {
 }
 #fallingTags p:active {
   transform: scale(0.98);
-}
-
-@keyframes rotateFirst {
-  from {
-    transform: translateY(0%) translateX(0%) rotate(0deg);
-  }
-  to {
-    transform: translateY(-30%) translateX(-30%) rotate(-45deg);
-  }
-}
-@keyframes slideAfter {
-  from {
-    transform: translateY(-30%) translateX(-30%) rotate(-45deg);
-  }
-  to {
-    transform: translateY(-50%) rotate(-45deg) translateX(130%);
-  }
 }

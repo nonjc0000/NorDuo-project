@@ -27,12 +27,20 @@
 // }
 
 
-@keyframes rotateFirst {
-    from { transform: translateY(0%) translateX(0%) rotate(0deg); }
-    to { transform: translateY(-30%) translateX(-30%) rotate(-45deg); }
-}
+// @keyframes rotate_learn {
+//     from { 
+//         transform: translateY(0%) translateX(0%) rotate(0deg); 
+//     }
+//     to { 
+//         transform: translateY(-35%) translateX(-13%) rotate(-30deg); 
+//     }
+// }
 
-@keyframes slideAfter {
-    from { transform: translateY(-30%) translateX(-30%) rotate(-45deg); }
-    to { transform: translateY(-50%) rotate(-45deg) translateX(130%); }
-}
+// @keyframes rotate_guitar {
+//     from { 
+//         transform: translateY(0%) translateX(0%) rotate(0deg); 
+//     }
+//     to { 
+//         transform: translateY(-20%) translateX(-7%) rotate(-15deg); 
+//     }
+// }

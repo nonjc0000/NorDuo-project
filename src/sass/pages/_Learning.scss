@@ -248,6 +248,11 @@
         white-space: nowrap;
         @extend %line_height_letter_spacing;
 
+        // 解決1024字溢出
+        @media (max-width: 1250px) and (min-width: 821px) {
+            font-size: $f-s-xxl;
+        }
+
         // 平板適配
         @media ($mediaMd) {
             font-size: $f-s-xl;
@@ -274,29 +279,60 @@
             transform: translateY(-5px);
         }
 
-        .text_marquee_learn {
-            animation:
-                rotateFirst 1s ease-in forwards,
-                slideAfter 5s linear 1s infinite;
+        .text_learn {
+            transform: translateY(-35%) translateX(-13%) rotate(-30deg);
+
+            @media ($mediaSm) {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
         }
 
-        .text_marquee_guitar {
-            animation: text_marquee_learn 40s linear infinite;
+        .text_guitar {
+            transform: translateY(-10%) translateX(-7%) rotate(-15deg);
+
+            @media ($mediaMd) {
+                transform: translateY(30%) translateX(-5%) rotate(-15deg);
+            }
+
+            @media ($mediaSm) {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+        }
+
+        .text_music {
+            transform: translateY(-10%) translateX(5%) rotate(-10deg);
+
+             @media ($mediaMd) {
+                transform: translateY(-10%) translateX(20%) rotate(-10deg);
+            }
+
+             @media ($mediaSm) {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+        }
+
+        .text_theory {
+            transform: translateY(30%) translateX(-5%) rotate(10deg);
+
+             @media ($mediaMd) {
+                transform: translateY(80%) translateX(-5%) rotate(10deg);
+            }
+
+             @media ($mediaSm) {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
         }
     }
 
-    .text_marquee_learn {
+    .text_learn,
+    .text_guitar,
+    .text_music,
+    .text_theory {
         position: relative;
         transition: all 0.3s ease;
         display: flex;
         transform-origin: center; // 設定變換原點
-    }
-
-    .text_marquee_guitar {
-        position: relative;
-        transition: all 0.3s ease;
-        display: flex;
-        transform-origin: center; // 設定變換原點
+        overflow: hidden;
     }
 }
 
@@ -310,7 +346,7 @@
 
     .card1_img {
         position: absolute;
-        bottom: -45px;
+        bottom: calc(-45px - 100%);
         right: -30px;
         width: 85%;
         min-width: 260px;
@@ -319,13 +355,13 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
-        transition: all 0.3s ease;
+        transition: all 0.5s ease;
         z-index: 1;
 
         // 平板適配：調整背景圖片
         @media ($mediaMd) {
             min-width: 200px;
-            bottom: -35px;
+            bottom: calc(-35px - 100%);
             right: -20px;
             width: 80%;
         }
@@ -333,7 +369,7 @@
         // 手機適配：進一步調整
         @media ($mediaSm) {
             min-width: 180px;
-            bottom: -25px;
+            bottom: calc(-25px - 100%);
             right: -15px;
             width: 75%;
             opacity: 0.8; // 稍微降低透明度避免干擾文字
@@ -342,18 +378,26 @@
         // 極小螢幕
         @media (max-width: 480px) {
             min-width: 160px;
-            bottom: -20px;
+            bottom: calc(-20px - 100%);
             right: -10px;
             width: 70%;
         }
     }
 
     &:hover .card1_img {
-        transform: scale(1.1) rotate(5deg);
+        transform: scale(1.1) rotate(5deg) translateY(calc(.9 * (-25px - 100%)));
+
+        @media ($mediaMd) {
+            min-width: 200px;
+            bottom: calc(-20px - 100%);
+            right: -20px;
+            width: 80%;
+            transform: scale(1.1) rotate(2deg) translateY(calc(.9 * (-20px - 100%)));
+        }
 
         // 手機適配：減少變形效果
         @media ($mediaSm) {
-            transform: scale(1.05) rotate(3deg);
+            transform: scale(1.05) rotate(3deg) translateY(calc(.9 * (-45px - 100%)));
         }
     }
 }
@@ -367,7 +411,7 @@
 
     .card2_img {
         position: absolute;
-        bottom: -30px;
+        bottom: calc(-30px - 100%);
         right: -30px;
         width: 80%;
         min-width: 270px;
@@ -376,13 +420,13 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
-        transition: all 0.3s ease;
+        transition: all 0.5s ease;
         z-index: 1;
 
         // 平板適配
         @media ($mediaMd) {
             min-width: 210px;
-            bottom: -25px;
+            bottom: calc(-25px - 100%);
             right: -20px;
             width: 75%;
         }
@@ -390,7 +434,7 @@
         // 手機適配
         @media ($mediaSm) {
             min-width: 190px;
-            bottom: -20px;
+            bottom: calc(-20px - 100%);
             right: -15px;
             width: 70%;
             opacity: 0.8;
@@ -399,18 +443,25 @@
         // 極小螢幕
         @media (max-width: 480px) {
             min-width: 170px;
-            bottom: -15px;
+            bottom: calc(-15px - 100%);
             right: -10px;
             width: 65%;
         }
     }
 
     &:hover .card2_img {
-        transform: scale(1.1) rotate(-5deg);
+        transform: scale(1.1) rotate(4deg) translateY(calc(.9 * (-80px - 100%)));
 
-        // 手機適配
+        @media ($mediaMd) {
+            min-width: 200px;
+            bottom: calc(-40px - 100%);
+            right: -20px;
+            width: 80%;
+        }
+
+        // 手機適配：減少變形效果
         @media ($mediaSm) {
-            transform: scale(1.05) rotate(-3deg);
+            transform: scale(1.05) rotate(3deg) translateY(calc(.9 * (-20px - 100%)));
         }
     }
 }

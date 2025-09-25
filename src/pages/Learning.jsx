@@ -151,13 +151,11 @@ const Learning = () => {
                             }}
                             viewport={{ once: true, margin: "-10%" }}
                         >
-                            <div className='text_marquee_learn'>
-                            <p>Learn Learn Learn</p>
-                            <p>Learn Learn Learn</p>
+                            <div className='text_learn'>
+                            <p>Learn</p>
                             </div>
-                            <div className='text_marquee_guitar'>
-                            <p>Guitar Guitar Guitar</p>
-                            <p>Guitar Guitar Guitar</p>
+                            <div className='text_guitar'>
+                            <p>Guitar</p>
                             </div>
                             <figure className='card1_img'></figure>
                         </motion.div>
@@ -182,7 +180,15 @@ const Learning = () => {
                             }}
                             viewport={{ once: true, margin: "-10%" }}
                         >
-                            <p>Learn<br />Music<br />Theory</p>
+                            <div className='text_learn'>
+                                 <p>Learn</p>
+                            </div>
+                            <div className='text_music'>
+                                 <p>Music</p>
+                            </div>
+                            <div className='text_theory'>
+                                 <p>Theory</p>
+                            </div>
                             <figure className='card2_img'></figure>
                         </motion.div>
                     </motion.div>
