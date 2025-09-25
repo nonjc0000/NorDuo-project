@@ -275,12 +275,13 @@
         }
 
         .text_marquee_learn {
-            animation: text_marquee_learn 30s linear infinite;
+            animation:
+                rotateFirst 1s ease-in forwards,
+                slideAfter 5s linear 1s infinite;
         }
 
-        .text_marquee_guitar{
-            transform: translate(-30%, 40%) rotate(-45deg);
-            animation: marquee 40s linear infinite;
+        .text_marquee_guitar {
+            animation: text_marquee_learn 40s linear infinite;
         }
     }
 

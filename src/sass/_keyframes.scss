@@ -12,16 +12,27 @@
 //     }
 // }
 
-@keyframes text_marquee_learn {
-    0% {
-        transform: translate(-100%, 10%) rotate(0deg);
-    }
+// @keyframes text_marquee_learn {
+//     0% {
+//         transform: translate(-100%, 10%) rotate(0deg);
+//     }
 
-    1%{
-        transform: translate(-30%, 10%) rotate(-45deg);
-    }
+//     1%{
+//         transform: translate(-30%, 10%) rotate(-45deg);
+//     }
 
-    100% {
-        transform: translate(100%, 10%) rotate(-45deg);
-    }
+//     100% {
+//         transform: translate(100%, 10%) rotate(-45deg);
+//     }
+// }
+
+
+@keyframes rotateFirst {
+    from { transform: translateY(0%) translateX(0%) rotate(0deg); }
+    to { transform: translateY(-30%) translateX(-30%) rotate(-45deg); }
+}
+
+@keyframes slideAfter {
+    from { transform: translateY(-30%) translateX(-30%) rotate(-45deg); }
+    to { transform: translateY(-50%) rotate(-45deg) translateX(130%); }
 }

@@ -2711,12 +2711,11 @@ body {
 }
 .card1:hover .text_marquee_learn,
 .card2:hover .text_marquee_learn {
-  animation: text_marquee_learn 30s linear infinite;
+  animation: rotateFirst 1s ease-in forwards, slideAfter 5s linear 1s infinite;
 }
 .card1:hover .text_marquee_guitar,
 .card2:hover .text_marquee_guitar {
-  transform: translate(-30%, 40%) rotate(-45deg);
-  animation: marquee 40s linear infinite;
+  animation: text_marquee_learn 40s linear infinite;
 }
 .card1 .text_marquee_learn,
 .card2 .text_marquee_learn {
@@ -3531,14 +3530,19 @@ body {
   transform: scale(0.98);
 }
 
-@keyframes text_marquee_learn {
-  0% {
-    transform: translate(-100%, 10%) rotate(0deg);
+@keyframes rotateFirst {
+  from {
+    transform: translateY(0%) translateX(0%) rotate(0deg);
   }
-  1% {
-    transform: translate(-30%, 10%) rotate(-45deg);
+  to {
+    transform: translateY(-30%) translateX(-30%) rotate(-45deg);
   }
-  100% {
-    transform: translate(100%, 10%) rotate(-45deg);
+}
+@keyframes slideAfter {
+  from {
+    transform: translateY(-30%) translateX(-30%) rotate(-45deg);
+  }
+  to {
+    transform: translateY(-50%) rotate(-45deg) translateX(130%);
   }
 }
